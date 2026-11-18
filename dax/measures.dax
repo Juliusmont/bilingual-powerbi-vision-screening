@@ -1,0 +1,199 @@
+// =====================================================================
+// Bilingual School Vision Screening - DAX measures
+// Create a table "_Measures" (Enter data, one empty column) and add the
+// measures below. Display folders are suggested in comments.
+// =====================================================================
+
+// ---------- Folder: 0 Language ----------------------------------------
+Selected Language =
+SELECTEDVALUE (
+    DimLanguage[LanguageCode],
+    IF ( LEFT ( USERCULTURE (), 2 ) = "fr", "FR", "EN" )   // default = viewer's browser culture
+)
+
+Selected Locale = IF ( [Selected Language] = "FR", "fr-FR", "en-US" )
+
+// One measure per UI label (titles, KPI captions). Same pattern for every LabelKey in Labels.csv
+Lbl Title Exec = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "title_exec", Labels[LanguageCode], [Selected Language] )
+Lbl Title Analysis = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "title_analysis", Labels[LanguageCode], [Selected Language] )
+Lbl Screened = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_screened", Labels[LanguageCode], [Selected Language] )
+Lbl Need = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_need", Labels[LanguageCode], [Selected Language] )
+Lbl Impairment = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_impairment", Labels[LanguageCode], [Selected Language] )
+Lbl Target = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_target", Labels[LanguageCode], [Selected Language] )
+Lbl Chart Region = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_region", Labels[LanguageCode], [Selected Language] )
+Lbl Chart Rank = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_rank", Labels[LanguageCode], [Selected Language] )
+Lbl Chart Trend = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_trend", Labels[LanguageCode], [Selected Language] )
+Lbl Chart Diag = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_diag", Labels[LanguageCode], [Selected Language] )
+Lbl Chart Symptom = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_symptom", Labels[LanguageCode], [Selected Language] )
+Lbl Chart Screen = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_screen", Labels[LanguageCode], [Selected Language] )
+Lbl Note Synthetic = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "note_synthetic", Labels[LanguageCode], [Selected Language] )
+
+// ---------- Folder: 1 Core KPIs ---------------------------------------
+Students Screened = COUNTROWS ( FactScreening )
+
+Eyes Examined = COUNTROWS ( FactEyeExam )
+
+// "Need for correction" = the examiner proposed a non-zero prescription in at least one eye
+// (data-driven definition, avoids the misleading ~99% "any refractive error" rate)
+Students Needing Correction =
+CALCULATE (
+    DISTINCTCOUNT ( FactEyeExam[StudentKey] ),
+    FactEyeExam[SphereRx] <> 0 || FactEyeExam[CylinderRx] <> 0
+)
+
+Correction Need Rate = DIVIDE ( [Students Needing Correction], [Students Screened] )
+
+Uncorrected Need =
+CALCULATE ( [Students Needing Correction], FactScreening[WearsCorrection] = 0 )
+
+Uncorrected Need Rate = DIVIDE ( [Uncorrected Need], [Students Needing Correction] )
+
+// Visual impairment in at least one eye (VA category Mild or worse)
+Students With Impairment =
+CALCULATE ( DISTINCTCOUNT ( FactEyeExam[StudentKey] ), FactEyeExam[VACategoryKey] >= 2 )
+
+Impairment Rate = DIVIDE ( [Students With Impairment], [Students Screened] )
+
+Screen Exposure Rate =
+DIVIDE ( CALCULATE ( [Students Screened], FactScreening[ScreenTimeKey] > 0 ), [Students Screened] )
+
+// Share of a diagnosis among examined eyes (use with a diagnosis field parameter on the axis)
+Diagnosis Share =
+DIVIDE ( [Eyes Examined], CALCULATE ( [Eyes Examined], REMOVEFILTERS ( DimDiagnosis ) ) )
+
+Students With Symptom = DISTINCTCOUNT ( BridgeSymptom[StudentKey] )
+Symptom Rate = DIVIDE ( [Students With Symptom], [Students Screened] )
+
+// ---------- Folder: 2 Time intelligence & targets ---------------------
+// Mark DimDate as date table (Date column) before using these measures
+Students Screened PY = CALCULATE ( [Students Screened], SAMEPERIODLASTYEAR ( DimDate[Date] ) )
+
+Students Screened YoY % =
+DIVIDE ( [Students Screened] - [Students Screened PY], [Students Screened PY] )
+
+Students Screened YTD = TOTALYTD ( [Students Screened], DimDate[Date] )
+
+Correction Need Rate PY = CALCULATE ( [Correction Need Rate], SAMEPERIODLASTYEAR ( DimDate[Date] ) )
+
+Correction Need Rate Change (pts) =
+IF ( NOT ISBLANK ( [Correction Need Rate PY] ), ( [Correction Need Rate] - [Correction Need Rate PY] ) * 100 )
+
+Target Students = SUM ( FactTarget[TargetStudents] )
+
+Target Achievement % = DIVIDE ( [Students Screened], [Target Students] )
+
+// ---------- Folder: 3 Ranking -----------------------------------------
+Prefecture Rank (Need Rate) =
+IF (
+    ISINSCOPE ( DimPrefecture[Prefecture] ),
+    RANKX ( ALLSELECTED ( DimPrefecture[Prefecture] ), [Correction Need Rate], , DESC, DENSE )
+)
+
+// ---------- Folder: 4 Formatted captions (locale-aware) ---------------
+KPI Need Subtitle =
+VAR d = [Correction Need Rate Change (pts)]
+RETURN
+    IF (
+        ISBLANK ( d ),
+        IF ( [Selected Language] = "FR", "Première campagne", "First campaign" ),
+        FORMAT ( d, "+0.0;-0.0;0.0", [Selected Locale] )
+            & IF ( [Selected Language] = "FR", " pts vs campagne précédente", " pts vs previous campaign" )
+    )
+
+KPI Screened Caption =
+FORMAT ( [Students Screened], "#,0", [Selected Locale] )
+    & IF ( [Selected Language] = "FR", " élèves dépistés", " students screened" )
+
+// Accessibility: dynamic alt text (Format > General > Alt text > fx)
+Alt Text Region Chart =
+IF (
+    [Selected Language] = "FR",
+    "Graphique à barres du taux de besoin de correction par région. Taux national : "
+        & FORMAT ( [Correction Need Rate], "0.0 %", "fr-FR" ),
+    "Bar chart of the need-for-correction rate by region. National rate: "
+        & FORMAT ( [Correction Need Rate], "0.0%", "en-US" )
+)
+
+// ---------- Folder: 5 Privacy (small-cell suppression) ----------------
+// Hide rates computed on fewer than 10 students (re-identification risk on health data)
+Correction Need Rate (Safe) =
+IF ( [Students Screened] < 10, BLANK (), [Correction Need Rate] )
+
+// ---------- Folder: 6 Data integrity checks ---------------------------
+DQ Implausible Cylinder = COUNTROWS ( FILTER ( FactEyeExam, ABS ( FactEyeExam[CylinderRx] ) > 6 ) )
+
+DQ Plus Cylinder Convention =
+COUNTROWS ( FILTER ( FactEyeExam, FactEyeExam[CylinderRx] > 0 && FactEyeExam[CylinderRx] <= 6 ) )
+
+DQ Missing Visual Acuity = COUNTROWS ( FILTER ( FactEyeExam, ISBLANK ( FactEyeExam[VA_10] ) ) )
+
+DQ Students Without Two Eyes =
+COUNTROWS ( FILTER ( FactScreening, CALCULATE ( COUNTROWS ( FactEyeExam ) ) <> 2 ) )
+
+DQ Symptom Inconsistency =
+COUNTROWS (
+    FILTER ( FactScreening, FactScreening[HasSymptoms] = 0 && CALCULATE ( COUNTROWS ( BridgeSymptom ) ) > 0 )
+)
+
+DQ Issues Total =
+[DQ Implausible Cylinder] + [DQ Plus Cylinder Convention] + [DQ Missing Visual Acuity]
+    + [DQ Students Without Two Eyes] + [DQ Symptom Inconsistency]
+
+DQ Status =
+IF (
+    [DQ Issues Total] = 0,
+    IF ( [Selected Language] = "FR", "✓ Aucune anomalie", "✓ No issues" ),
+    "⚠ " & FORMAT ( [DQ Issues Total], "#,0", [Selected Locale] )
+        & IF ( [Selected Language] = "FR", " anomalies à vérifier", " issues to review" )
+)
+
+
+// =====================================================================
+// FIELD PARAMETERS (Modeling > New parameter > Fields), then edit the DAX
+// to add a 4th column = language code, rename it LanguageCode and create a
+// relationship DimLanguage[LanguageCode] (1) -> (*) Param[LanguageCode]
+// =====================================================================
+/*
+Param Diagnosis Group = {
+    ("Groupe de diagnostic", NAMEOF ( 'DimDiagnosis'[DiagnosisGroup_FR] ), 0, "FR"),
+    ("Diagnosis group",      NAMEOF ( 'DimDiagnosis'[DiagnosisGroup_EN] ), 1, "EN")
+}
+Param Region = {
+    ("Région", NAMEOF ( 'DimRegion'[RegionName_FR] ), 0, "FR"),
+    ("Region", NAMEOF ( 'DimRegion'[RegionName_EN] ), 1, "EN")
+}
+Param Sex = {
+    ("Sexe", NAMEOF ( 'DimSex'[Sex_FR] ), 0, "FR"),
+    ("Sex",  NAMEOF ( 'DimSex'[Sex_EN] ), 1, "EN")
+}
+Param Age Band = {
+    ("Tranche d'âge", NAMEOF ( 'DimAgeBand'[AgeBand_FR] ), 0, "FR"),
+    ("Age band",      NAMEOF ( 'DimAgeBand'[AgeBand_EN] ), 1, "EN")
+}
+Param Symptom = {
+    ("Signe fonctionnel", NAMEOF ( 'DimSymptom'[Symptom_FR] ), 0, "FR"),
+    ("Symptom",           NAMEOF ( 'DimSymptom'[Symptom_EN] ), 1, "EN")
+}
+Param Screen Time = {
+    ("Temps d'écran", NAMEOF ( 'DimScreenTime'[ScreenTime_FR] ), 0, "FR"),
+    ("Screen time",   NAMEOF ( 'DimScreenTime'[ScreenTime_EN] ), 1, "EN")
+}
+Param Campaign = {
+    ("Campagne", NAMEOF ( 'DimDate'[Campaign_FR] ), 0, "FR"),
+    ("Campaign", NAMEOF ( 'DimDate'[Campaign_EN] ), 1, "EN")
+}
+*/
+
+// =====================================================================
+// ROW-LEVEL SECURITY (Modeling > Manage roles), filter on table DimRegion
+// =====================================================================
+/*
+Role "Region - Plateaux" (static):   [RegionCode] = "PLA"
+Role "Region - Maritime" (static):   [RegionCode] = "MAR"
+Role "Dynamic by user":
+    [RegionCode]
+        IN CALCULATETABLE (
+            VALUES ( SecurityUserRegion[RegionCode] ),
+            SecurityUserRegion[UserEmail] = USERPRINCIPALNAME ()
+        )
+*/

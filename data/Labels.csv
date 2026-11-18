@@ -1,0 +1,39 @@
+﻿LabelKey,LanguageCode,Text
+title_exec,FR,Dépistage visuel en milieu scolaire - Vue direction
+title_analysis,FR,Analyse des amétropies
+kpi_screened,FR,Élèves dépistés
+kpi_need,FR,Besoin de correction
+kpi_impairment,FR,Déficience visuelle
+kpi_target,FR,Atteinte de l'objectif
+kpi_yoy,FR,Variation annuelle
+kpi_screen,FR,Exposition aux écrans
+chart_region,FR,Besoin de correction par région
+chart_rank,FR,Classement des préfectures
+chart_trend,FR,Évolution par campagne
+chart_diag,FR,Répartition des diagnostics
+chart_symptom,FR,Signes fonctionnels déclarés
+chart_screen,FR,Diagnostic selon le temps d'écran
+slicer_language,FR,Langue
+slicer_region,FR,Région
+slicer_campaign,FR,Campagne
+note_synthetic,FR,Données synthétiques à des fins de démonstration
+note_dq,FR,Contrôles d'intégrité des données
+title_exec,EN,School Vision Screening - Executive View
+title_analysis,EN,Refractive Error Analysis
+kpi_screened,EN,Students screened
+kpi_need,EN,Need for correction
+kpi_impairment,EN,Visual impairment
+kpi_target,EN,Target achievement
+kpi_yoy,EN,Year-over-year change
+kpi_screen,EN,Screen exposure
+chart_region,EN,Need for correction by region
+chart_rank,EN,Prefecture ranking
+chart_trend,EN,Trend by campaign
+chart_diag,EN,Diagnosis breakdown
+chart_symptom,EN,Reported symptoms
+chart_screen,EN,Diagnosis by screen time
+slicer_language,EN,Language
+slicer_region,EN,Region
+slicer_campaign,EN,Campaign
+note_synthetic,EN,Synthetic data for demonstration purposes
+note_dq,EN,Data integrity checks

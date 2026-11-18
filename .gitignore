@@ -1,0 +1,34 @@
+# --- Personal notes (not published) ---
+GUIDE_FR.md
+NOTES*.md
+*.local.md
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.vision/
+.venv/
+venv/
+env/
+.ipynb_checkpoints/
+
+# --- Power BI ---
+# Lock / temp files created while a .pbix is open
+~$*
+*.pbix.bak
+# PBIP project format: local settings and cache
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+# Tabular Editor backups
+*.bim.bak
+
+# --- Editors / AI tooling ---
+.claude/
+.vscode/
+.idea/
+
+# --- OS ---
+.DS_Store
+._*
+Thumbs.db
+desktop.ini

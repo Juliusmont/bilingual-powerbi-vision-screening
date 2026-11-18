@@ -1,0 +1,406 @@
+﻿SchoolKey,CommuneKey,SchoolName,SchoolCode,SchoolTypeKey,HasUpperSecondary
+1,1,Lycée confessionnel Cinkassé Gare,SCH-0001,2,1
+2,1,Collège privé Cinkassé Sud,SCH-0002,3,0
+3,2,Lycée Cinkassé 2 Plateau,SCH-0003,1,1
+4,2,CEG Cinkassé 2 Est,SCH-0004,1,0
+5,2,Lycée privé Cinkassé 2 Centre,SCH-0005,3,1
+6,2,CEG Cinkassé 2 Sud,SCH-0006,1,0
+7,3,Lycée confessionnel Dapaong Gare,SCH-0007,2,1
+8,3,CEG Dapaong Ouest,SCH-0008,1,0
+9,3,CEG Dapaong Nord,SCH-0009,1,0
+10,4,Lycée Dapaong 2 Sud,SCH-0010,1,1
+11,4,CEG Dapaong 2 Centre,SCH-0011,1,0
+12,4,CEG Dapaong 2 Gare,SCH-0012,1,0
+13,5,Lycée Dapaong 3 Marché,SCH-0013,1,1
+14,5,Collège privé Dapaong 3 Sud,SCH-0014,3,0
+15,6,Lycée Dapaong 4 Marché,SCH-0015,1,1
+16,6,CEG Dapaong 4 Sud,SCH-0016,1,0
+17,6,CEG Dapaong 4 Nord,SCH-0017,1,0
+18,7,Lycée Mandouri Marché,SCH-0018,1,1
+19,7,CEG Mandouri Nord,SCH-0019,1,0
+20,8,Lycée Mandouri 2 Plateau,SCH-0020,1,1
+21,8,Collège privé Mandouri 2 Gare,SCH-0021,3,0
+22,9,Lycée Naki-Est Sud,SCH-0022,1,1
+23,9,CEG Naki-Est Plateau,SCH-0023,1,0
+24,9,Lycée Naki-Est Gare,SCH-0024,1,1
+25,9,Lycée Naki-Est Marché,SCH-0025,1,1
+26,10,Lycée Naki-Est 2 Plateau,SCH-0026,1,1
+27,10,CEG Naki-Est 2 Ouest,SCH-0027,1,0
+28,10,CEG Naki-Est 2 Est,SCH-0028,1,0
+29,10,CEG Naki-Est 2 Marché,SCH-0029,1,0
+30,11,Lycée Sansanné-Mango Gare,SCH-0030,1,1
+31,11,Collège privé Sansanné-Mango Nord,SCH-0031,3,0
+32,11,Collège privé Sansanné-Mango Centre,SCH-0032,3,0
+33,12,Lycée Sansanné-Mango 2 Est,SCH-0033,1,1
+34,12,Lycée confessionnel Sansanné-Mango 2 Gare,SCH-0034,2,1
+35,12,CEG Sansanné-Mango 2 Ouest,SCH-0035,1,0
+36,12,Lycée Sansanné-Mango 2 Nord,SCH-0036,1,1
+37,13,Lycée Gando Nord,SCH-0037,1,1
+38,13,Lycée Gando Est,SCH-0038,1,1
+39,14,Lycée Gando 2 Gare,SCH-0039,1,1
+40,14,CEG Gando 2 Est,SCH-0040,1,0
+41,14,CEG Gando 2 Centre,SCH-0041,1,0
+42,15,Lycée Tandjouaré Nord,SCH-0042,1,1
+43,15,CEG Tandjouaré Plateau,SCH-0043,1,0
+44,15,CEG Tandjouaré Sud,SCH-0044,1,0
+45,16,Lycée Tandjouaré 2 Ouest,SCH-0045,1,1
+46,16,CEG Tandjouaré 2 Marché,SCH-0046,1,0
+47,16,CEG Tandjouaré 2 Sud,SCH-0047,1,0
+48,17,Lycée confessionnel Kara Est,SCH-0048,2,1
+49,17,CEG Kara Nord,SCH-0049,1,0
+50,18,Lycée Kara 2 Centre,SCH-0050,1,1
+51,18,CEG Kara 2 Sud,SCH-0051,1,0
+52,19,Lycée Kara 3 Plateau,SCH-0052,1,1
+53,19,CEG Kara 3 Nord,SCH-0053,1,0
+54,20,Lycée Kara 4 Marché,SCH-0054,1,1
+55,20,Lycée Kara 4 Sud,SCH-0055,1,1
+56,20,CEG Kara 4 Ouest,SCH-0056,1,0
+57,21,Lycée confessionnel Bassar Centre,SCH-0057,2,1
+58,21,CEG Bassar Gare,SCH-0058,1,0
+59,21,Lycée Bassar Sud,SCH-0059,1,1
+60,22,Lycée Bassar 2 Ouest,SCH-0060,1,1
+61,22,CEG Bassar 2 Gare,SCH-0061,1,0
+62,23,Lycée Bassar 3 Ouest,SCH-0062,1,1
+63,23,CEG Bassar 3 Gare,SCH-0063,1,0
+64,23,Lycée Bassar 3 Est,SCH-0064,1,1
+65,24,Lycée Bassar 4 Ouest,SCH-0065,1,1
+66,24,CEG Bassar 4 Plateau,SCH-0066,1,0
+67,24,CEG Bassar 4 Nord,SCH-0067,1,0
+68,25,Lycée Guérin-Kouka Plateau,SCH-0068,1,1
+69,25,CEG Guérin-Kouka Centre,SCH-0069,1,0
+70,25,Lycée privé Guérin-Kouka Sud,SCH-0070,3,1
+71,25,CEG Guérin-Kouka Gare,SCH-0071,1,0
+72,26,Lycée Guérin-Kouka 2 Centre,SCH-0072,1,1
+73,26,CEG Guérin-Kouka 2 Ouest,SCH-0073,1,0
+74,26,Lycée Guérin-Kouka 2 Est,SCH-0074,1,1
+75,27,Lycée Guérin-Kouka 3 Nord,SCH-0075,1,1
+76,27,CEG Guérin-Kouka 3 Sud,SCH-0076,1,0
+77,27,CEG Guérin-Kouka 3 Ouest,SCH-0077,1,0
+78,28,Lycée Kandé Ouest,SCH-0078,1,1
+79,28,CEG Kandé Centre,SCH-0079,1,0
+80,28,CEG Kandé Gare,SCH-0080,1,0
+81,28,CEG Kandé Marché,SCH-0081,1,0
+82,29,Lycée Kandé 2 Gare,SCH-0082,1,1
+83,29,Lycée privé Kandé 2 Est,SCH-0083,3,1
+84,29,CEG Kandé 2 Ouest,SCH-0084,1,0
+85,30,Lycée Kandé 3 Nord,SCH-0085,1,1
+86,30,Lycée Kandé 3 Centre,SCH-0086,1,1
+87,31,Lycée Pagouda Gare,SCH-0087,1,1
+88,31,CEG Pagouda Marché,SCH-0088,1,0
+89,31,CEG Pagouda Nord,SCH-0089,1,0
+90,32,Lycée privé Pagouda 2 Plateau,SCH-0090,3,1
+91,32,CEG Pagouda 2 Nord,SCH-0091,1,0
+92,32,CEG Pagouda 2 Gare,SCH-0092,1,0
+93,33,Lycée Niamtougou Centre,SCH-0093,1,1
+94,33,Lycée Niamtougou Gare,SCH-0094,1,1
+95,33,Collège confessionnel Niamtougou Marché,SCH-0095,2,0
+96,34,Lycée privé Niamtougou 2 Marché,SCH-0096,3,1
+97,34,Lycée Niamtougou 2 Ouest,SCH-0097,1,1
+98,34,CEG Niamtougou 2 Sud,SCH-0098,1,0
+99,35,Lycée Bafilo Est,SCH-0099,1,1
+100,35,CEG Bafilo Centre,SCH-0100,1,0
+101,36,Lycée Bafilo 2 Centre,SCH-0101,1,1
+102,36,CEG Bafilo 2 Nord,SCH-0102,1,0
+103,36,CEG Bafilo 2 Sud,SCH-0103,1,0
+104,37,Lycée Bafilo 3 Ouest,SCH-0104,1,1
+105,37,CEG Bafilo 3 Sud,SCH-0105,1,0
+106,37,CEG Bafilo 3 Centre,SCH-0106,1,0
+107,38,Lycée Sokodé Nord,SCH-0107,1,1
+108,38,CEG Sokodé Centre,SCH-0108,1,0
+109,38,Collège confessionnel Sokodé Marché,SCH-0109,2,0
+110,39,Lycée Sokodé 2 Centre,SCH-0110,1,1
+111,39,CEG Sokodé 2 Gare,SCH-0111,1,0
+112,39,CEG Sokodé 2 Sud,SCH-0112,1,0
+113,40,Lycée Sokodé 3 Nord,SCH-0113,1,1
+114,40,Lycée Sokodé 3 Plateau,SCH-0114,1,1
+115,41,Lycée confessionnel Sokodé 4 Marché,SCH-0115,2,1
+116,41,CEG Sokodé 4 Gare,SCH-0116,1,0
+117,41,CEG Sokodé 4 Ouest,SCH-0117,1,0
+118,42,Lycée Sotouboua Plateau,SCH-0118,1,1
+119,42,Lycée Sotouboua Sud,SCH-0119,1,1
+120,42,CEG Sotouboua Nord,SCH-0120,1,0
+121,42,Collège privé Sotouboua Marché,SCH-0121,3,0
+122,43,Lycée Sotouboua 2 Ouest,SCH-0122,1,1
+123,43,CEG Sotouboua 2 Centre,SCH-0123,1,0
+124,44,Lycée Sotouboua 3 Centre,SCH-0124,1,1
+125,44,CEG Sotouboua 3 Sud,SCH-0125,1,0
+126,45,Lycée Djarkpanga Marché,SCH-0126,1,1
+127,45,CEG Djarkpanga Nord,SCH-0127,1,0
+128,46,Lycée Djarkpanga 2 Est,SCH-0128,1,1
+129,46,CEG Djarkpanga 2 Centre,SCH-0129,1,0
+130,46,Lycée Djarkpanga 2 Plateau,SCH-0130,1,1
+131,47,Lycée Tchamba Ouest,SCH-0131,1,1
+132,47,Collège confessionnel Tchamba Plateau,SCH-0132,2,0
+133,47,CEG Tchamba Marché,SCH-0133,1,0
+134,48,Lycée Tchamba 2 Marché,SCH-0134,1,1
+135,48,Lycée Tchamba 2 Ouest,SCH-0135,1,1
+136,48,Lycée Tchamba 2 Sud,SCH-0136,1,1
+137,48,Lycée Tchamba 2 Est,SCH-0137,1,1
+138,49,Lycée Tchamba 3 Gare,SCH-0138,1,1
+139,49,Lycée Tchamba 3 Centre,SCH-0139,1,1
+140,50,Lycée Blitta Ouest,SCH-0140,1,1
+141,50,CEG Blitta Centre,SCH-0141,1,0
+142,50,CEG Blitta Plateau,SCH-0142,1,0
+143,51,Lycée confessionnel Blitta 2 Gare,SCH-0143,2,1
+144,51,CEG Blitta 2 Nord,SCH-0144,1,0
+145,52,Lycée Blitta 3 Plateau,SCH-0145,1,1
+146,52,CEG Blitta 3 Sud,SCH-0146,1,0
+147,52,CEG Blitta 3 Ouest,SCH-0147,1,0
+148,53,Lycée Atakpamé Ouest,SCH-0148,1,1
+149,53,Collège privé Atakpamé Plateau,SCH-0149,3,0
+150,53,CEG Atakpamé Nord,SCH-0150,1,0
+151,54,Lycée Atakpamé 2 Nord,SCH-0151,1,1
+152,54,CEG Atakpamé 2 Marché,SCH-0152,1,0
+153,54,CEG Atakpamé 2 Gare,SCH-0153,1,0
+154,54,CEG Atakpamé 2 Ouest,SCH-0154,1,0
+155,55,Lycée Atakpamé 3 Marché,SCH-0155,1,1
+156,55,CEG Atakpamé 3 Ouest,SCH-0156,1,0
+157,55,CEG Atakpamé 3 Plateau,SCH-0157,1,0
+158,56,Lycée Atakpamé 4 Nord,SCH-0158,1,1
+159,56,Lycée Atakpamé 4 Ouest,SCH-0159,1,1
+160,56,CEG Atakpamé 4 Est,SCH-0160,1,0
+161,57,Lycée Anié Gare,SCH-0161,1,1
+162,57,Lycée Anié Plateau,SCH-0162,1,1
+163,58,Lycée Anié 2 Nord,SCH-0163,1,1
+164,58,CEG Anié 2 Plateau,SCH-0164,1,0
+165,58,CEG Anié 2 Ouest,SCH-0165,1,0
+166,58,Lycée Anié 2 Gare,SCH-0166,1,1
+167,59,Lycée Elavagnon Plateau,SCH-0167,1,1
+168,59,CEG Elavagnon Marché,SCH-0168,1,0
+169,59,Collège privé Elavagnon Nord,SCH-0169,3,0
+170,59,Lycée Elavagnon Ouest,SCH-0170,1,1
+171,60,Lycée Elavagnon 2 Sud,SCH-0171,1,1
+172,60,CEG Elavagnon 2 Plateau,SCH-0172,1,0
+173,60,Lycée Elavagnon 2 Gare,SCH-0173,1,1
+174,60,CEG Elavagnon 2 Ouest,SCH-0174,1,0
+175,61,Lycée Elavagnon 3 Nord,SCH-0175,1,1
+176,61,Lycée Elavagnon 3 Sud,SCH-0176,1,1
+177,61,CEG Elavagnon 3 Gare,SCH-0177,1,0
+178,61,Lycée Elavagnon 3 Est,SCH-0178,1,1
+179,62,Lycée privé Tohoun Centre,SCH-0179,3,1
+180,62,CEG Tohoun Est,SCH-0180,1,0
+181,62,CEG Tohoun Sud,SCH-0181,1,0
+182,62,Collège privé Tohoun Gare,SCH-0182,3,0
+183,63,Lycée Tohoun 2 Plateau,SCH-0183,1,1
+184,63,CEG Tohoun 2 Est,SCH-0184,1,0
+185,64,Lycée Notsé Nord,SCH-0185,1,1
+186,64,CEG Notsé Ouest,SCH-0186,1,0
+187,64,Lycée Notsé Marché,SCH-0187,1,1
+188,64,Lycée Notsé Sud,SCH-0188,1,1
+189,65,Lycée privé Notsé 2 Plateau,SCH-0189,3,1
+190,65,CEG Notsé 2 Sud,SCH-0190,1,0
+191,65,CEG Notsé 2 Centre,SCH-0191,1,0
+192,66,Lycée Notsé 3 Sud,SCH-0192,1,1
+193,66,CEG Notsé 3 Marché,SCH-0193,1,0
+194,66,CEG Notsé 3 Plateau,SCH-0194,1,0
+195,67,Lycée confessionnel Notsé 4 Nord,SCH-0195,2,1
+196,67,CEG Notsé 4 Est,SCH-0196,1,0
+197,67,Collège privé Notsé 4 Plateau,SCH-0197,3,0
+198,67,Lycée Notsé 4 Sud,SCH-0198,1,1
+199,68,Lycée Badou Gare,SCH-0199,1,1
+200,68,CEG Badou Plateau,SCH-0200,1,0
+201,68,CEG Badou Nord,SCH-0201,1,0
+202,69,Lycée Badou 2 Ouest,SCH-0202,1,1
+203,69,Collège privé Badou 2 Est,SCH-0203,3,0
+204,69,Collège confessionnel Badou 2 Gare,SCH-0204,2,0
+205,70,Lycée Badou 3 Sud,SCH-0205,1,1
+206,70,CEG Badou 3 Plateau,SCH-0206,1,0
+207,70,Lycée Badou 3 Gare,SCH-0207,1,1
+208,71,Lycée Amlamé Marché,SCH-0208,1,1
+209,71,CEG Amlamé Gare,SCH-0209,1,0
+210,71,Lycée Amlamé Sud,SCH-0210,1,1
+211,72,Lycée Amlamé 2 Plateau,SCH-0211,1,1
+212,72,Lycée Amlamé 2 Gare,SCH-0212,1,1
+213,73,Lycée Amlamé 3 Plateau,SCH-0213,1,1
+214,73,CEG Amlamé 3 Centre,SCH-0214,1,0
+215,74,Lycée Kougnohou Gare,SCH-0215,1,1
+216,74,Lycée Kougnohou Marché,SCH-0216,1,1
+217,74,CEG Kougnohou Centre,SCH-0217,1,0
+218,75,Lycée confessionnel Kougnohou 2 Nord,SCH-0218,2,1
+219,75,CEG Kougnohou 2 Est,SCH-0219,1,0
+220,75,CEG Kougnohou 2 Gare,SCH-0220,1,0
+221,76,Lycée Kpalimé Gare,SCH-0221,1,1
+222,76,Collège privé Kpalimé Plateau,SCH-0222,3,0
+223,76,Lycée confessionnel Kpalimé Est,SCH-0223,2,1
+224,76,Lycée Kpalimé Ouest,SCH-0224,1,1
+225,77,Lycée Kpalimé 2 Est,SCH-0225,1,1
+226,77,Lycée privé Kpalimé 2 Plateau,SCH-0226,3,1
+227,77,Lycée privé Kpalimé 2 Marché,SCH-0227,3,1
+228,78,Lycée Kpalimé 3 Gare,SCH-0228,1,1
+229,78,CEG Kpalimé 3 Nord,SCH-0229,1,0
+230,78,Collège confessionnel Kpalimé 3 Centre,SCH-0230,2,0
+231,79,Lycée Kpélé-Adéta Nord,SCH-0231,1,1
+232,79,CEG Kpélé-Adéta Ouest,SCH-0232,1,0
+233,79,CEG Kpélé-Adéta Plateau,SCH-0233,1,0
+234,80,Lycée Kpélé-Adéta 2 Est,SCH-0234,1,1
+235,80,CEG Kpélé-Adéta 2 Nord,SCH-0235,1,0
+236,80,CEG Kpélé-Adéta 2 Marché,SCH-0236,1,0
+237,81,Lycée Danyi-Apéyémé Sud,SCH-0237,1,1
+238,81,Lycée confessionnel Danyi-Apéyémé Centre,SCH-0238,2,1
+239,81,CEG Danyi-Apéyémé Marché,SCH-0239,1,0
+240,82,Lycée confessionnel Danyi-Apéyémé 2 Plateau,SCH-0240,2,1
+241,82,Lycée Danyi-Apéyémé 2 Sud,SCH-0241,1,1
+242,82,Lycée confessionnel Danyi-Apéyémé 2 Centre,SCH-0242,2,1
+243,82,CEG Danyi-Apéyémé 2 Est,SCH-0243,1,0
+244,83,Lycée privé Agou-Gadzépé Est,SCH-0244,3,1
+245,83,CEG Agou-Gadzépé Gare,SCH-0245,1,0
+246,84,Lycée Agou-Gadzépé 2 Nord,SCH-0246,1,1
+247,84,CEG Agou-Gadzépé 2 Ouest,SCH-0247,1,0
+248,84,CEG Agou-Gadzépé 2 Gare,SCH-0248,1,0
+249,84,CEG Agou-Gadzépé 2 Plateau,SCH-0249,1,0
+250,85,Lycée Lomé Nord,SCH-0250,1,1
+251,85,CEG Lomé Marché,SCH-0251,1,0
+252,85,Lycée Lomé Centre,SCH-0252,1,1
+253,85,CEG Lomé Sud,SCH-0253,1,0
+254,85,Collège privé Lomé Plateau,SCH-0254,3,0
+255,85,CEG Lomé Ouest,SCH-0255,1,0
+256,86,Lycée confessionnel Lomé 2 Gare,SCH-0256,2,1
+257,86,CEG Lomé 2 Sud,SCH-0257,1,0
+258,86,CEG Lomé 2 Marché,SCH-0258,1,0
+259,86,CEG Lomé 2 Est,SCH-0259,1,0
+260,87,Lycée Lomé 3 Marché,SCH-0260,1,1
+261,87,CEG Lomé 3 Nord,SCH-0261,1,0
+262,87,Collège confessionnel Lomé 3 Centre,SCH-0262,2,0
+263,87,Collège confessionnel Lomé 3 Est,SCH-0263,2,0
+264,88,Lycée privé Lomé 4 Est,SCH-0264,3,1
+265,88,CEG Lomé 4 Nord,SCH-0265,1,0
+266,88,Collège confessionnel Lomé 4 Sud,SCH-0266,2,0
+267,88,Collège confessionnel Lomé 4 Centre,SCH-0267,2,0
+268,88,CEG Lomé 4 Ouest,SCH-0268,1,0
+269,89,Lycée Lomé 5 Sud,SCH-0269,1,1
+270,89,Lycée confessionnel Lomé 5 Est,SCH-0270,2,1
+271,89,CEG Lomé 5 Centre,SCH-0271,1,0
+272,89,Lycée Lomé 5 Ouest,SCH-0272,1,1
+273,90,Lycée Lomé 6 Plateau,SCH-0273,1,1
+274,90,CEG Lomé 6 Marché,SCH-0274,1,0
+275,90,Lycée Lomé 6 Centre,SCH-0275,1,1
+276,90,CEG Lomé 6 Sud,SCH-0276,1,0
+277,90,CEG Lomé 6 Ouest,SCH-0277,1,0
+278,91,Lycée confessionnel Lomé 7 Nord,SCH-0278,2,1
+279,91,CEG Lomé 7 Sud,SCH-0279,1,0
+280,91,Lycée Lomé 7 Ouest,SCH-0280,1,1
+281,91,CEG Lomé 7 Plateau,SCH-0281,1,0
+282,91,CEG Lomé 7 Gare,SCH-0282,1,0
+283,92,Lycée Agoè-Nyivé Ouest,SCH-0283,1,1
+284,92,Lycée Agoè-Nyivé Gare,SCH-0284,1,1
+285,92,CEG Agoè-Nyivé Plateau,SCH-0285,1,0
+286,92,CEG Agoè-Nyivé Est,SCH-0286,1,0
+287,92,CEG Agoè-Nyivé Nord,SCH-0287,1,0
+288,92,CEG Agoè-Nyivé Marché,SCH-0288,1,0
+289,93,Lycée Agoè-Nyivé 2 Nord,SCH-0289,1,1
+290,93,Collège confessionnel Agoè-Nyivé 2 Centre,SCH-0290,2,0
+291,93,CEG Agoè-Nyivé 2 Plateau,SCH-0291,1,0
+292,93,CEG Agoè-Nyivé 2 Est,SCH-0292,1,0
+293,93,CEG Agoè-Nyivé 2 Ouest,SCH-0293,1,0
+294,94,Lycée Agoè-Nyivé 3 Nord,SCH-0294,1,1
+295,94,CEG Agoè-Nyivé 3 Gare,SCH-0295,1,0
+296,94,Lycée Agoè-Nyivé 3 Plateau,SCH-0296,1,1
+297,94,CEG Agoè-Nyivé 3 Est,SCH-0297,1,0
+298,95,Lycée Agoè-Nyivé 4 Sud,SCH-0298,1,1
+299,95,CEG Agoè-Nyivé 4 Centre,SCH-0299,1,0
+300,95,Lycée Agoè-Nyivé 4 Nord,SCH-0300,1,1
+301,95,CEG Agoè-Nyivé 4 Plateau,SCH-0301,1,0
+302,95,Collège privé Agoè-Nyivé 4 Ouest,SCH-0302,3,0
+303,95,CEG Agoè-Nyivé 4 Marché,SCH-0303,1,0
+304,96,Lycée Agoè-Nyivé 5 Sud,SCH-0304,1,1
+305,96,CEG Agoè-Nyivé 5 Nord,SCH-0305,1,0
+306,96,Lycée Agoè-Nyivé 5 Gare,SCH-0306,1,1
+307,96,Lycée privé Agoè-Nyivé 5 Plateau,SCH-0307,3,1
+308,96,CEG Agoè-Nyivé 5 Marché,SCH-0308,1,0
+309,97,Lycée Agoè-Nyivé 6 Nord,SCH-0309,1,1
+310,97,Lycée Agoè-Nyivé 6 Marché,SCH-0310,1,1
+311,97,CEG Agoè-Nyivé 6 Gare,SCH-0311,1,0
+312,97,Collège privé Agoè-Nyivé 6 Ouest,SCH-0312,3,0
+313,97,CEG Agoè-Nyivé 6 Est,SCH-0313,1,0
+314,97,CEG Agoè-Nyivé 6 Centre,SCH-0314,1,0
+315,98,Lycée Tsévié Centre,SCH-0315,1,1
+316,98,CEG Tsévié Gare,SCH-0316,1,0
+317,98,CEG Tsévié Sud,SCH-0317,1,0
+318,98,CEG Tsévié Est,SCH-0318,1,0
+319,98,CEG Tsévié Ouest,SCH-0319,1,0
+320,99,Lycée Tsévié 2 Sud,SCH-0320,1,1
+321,99,CEG Tsévié 2 Marché,SCH-0321,1,0
+322,99,Collège privé Tsévié 2 Nord,SCH-0322,3,0
+323,99,CEG Tsévié 2 Est,SCH-0323,1,0
+324,99,CEG Tsévié 2 Ouest,SCH-0324,1,0
+325,100,Lycée confessionnel Tsévié 3 Nord,SCH-0325,2,1
+326,100,Lycée Tsévié 3 Sud,SCH-0326,1,1
+327,100,CEG Tsévié 3 Marché,SCH-0327,1,0
+328,100,CEG Tsévié 3 Plateau,SCH-0328,1,0
+329,100,CEG Tsévié 3 Ouest,SCH-0329,1,0
+330,101,Lycée Tsévié 4 Est,SCH-0330,1,1
+331,101,CEG Tsévié 4 Centre,SCH-0331,1,0
+332,101,CEG Tsévié 4 Plateau,SCH-0332,1,0
+333,101,CEG Tsévié 4 Nord,SCH-0333,1,0
+334,102,Lycée Kévé Est,SCH-0334,1,1
+335,102,CEG Kévé Centre,SCH-0335,1,0
+336,102,CEG Kévé Ouest,SCH-0336,1,0
+337,102,Collège privé Kévé Plateau,SCH-0337,3,0
+338,103,Lycée Kévé 2 Est,SCH-0338,1,1
+339,103,Collège privé Kévé 2 Centre,SCH-0339,3,0
+340,103,CEG Kévé 2 Ouest,SCH-0340,1,0
+341,103,Lycée Kévé 2 Plateau,SCH-0341,1,1
+342,103,CEG Kévé 2 Sud,SCH-0342,1,0
+343,104,Lycée Aného Centre,SCH-0343,1,1
+344,104,CEG Aného Nord,SCH-0344,1,0
+345,104,CEG Aného Marché,SCH-0345,1,0
+346,104,CEG Aného Ouest,SCH-0346,1,0
+347,104,Lycée privé Aného Plateau,SCH-0347,3,1
+348,104,CEG Aného Gare,SCH-0348,1,0
+349,105,Lycée confessionnel Aného 2 Nord,SCH-0349,2,1
+350,105,CEG Aného 2 Ouest,SCH-0350,1,0
+351,105,Collège privé Aného 2 Centre,SCH-0351,3,0
+352,105,Lycée Aného 2 Plateau,SCH-0352,1,1
+353,106,Lycée Aného 3 Marché,SCH-0353,1,1
+354,106,CEG Aného 3 Ouest,SCH-0354,1,0
+355,106,CEG Aného 3 Centre,SCH-0355,1,0
+356,106,CEG Aného 3 Sud,SCH-0356,1,0
+357,106,CEG Aného 3 Plateau,SCH-0357,1,0
+358,107,Lycée Aného 4 Sud,SCH-0358,1,1
+359,107,Lycée Aného 4 Ouest,SCH-0359,1,1
+360,107,CEG Aného 4 Centre,SCH-0360,1,0
+361,107,CEG Aného 4 Plateau,SCH-0361,1,0
+362,107,CEG Aného 4 Est,SCH-0362,1,0
+363,108,Lycée Vogan Marché,SCH-0363,1,1
+364,108,CEG Vogan Gare,SCH-0364,1,0
+365,108,Lycée Vogan Centre,SCH-0365,1,1
+366,108,CEG Vogan Ouest,SCH-0366,1,0
+367,108,CEG Vogan Nord,SCH-0367,1,0
+368,108,CEG Vogan Sud,SCH-0368,1,0
+369,109,Lycée Vogan 2 Sud,SCH-0369,1,1
+370,109,CEG Vogan 2 Plateau,SCH-0370,1,0
+371,109,Collège privé Vogan 2 Marché,SCH-0371,3,0
+372,109,Lycée Vogan 2 Centre,SCH-0372,1,1
+373,110,Lycée privé Vogan 3 Nord,SCH-0373,3,1
+374,110,Lycée Vogan 3 Est,SCH-0374,1,1
+375,110,CEG Vogan 3 Centre,SCH-0375,1,0
+376,110,CEG Vogan 3 Ouest,SCH-0376,1,0
+377,111,Lycée privé Vogan 4 Nord,SCH-0377,3,1
+378,111,Lycée Vogan 4 Centre,SCH-0378,1,1
+379,111,CEG Vogan 4 Gare,SCH-0379,1,0
+380,111,Collège privé Vogan 4 Marché,SCH-0380,3,0
+381,111,CEG Vogan 4 Sud,SCH-0381,1,0
+382,111,CEG Vogan 4 Plateau,SCH-0382,1,0
+383,112,Lycée Tabligbo Marché,SCH-0383,1,1
+384,112,CEG Tabligbo Ouest,SCH-0384,1,0
+385,112,CEG Tabligbo Est,SCH-0385,1,0
+386,112,CEG Tabligbo Plateau,SCH-0386,1,0
+387,113,Lycée Tabligbo 2 Plateau,SCH-0387,1,1
+388,113,Lycée Tabligbo 2 Gare,SCH-0388,1,1
+389,113,Lycée privé Tabligbo 2 Marché,SCH-0389,3,1
+390,113,CEG Tabligbo 2 Est,SCH-0390,1,0
+391,113,CEG Tabligbo 2 Centre,SCH-0391,1,0
+392,113,CEG Tabligbo 2 Sud,SCH-0392,1,0
+393,114,Lycée Tabligbo 3 Nord,SCH-0393,1,1
+394,114,Collège confessionnel Tabligbo 3 Plateau,SCH-0394,2,0
+395,114,CEG Tabligbo 3 Marché,SCH-0395,1,0
+396,114,CEG Tabligbo 3 Centre,SCH-0396,1,0
+397,115,Lycée Afagnagan Sud,SCH-0397,1,1
+398,115,Lycée Afagnagan Centre,SCH-0398,1,1
+399,115,CEG Afagnagan Ouest,SCH-0399,1,0
+400,115,CEG Afagnagan Plateau,SCH-0400,1,0
+401,115,Lycée Afagnagan Marché,SCH-0401,1,1
+402,116,Lycée Afagnagan 2 Marché,SCH-0402,1,1
+403,116,Lycée Afagnagan 2 Ouest,SCH-0403,1,1
+404,116,CEG Afagnagan 2 Sud,SCH-0404,1,0
+405,116,CEG Afagnagan 2 Nord,SCH-0405,1,0

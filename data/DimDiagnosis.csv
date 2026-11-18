@@ -1,0 +1,16 @@
+﻿DiagnosisKey,Diagnosis_FR,Diagnosis_EN,DiagnosisGroup_FR,DiagnosisGroup_EN,GroupSortOrder,IsAmetropia
+1,Astigmatisme mixte,Mixed astigmatism,Astigmatisme,Astigmatism,1,1
+2,Astigmatisme myopique composé,Compound myopic astigmatism,Astigmatisme,Astigmatism,1,1
+3,Astigmatisme myopique simple direct,Simple myopic astigmatism (with-the-rule),Astigmatisme,Astigmatism,1,1
+4,Astigmatisme myopique simple indirect,Simple myopic astigmatism (against-the-rule),Astigmatisme,Astigmatism,1,1
+5,Astigmatisme myopique simple oblique,Simple myopic astigmatism (oblique),Astigmatisme,Astigmatism,1,1
+6,Astigmatisme hypermétropique composé,Compound hyperopic astigmatism,Astigmatisme,Astigmatism,1,1
+7,Astigmatisme hypermétropique simple,Simple hyperopic astigmatism,Astigmatisme,Astigmatism,1,1
+8,Myopie physiologique,Physiological myopia,Myopie,Myopia,2,1
+9,Myopie faible,Low myopia,Myopie,Myopia,2,1
+10,Myopie moyenne,Moderate myopia,Myopie,Myopia,2,1
+11,Myopie forte,High myopia,Myopie,Myopia,2,1
+12,Hypermétropie physiologique,Physiological hyperopia,Hypermétropie,Hyperopia,3,1
+13,Hypermétropie faible,Low hyperopia,Hypermétropie,Hyperopia,3,1
+14,Hypermétropie moyenne,Moderate hyperopia,Hypermétropie,Hyperopia,3,1
+15,Emmétropie,Emmetropia,Emmétropie,Emmetropia,4,0
