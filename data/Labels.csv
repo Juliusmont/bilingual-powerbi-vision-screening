@@ -18,6 +18,22 @@ slicer_region,FR,Région
 slicer_campaign,FR,Campagne
 note_synthetic,FR,Données synthétiques à des fins de démonstration
 note_dq,FR,Contrôles d'intégrité des données
+nav_about,FR,Présentation
+nav_exec,FR,Vue direction
+nav_analysis,FR,Analyse clinique
+nav_quality,FR,Qualité & sécurité
+title_quality,FR,Qualité des données et sécurité
+title_about,FR,À propos de ce rapport
+narrative_title,FR,Ce que disent les chiffres
+section_coverage,FR,01 Couverture
+section_needs,FR,02 Besoins visuels
+section_geo,FR,03 Répartition territoriale
+kpi_uncorrected,FR,Besoin non corrigé
+chart_va,FR,Acuité visuelle par œil
+chart_dq,FR,Anomalies détectées
+note_population,FR,"Population dépistée : élèves vus lors des campagnes, pas une prévalence nationale"
+note_small_cells,FR,Taux masqués sous 10 élèves (protection des mineurs)
+footer_built,FR,Construit avec Power BI · données synthétiques
 title_exec,EN,School Vision Screening - Executive View
 title_analysis,EN,Refractive Error Analysis
 kpi_screened,EN,Students screened
@@ -37,3 +53,19 @@ slicer_region,EN,Region
 slicer_campaign,EN,Campaign
 note_synthetic,EN,Synthetic data for demonstration purposes
 note_dq,EN,Data integrity checks
+nav_about,EN,About
+nav_exec,EN,Overview
+nav_analysis,EN,Clinical analysis
+nav_quality,EN,Quality & security
+title_quality,EN,Data quality and security
+title_about,EN,About this report
+narrative_title,EN,What the numbers say
+section_coverage,EN,01 Coverage
+section_needs,EN,02 Visual needs
+section_geo,EN,03 Territorial breakdown
+kpi_uncorrected,EN,Uncorrected need
+chart_va,EN,Visual acuity per eye
+chart_dq,EN,Issues detected
+note_population,EN,"Screened population: students seen during campaigns, not a national prevalence"
+note_small_cells,EN,Rates hidden below 10 students (protection of minors)
+footer_built,EN,Built with Power BI · synthetic data

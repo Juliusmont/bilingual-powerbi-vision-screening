@@ -18,6 +18,7 @@
 
 - [Highlights](#highlights)
 - [Screenshots](#screenshots)
+- [How the report was built (Claude Code + Power BI)](#how-the-report-was-built-claude-code--power-bi)
 - [Multilingual design](#multilingual-design)
 - [Data model](#data-model)
 - [Key DAX](#key-dax)
@@ -43,7 +44,34 @@
 
 ## Screenshots
 
-> 🚧 **Coming soon.** Report screenshots (executive and analysis pages in FR and EN, RLS test, model view) will be added to [`screenshots/`](screenshots/) together with the `.pbix` file.
+<!-- Replace the design target below by screenshots/01-overview-fr.png once captured (see docs/CAPTURE_CHECKLIST.md) -->
+**Design target (Overview page, French).** Built from the real synthetic data; the Power BI report must reproduce it.
+
+![Overview page - design target](docs/design/overview-target-fr.png)
+
+| Overview (FR) | Overview (EN) |
+|---|---|
+| `screenshots/01-overview-fr.png` *(coming)* | `screenshots/02-overview-en.png` *(coming)* |
+| **Clinical analysis** | **Quality & security / RLS** |
+| `screenshots/03-clinical-analysis-fr.png` *(coming)* | `screenshots/07-rls-view-as-plateaux.png` *(coming)* |
+
+Demo video (FR > EN switch, filters, RLS): `screenshots/demo.mp4` *(coming)*.
+
+## How the report was built (Claude Code + Power BI)
+
+The report layer is built with **Claude Code** driving **Power BI Desktop** through Microsoft's `powerbi-authoring` plugin
+(Skills for Fabric: semantic-model authoring skill, Power BI Modeling MCP, Report Authoring CLI with Desktop reload and screenshot).
+
+The key is not the agent but the **rules written before building**:
+
+| Document | Role |
+|---|---|
+| [`docs/DESIGN_GUIDEBOOK.md`](docs/DESIGN_GUIDEBOOK.md) | Canvas, grid and exact positions, validated colour-blind-safe palette, typography, KPI anatomy, bilingual rules, and what we do **not** want |
+| [`powerbi/themes/`](powerbi/themes/) | Power BI theme JSON (light, dark) implementing the guidebook |
+| [`docs/expected-kpis.md`](docs/expected-kpis.md) | Test oracle: KPI values recomputed in Python from the CSVs (`scripts/expected_kpis.py`); the report must match them |
+| [`CLAUDE.md`](CLAUDE.md) | Standing instructions for the agent in this repo |
+| [`docs/CLAUDE_CODE_WORKFLOW.md`](docs/CLAUDE_CODE_WORKFLOW.md) | Setup and the exact prompt sequence, one page at a time |
+| [`dax/measures-report.dax`](dax/measures-report.dax) | Report-layer measures: bilingual narrative, KPI captions, status colours, KPI definitions |
 
 ## Multilingual design
 
@@ -83,7 +111,7 @@ DimRegion ─< DimPrefecture ─< DimCommune ─< DimSchool ─< FactScreening �
 | `DimDate` | calendar 2024-2026 with bilingual campaign labels | 1,096 |
 | `DimDiagnosis`, `DimVACategory`, `DimEye`, `DimSex`, `DimAgeBand`, `DimCycle`, `DimScreenTime`, `DimSchoolType`, `DimSymptom`, `DimHistory` | bilingual lookup dimensions (`_FR` / `_EN` columns) | |
 | `DimLanguage` | FR / EN, culture codes | 2 |
-| `Labels` | UI text keyed by `LabelKey` + `LanguageCode` | 38 |
+| `Labels` | UI text keyed by `LabelKey` + `LanguageCode` | 70 |
 | `SecurityUserRegion` | user e-mail → region mapping for dynamic RLS (hidden) | 7 |
 
 Three annual campaigns (March 2024, 2025, 2026). Geography follows Togo's administrative division (Law no. 2017-008 on communes).
@@ -102,7 +130,9 @@ All measures are in [`dax/measures.dax`](dax/measures.dax), organised in display
 | `5 Privacy` | `Correction Need Rate (Safe)` |
 | `6 Data integrity checks` | `DQ …` measures and `DQ Status` |
 
-**Need-for-correction rate**: a student counts when the examiner proposed a non-zero prescription in at least one eye. This data-driven definition avoids the misleading ~99 % "any refractive error" rate that physiological hyperopia and very small cylinders would produce on raw refraction values.
+**Need-for-correction rate**: a student counts when the examiner proposed a non-zero prescription in at least one eye. Since v1.1 the generator follows a simplified paediatric prescribing rule (myopia ≤ -0.75 D, hyperopia ≥ +2.00 D under cycloplegia, astigmatism ≥ 1.00 D): physiological and low hyperopia are no longer corrected, which brings the rate from 98.6 % (v1.0, any refraction ≥ 0.50 D) to **87.2 %**.
+
+> **Reading the rates.** The screened population is calibrated on a symptomatic survey sample (≈ 85 % report symptoms, < 1 % emmetropic eyes). Rates describe students seen during campaigns, **not a national prevalence**; the report says so on every page.
 
 The file also contains the **field parameter** definitions and the **RLS rules** (as commented DAX, to paste into the matching dialogs).
 
@@ -156,7 +186,7 @@ The generator is seeded (`SEED = 2026`), so the output is identical on every run
 ### 2. Build the model in Power BI Desktop
 
 1. Load **each CSV separately** (*Get data > Text/CSV*, UTF-8). Do not use *Folder > Combine*.
-2. In Power Query, set keys to whole numbers, `Date` to date, and refraction columns (`SphereCyclo`, `CylinderCyclo`, `SphereRx`, `CylinderRx`) to **decimal number with locale English (United States)** (dot decimal separator).
+2. Create a text parameter `DataFolder` (path of `data\`) and use it in every CSV source. In Power Query, set keys to whole numbers, `Date` to date, and refraction columns (`SphereCyclo`, `CylinderCyclo`, `SphereRx`, `CylinderRx`) to **decimal number with locale English (United States)** (dot decimal separator).
 3. Create the relationships shown in [Data model](#data-model) (one-to-many, single direction) and **mark `DimDate` as a date table**.
 4. Sort `DiagnosisGroup_FR/EN` by `GroupSortOrder` and `RegionName_FR/EN` by `RegionSortOrder`; hide technical keys, `Labels` and `SecurityUserRegion`.
 5. Create a `_Measures` table and add the measures from [`dax/measures.dax`](dax/measures.dax).
@@ -177,21 +207,34 @@ Publish to the Power BI Service and open the report with `?language=fr` or `?lan
 .
 ├── data/                                  star-schema CSV files (UTF-8, synthetic)
 ├── dax/
-│   └── measures.dax                       measures, field parameters, RLS rules
-├── powerbi/                               .pbix file (coming soon)
-├── screenshots/                           report screenshots (coming soon)
+│   ├── measures.dax                       measures, field parameters, RLS rules
+│   └── measures-report.dax                report-layer measures (narrative, captions, colours)
+├── docs/
+│   ├── DESIGN_GUIDEBOOK.md                design rules for every page
+│   ├── CLAUDE_CODE_WORKFLOW.md            agentic build: setup + prompts
+│   ├── CAPTURE_CHECKLIST.md               screenshots, demo video, release
+│   ├── expected-kpis.md / .json           test oracle for the report
+│   └── design/                            design target (HTML + PNG)
+├── powerbi/
+│   ├── themes/                            Power BI theme JSON (light, dark)
+│   └── VisionScreening.pbip (+ folders)   PBIP project (coming)
+├── screenshots/                           report screenshots and demo (coming)
 ├── scripts/
-│   └── generate_data.py                   seeded synthetic data generator
+│   ├── generate_data.py                   seeded synthetic data generator
+│   └── expected_kpis.py                   recomputes the expected KPI values (pandas)
 ├── tabular-editor/
 │   └── add_french_translations.csx        fr-FR metadata translations (C#)
+├── CLAUDE.md                              instructions for Claude Code
 ├── LICENSE
 └── README.md
 ```
 
 ## Roadmap
 
-- [ ] Add the `.pbix` report
-- [ ] Add FR / EN screenshots, RLS test and model view
+- [x] Design guidebook, themes, expected KPI values, agentic build workflow (v1.1)
+- [x] Realistic prescribing rule in the generator (v1.1)
+- [ ] Build the 4 report pages and save as `.pbip`; attach the `.pbix` to release `v1.0`
+- [ ] Add FR / EN screenshots, RLS test, model view and demo video
 - [ ] Publish to the Power BI Service and capture `?language=fr` / `?language=en`
 - [ ] Object-level security (OLS) on general medical history for selected roles
 
@@ -208,6 +251,8 @@ Code released under the [MIT License](LICENSE). The data is synthetic and free t
 ### Résumé en français
 
 Projet portfolio : **un seul modèle sémantique Power BI** qui sert des utilisateurs francophones et anglophones. Il combine des paramètres de champs reliés à une table de langues, une sélection dynamique de la langue (par défaut celle du navigateur via `USERCULTURE()`), des titres et formats de nombres bilingues pilotés par DAX, et la traduction des métadonnées (culture fr-FR ajoutée avec Tabular Editor).
+
+Le rapport est construit avec Claude Code pilotant Power BI Desktop (plugin `powerbi-authoring` de Microsoft), à partir d'un guide de conception écrit avant toute production ([`docs/DESIGN_GUIDEBOOK.md`](docs/DESIGN_GUIDEBOOK.md)) et de valeurs attendues recalculées en Python ([`docs/expected-kpis.md`](docs/expected-kpis.md)).
 
 Le modèle en étoile (géographie en flocon : Région > Préfecture > Commune > Établissement) est complété par une sécurité au niveau des lignes statique et dynamique par région, des mesures DAX avancées (comparaison annuelle, cumul, atteinte des objectifs, classement), la suppression des petits effectifs et des contrôles d'intégrité des données.
 

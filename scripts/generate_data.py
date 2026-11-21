@@ -257,8 +257,11 @@ for year, coverage in CAMPAIGNS.items():
             for eye, dk in ((1, dk_od), (2, dk_og)):
                 sph, cyl, axis = refraction(dk)
                 va = va_from(sph, cyl)
-                rx_sph = q(sph * 0.8) if abs(sph) >= 0.5 else 0.0
-                rx_cyl = q(cyl * 0.8) if abs(cyl) >= 0.5 else 0.0
+                # Simplified paediatric prescribing rule (cycloplegic values):
+                # myopia <= -0.75 D, hyperopia >= +2.00 D (under-corrected by 1.00 D),
+                # astigmatism >= 1.00 D. Low / physiological hyperopia is not corrected.
+                rx_sph = q(sph * 0.8) if sph <= -0.75 else q(sph - 1.0) if sph >= 2.0 else 0.0
+                rx_cyl = q(cyl * 0.8) if abs(cyl) >= 1.0 else 0.0
                 # --- injected data-quality issues (for integrity-check measures) ---
                 r = random.random()
                 if r < 0.002:
@@ -310,6 +313,25 @@ LABELS = [
     ("slicer_campaign", "Campagne", "Campaign"),
     ("note_synthetic", "Données synthétiques à des fins de démonstration", "Synthetic data for demonstration purposes"),
     ("note_dq", "Contrôles d'intégrité des données", "Data integrity checks"),
+    # --- v1.1 report pages (see docs/DESIGN_GUIDEBOOK.md) ---
+    ("nav_about", "Présentation", "About"),
+    ("nav_exec", "Vue direction", "Overview"),
+    ("nav_analysis", "Analyse clinique", "Clinical analysis"),
+    ("nav_quality", "Qualité & sécurité", "Quality & security"),
+    ("title_quality", "Qualité des données et sécurité", "Data quality and security"),
+    ("title_about", "À propos de ce rapport", "About this report"),
+    ("narrative_title", "Ce que disent les chiffres", "What the numbers say"),
+    ("section_coverage", "01 Couverture", "01 Coverage"),
+    ("section_needs", "02 Besoins visuels", "02 Visual needs"),
+    ("section_geo", "03 Répartition territoriale", "03 Territorial breakdown"),
+    ("kpi_uncorrected", "Besoin non corrigé", "Uncorrected need"),
+    ("chart_va", "Acuité visuelle par œil", "Visual acuity per eye"),
+    ("chart_dq", "Anomalies détectées", "Issues detected"),
+    ("note_population", "Population dépistée : élèves vus lors des campagnes, pas une prévalence nationale",
+     "Screened population: students seen during campaigns, not a national prevalence"),
+    ("note_small_cells", "Taux masqués sous 10 élèves (protection des mineurs)",
+     "Rates hidden below 10 students (protection of minors)"),
+    ("footer_built", "Construit avec Power BI · données synthétiques", "Built with Power BI · synthetic data"),
 ]
 write("Labels.csv", ["LabelKey", "LanguageCode", "Text"],
       [(k, "FR", fr) for k, fr, _ in LABELS] + [(k, "EN", en) for k, _, en in LABELS])
