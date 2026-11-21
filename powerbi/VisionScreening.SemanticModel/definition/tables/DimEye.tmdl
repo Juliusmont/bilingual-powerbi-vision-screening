@@ -1,0 +1,40 @@
+table DimEye
+	lineageTag: 8582c58f-26e0-4e15-ac3c-0288718a8d74
+
+	column EyeKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 056fe0a0-1a1b-4e20-befd-0499fbba3405
+		summarizeBy: none
+		sourceColumn: EyeKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Eye_FR
+		dataType: string
+		lineageTag: 7e6e489b-e6a4-4fb2-9b89-07923da9580c
+		summarizeBy: none
+		sourceColumn: Eye_FR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Eye_EN
+		dataType: string
+		lineageTag: 24bac527-9b94-45f4-aa76-1de077005ef6
+		summarizeBy: none
+		sourceColumn: Eye_EN
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimEye = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "DimEye.csv"), [Delimiter = ",", Columns = 3, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"EyeKey", Int64.Type}, {"Eye_FR", type text}, {"Eye_EN", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

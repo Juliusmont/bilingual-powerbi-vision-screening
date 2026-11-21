@@ -1,0 +1,41 @@
+table DimCommune
+	lineageTag: f935b7ee-45ca-4b4a-a838-2be1a01126ee
+
+	column CommuneKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ebef841-8fbd-41c8-b95d-e256eb72221a
+		summarizeBy: none
+		sourceColumn: CommuneKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrefectureKey
+		dataType: int64
+		formatString: 0
+		lineageTag: d8cc7014-673b-433f-996d-ce5a3fbc4e58
+		summarizeBy: none
+		sourceColumn: PrefectureKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CommuneName
+		dataType: string
+		lineageTag: 9e2dcfe9-450c-4bc7-a6c8-6b9afbdc1dd3
+		summarizeBy: none
+		sourceColumn: CommuneName
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCommune = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "DimCommune.csv"), [Delimiter = ",", Columns = 3, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"CommuneKey", Int64.Type}, {"PrefectureKey", Int64.Type}, {"CommuneName", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

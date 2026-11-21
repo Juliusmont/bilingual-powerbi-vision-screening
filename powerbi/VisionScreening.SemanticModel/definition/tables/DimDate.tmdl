@@ -1,0 +1,88 @@
+table DimDate
+	lineageTag: 27a7412c-15b2-45a5-99fb-24f6b387db12
+	dataCategory: Time
+
+	column DateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: eb2780e6-c44a-4012-94b2-37830ff90410
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		isUnique
+		isKey
+		formatString: Long Date
+		lineageTag: 31a3b6a8-9bee-4838-9f6f-ca1e943b8210
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: f26040df-813a-4f5a-836f-e4ee0ce75109
+		summarizeBy: sum
+		sourceColumn: Year
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNumber
+		dataType: int64
+		formatString: 0
+		lineageTag: a5196b00-ca71-4aaa-88e3-a52cea603ccf
+		summarizeBy: sum
+		sourceColumn: MonthNumber
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_FR
+		dataType: string
+		lineageTag: 0d15a823-3d82-450e-b3ef-712b2f6af34e
+		summarizeBy: none
+		sourceColumn: Month_FR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Month_EN
+		dataType: string
+		lineageTag: 17927b05-e088-4f38-ac1a-61859ed6004e
+		summarizeBy: none
+		sourceColumn: Month_EN
+
+		annotation SummarizationSetBy = Automatic
+
+	column Campaign_FR
+		dataType: string
+		lineageTag: e8f8d13f-d8a1-44ae-be27-6ff84a505d6f
+		summarizeBy: none
+		sourceColumn: Campaign_FR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Campaign_EN
+		dataType: string
+		lineageTag: 889060e3-a992-4008-ab9a-1ce4ff336e43
+		summarizeBy: none
+		sourceColumn: Campaign_EN
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDate = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "DimDate.csv"), [Delimiter = ",", Columns = 8, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"DateKey", Int64.Type}, {"Date", type date}, {"Year", Int64.Type}, {"MonthNumber", Int64.Type}, {"Month_FR", type text}, {"Month_EN", type text}, {"Campaign_FR", type text}, {"Campaign_EN", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

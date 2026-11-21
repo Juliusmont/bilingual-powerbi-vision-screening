@@ -127,12 +127,17 @@ COUNTROWS ( FILTER ( FactEyeExam, FactEyeExam[CylinderRx] > 0 && FactEyeExam[Cyl
 
 DQ Missing Visual Acuity = COUNTROWS ( FILTER ( FactEyeExam, ISBLANK ( FactEyeExam[VA_10] ) ) )
 
+// COALESCE(...,0) because COUNTROWS returns BLANK (not 0) when the filtered table is empty,
+// which would show as an empty cell instead of a reassuring "0" on a DQ card.
 DQ Students Without Two Eyes =
-COUNTROWS ( FILTER ( FactScreening, CALCULATE ( COUNTROWS ( FactEyeExam ) ) <> 2 ) )
+COALESCE ( COUNTROWS ( FILTER ( FactScreening, CALCULATE ( COUNTROWS ( FactEyeExam ) ) <> 2 ) ), 0 )
 
 DQ Symptom Inconsistency =
-COUNTROWS (
-    FILTER ( FactScreening, FactScreening[HasSymptoms] = 0 && CALCULATE ( COUNTROWS ( BridgeSymptom ) ) > 0 )
+COALESCE (
+    COUNTROWS (
+        FILTER ( FactScreening, FactScreening[HasSymptoms] = 0 && CALCULATE ( COUNTROWS ( BridgeSymptom ) ) > 0 )
+    ),
+    0
 )
 
 DQ Issues Total =

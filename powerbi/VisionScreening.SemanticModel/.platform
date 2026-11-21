@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "VisionScreening"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "667f45d0-5bea-4d0d-8991-ddc496dae3e5"
+  }
+}

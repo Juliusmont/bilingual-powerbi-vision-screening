@@ -1,0 +1,65 @@
+table DimPrefecture
+	lineageTag: d0dfdd08-b164-4123-8054-11bc7b4cdea4
+
+	column PrefectureKey
+		dataType: int64
+		formatString: 0
+		lineageTag: dcfe6009-8b42-443b-b56e-caa93ff7d7e5
+		summarizeBy: none
+		sourceColumn: PrefectureKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionKey
+		dataType: int64
+		formatString: 0
+		lineageTag: f8839600-c866-4888-9954-c364febf76a8
+		summarizeBy: none
+		sourceColumn: RegionKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrefectureName_FR
+		dataType: string
+		lineageTag: c2d7b774-20cc-414e-8d0d-635cd805e92d
+		summarizeBy: none
+		sourceColumn: PrefectureName_FR
+
+		annotation SummarizationSetBy = Automatic
+
+	column PrefectureName_EN
+		dataType: string
+		lineageTag: 0b2c3f99-e188-4331-b2f5-34253833ace7
+		summarizeBy: none
+		sourceColumn: PrefectureName_EN
+
+		annotation SummarizationSetBy = Automatic
+
+	column Prefecture
+		dataType: string
+		lineageTag: 5402e0c9-2fa4-4938-a51f-ba1ebfbc7a40
+		summarizeBy: none
+		sourceColumn: Prefecture
+
+		annotation SummarizationSetBy = Automatic
+
+	column ChefLieu
+		dataType: string
+		lineageTag: a2566bdc-2ca0-41eb-9c8a-e920cd319d10
+		summarizeBy: none
+		sourceColumn: ChefLieu
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimPrefecture = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "DimPrefecture.csv"), [Delimiter = ",", Columns = 6, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"PrefectureKey", Int64.Type}, {"RegionKey", Int64.Type}, {"PrefectureName_FR", type text}, {"PrefectureName_EN", type text}, {"Prefecture", type text}, {"ChefLieu", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

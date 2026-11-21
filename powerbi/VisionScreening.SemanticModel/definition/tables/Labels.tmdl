@@ -1,0 +1,38 @@
+table Labels
+	lineageTag: 2f3417c7-253e-4650-b0d4-df7b77632e3b
+
+	column LabelKey
+		dataType: string
+		lineageTag: 19f695eb-20c1-43f8-b6e4-e9aaea022027
+		summarizeBy: none
+		sourceColumn: LabelKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column LanguageCode
+		dataType: string
+		lineageTag: c0af4e58-5694-4906-a6b9-1181c9798497
+		summarizeBy: none
+		sourceColumn: LanguageCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Text
+		dataType: string
+		lineageTag: 1d46febc-b6f6-4a2a-bbb3-cd628078aa2c
+		summarizeBy: none
+		sourceColumn: Text
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Labels = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "Labels.csv"), [Delimiter = ",", Columns = 3, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true])
+				in
+				  #"Promoted headers"
+
+	annotation PBI_ResultType = Table
+

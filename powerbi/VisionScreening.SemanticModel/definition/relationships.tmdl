@@ -1,0 +1,88 @@
+relationship AutoDetected_78ed5711-0802-4124-933b-4e4073f38848
+	fromColumn: FactEyeExam.StudentKey
+	toColumn: FactScreening.StudentKey
+
+relationship AutoDetected_c4c50943-680b-4e02-b51b-dba0a6583b54
+	fromColumn: BridgeHistory.StudentKey
+	toColumn: FactScreening.StudentKey
+
+relationship AutoDetected_7c1c6ec2-41c5-44f7-aa43-d8858f13508f
+	fromColumn: BridgeSymptom.StudentKey
+	toColumn: FactScreening.StudentKey
+
+relationship AutoDetected_37528a2e-4188-4a7e-a622-8021f2f4ae9b
+	fromColumn: FactScreening.AgeBandKey
+	toColumn: DimAgeBand.AgeBandKey
+
+relationship AutoDetected_f7bf74f7-4058-41b0-82c0-3f158281d97a
+	fromColumn: FactScreening.CycleKey
+	toColumn: DimCycle.CycleKey
+
+relationship AutoDetected_1ba635ae-ccfb-4155-be8a-bcd84ba59384
+	fromColumn: FactTarget.DateKey
+	toColumn: DimDate.DateKey
+
+relationship AutoDetected_e6ed552e-cf35-4861-9954-bebe422a3669
+	fromColumn: FactScreening.DateKey
+	toColumn: DimDate.DateKey
+
+relationship AutoDetected_2ddbb585-de1c-472d-ac5d-5a6617620f87
+	fromColumn: FactEyeExam.DiagnosisKey
+	toColumn: DimDiagnosis.DiagnosisKey
+
+relationship AutoDetected_7917ae88-600d-467c-a4ce-5aaf4579cdac
+	fromColumn: FactEyeExam.EyeKey
+	toColumn: DimEye.EyeKey
+
+relationship AutoDetected_9182fa1e-671e-47f6-9a4d-139d086fe75e
+	fromColumn: BridgeHistory.HistoryKey
+	toColumn: DimHistory.HistoryKey
+
+relationship AutoDetected_1002c4b6-ec74-4d95-83ae-562bbb9fe951
+	fromColumn: FactTarget.PrefectureKey
+	toColumn: DimPrefecture.PrefectureKey
+
+relationship AutoDetected_1dc761f9-3290-4028-841b-4d5361e4cc8d
+	fromColumn: DimCommune.PrefectureKey
+	toColumn: DimPrefecture.PrefectureKey
+
+relationship AutoDetected_db3b405a-4bfe-443c-9da4-dd17f03380e9
+	fromColumn: DimPrefecture.RegionKey
+	toColumn: DimRegion.RegionKey
+
+relationship AutoDetected_31d61f99-b1e7-4973-88ca-23d311ef8264
+	fromColumn: FactScreening.SchoolKey
+	toColumn: DimSchool.SchoolKey
+
+relationship AutoDetected_29cc1f4e-0e8b-4843-9326-812320c21422
+	fromColumn: DimSchool.CommuneKey
+	toColumn: DimCommune.CommuneKey
+
+relationship AutoDetected_13c8f13e-8423-49cf-9c1d-3e4700c39749
+	fromColumn: DimSchool.SchoolTypeKey
+	toColumn: DimSchoolType.SchoolTypeKey
+
+relationship AutoDetected_15690488-1915-4a0a-acf4-85136a9954e0
+	fromColumn: FactScreening.ScreenTimeKey
+	toColumn: DimScreenTime.ScreenTimeKey
+
+relationship AutoDetected_81388fc6-b2e6-499a-8a0b-8aa5fe6b75b6
+	fromColumn: FactScreening.SexKey
+	toColumn: DimSex.SexKey
+
+relationship AutoDetected_c15e2f6f-0552-483c-bceb-b57478303254
+	fromColumn: BridgeSymptom.SymptomKey
+	toColumn: DimSymptom.SymptomKey
+
+relationship AutoDetected_5501b2f2-62cd-4eaa-aab3-5a6f08d3c722
+	fromColumn: FactEyeExam.VACategoryKey
+	toColumn: DimVACategory.VACategoryKey
+
+relationship AutoDetected_8c04c083-11fa-4539-99e9-030e025bccf3
+	fromColumn: Labels.LanguageCode
+	toColumn: DimLanguage.LanguageCode
+
+relationship AutoDetected_b3144c6d-9036-4c6c-b4c5-7ca7baf531db
+	fromColumn: SecurityUserRegion.RegionCode
+	toColumn: DimRegion.RegionCode
+

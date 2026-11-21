@@ -1,0 +1,74 @@
+table DimDiagnosis
+	lineageTag: 2006bd84-ef16-4040-899b-4996e537e243
+
+	column DiagnosisKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 50be60fe-65e2-493a-b622-8fc637601218
+		summarizeBy: none
+		sourceColumn: DiagnosisKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Diagnosis_FR
+		dataType: string
+		lineageTag: cd4ebc54-e42d-4baf-a612-488644e46c4a
+		summarizeBy: none
+		sourceColumn: Diagnosis_FR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Diagnosis_EN
+		dataType: string
+		lineageTag: 5398863e-f306-47bf-937c-61ab13753d5b
+		summarizeBy: none
+		sourceColumn: Diagnosis_EN
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiagnosisGroup_FR
+		dataType: string
+		lineageTag: 772b804f-4541-489b-9867-dbcf517ff564
+		summarizeBy: none
+		sourceColumn: DiagnosisGroup_FR
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiagnosisGroup_EN
+		dataType: string
+		lineageTag: c310e94a-2aaf-4f02-8fda-6d6479ce3cf1
+		summarizeBy: none
+		sourceColumn: DiagnosisGroup_EN
+
+		annotation SummarizationSetBy = Automatic
+
+	column GroupSortOrder
+		dataType: int64
+		formatString: 0
+		lineageTag: af0f9b66-e111-4a7a-b81d-cdd31d5819ff
+		summarizeBy: none
+		sourceColumn: GroupSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsAmetropia
+		dataType: int64
+		formatString: 0
+		lineageTag: 92f9a232-c4b1-4285-a092-be5cd6f32073
+		summarizeBy: none
+		sourceColumn: IsAmetropia
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimDiagnosis = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "DimDiagnosis.csv"), [Delimiter = ",", Columns = 7, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"DiagnosisKey", Int64.Type}, {"Diagnosis_FR", type text}, {"Diagnosis_EN", type text}, {"DiagnosisGroup_FR", type text}, {"DiagnosisGroup_EN", type text}, {"GroupSortOrder", Int64.Type}, {"IsAmetropia", Int64.Type}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

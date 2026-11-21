@@ -1,0 +1,57 @@
+table DimRegion
+	lineageTag: f8143874-b014-4d7d-a354-a5c2289f1651
+
+	column RegionKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 8c917178-2d7c-43ff-9e92-a8c6f256b772
+		summarizeBy: none
+		sourceColumn: RegionKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionCode
+		dataType: string
+		lineageTag: 1a9a6dce-e968-4e7f-bcef-cf73a074b7f6
+		summarizeBy: none
+		sourceColumn: RegionCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionName_FR
+		dataType: string
+		lineageTag: e54cac66-1300-4b76-882d-0e502e8ed685
+		summarizeBy: none
+		sourceColumn: RegionName_FR
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionName_EN
+		dataType: string
+		lineageTag: 78b92083-cbb8-40f2-a61c-c75475af3495
+		summarizeBy: none
+		sourceColumn: RegionName_EN
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionSortOrder
+		dataType: int64
+		formatString: 0
+		lineageTag: 8fbb7f82-fdde-4622-a936-cd41530e1527
+		summarizeBy: sum
+		sourceColumn: RegionSortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimRegion = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "DimRegion.csv"), [Delimiter = ",", Columns = 5, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"RegionKey", Int64.Type}, {"RegionCode", type text}, {"RegionName_FR", type text}, {"RegionName_EN", type text}, {"RegionSortOrder", Int64.Type}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

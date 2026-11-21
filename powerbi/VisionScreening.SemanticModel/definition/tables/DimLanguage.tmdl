@@ -1,0 +1,48 @@
+table DimLanguage
+	lineageTag: 21d75965-8589-4e18-b1df-490ccf17341b
+
+	column LanguageCode
+		dataType: string
+		lineageTag: f71c1388-8e6d-4542-9b8a-54e53c1b23ef
+		summarizeBy: none
+		sourceColumn: LanguageCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column LanguageName
+		dataType: string
+		lineageTag: 7f620fba-93ef-4c96-bf51-3164fca86fb1
+		summarizeBy: none
+		sourceColumn: LanguageName
+
+		annotation SummarizationSetBy = Automatic
+
+	column Culture
+		dataType: string
+		lineageTag: 8f9d39ef-f789-4802-8880-7868509e9dae
+		summarizeBy: none
+		sourceColumn: Culture
+
+		annotation SummarizationSetBy = Automatic
+
+	column SortOrder
+		dataType: int64
+		formatString: 0
+		lineageTag: f6fd7618-3fe8-429f-93ee-8830213eec32
+		summarizeBy: none
+		sourceColumn: SortOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimLanguage = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "DimLanguage.csv"), [Delimiter = ",", Columns = 4, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"LanguageCode", type text}, {"LanguageName", type text}, {"Culture", type text}, {"SortOrder", Int64.Type}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+
