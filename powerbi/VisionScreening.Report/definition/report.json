@@ -9,6 +9,15 @@
         "page": "2.3.1"
       },
       "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "VisionScreeningLight-ec5985db09.json",
+      "reportVersionAtImport": {
+        "visual": "2.14.0",
+        "report": "3.4.0",
+        "page": "2.3.1"
+      },
+      "type": "RegisteredResources"
     }
   },
   "objects": {
@@ -19,6 +28,19 @@
             "expr": {
               "Literal": {
                 "Value": "'Top'"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
               }
             }
           }
@@ -35,6 +57,27 @@
           "name": "Fluent2-CY26SU10",
           "path": "BaseThemes/Fluent2-CY26SU10.json",
           "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "08-model-view29128677381390056.png",
+          "path": "08-model-view29128677381390056.png",
+          "type": "Image"
+        },
+        {
+          "name": "illustration_screening_5513208847.png",
+          "path": "illustration_screening_5513208847.png",
+          "type": "Image"
+        },
+        {
+          "name": "VisionScreeningLight-ec5985db09.json",
+          "path": "VisionScreeningLight-ec5985db09.json",
+          "type": "CustomTheme"
         }
       ]
     }

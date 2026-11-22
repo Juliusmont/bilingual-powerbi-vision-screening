@@ -32,7 +32,7 @@
     }
   },
   "by_region_2026": {
-    "Savanes Region": {
+    "Savanes": {
       "students_screened": 1724,
       "correction_need_rate": 0.8544083526682135,
       "uncorrected_need_rate": 0.9178547182620502,
@@ -42,7 +42,7 @@
       "target_students": 1840.0,
       "target_achievement": 0.9369565217391305
     },
-    "Kara Region": {
+    "Kara": {
       "students_screened": 2253,
       "correction_need_rate": 0.8655126498002663,
       "uncorrected_need_rate": 0.9220512820512821,
@@ -52,7 +52,7 @@
       "target_students": 2360.0,
       "target_achievement": 0.9546610169491525
     },
-    "Centrale Region": {
+    "Centrale": {
       "students_screened": 1416,
       "correction_need_rate": 0.8637005649717514,
       "uncorrected_need_rate": 0.9165985282093213,
@@ -62,7 +62,7 @@
       "target_students": 1470.0,
       "target_achievement": 0.963265306122449
     },
-    "Plateaux Region": {
+    "Plateaux": {
       "students_screened": 3982,
       "correction_need_rate": 0.8721747865394274,
       "uncorrected_need_rate": 0.9219694788367405,
@@ -72,7 +72,7 @@
       "target_students": 4120.0,
       "target_achievement": 0.9665048543689321
     },
-    "Maritime Region": {
+    "Maritime": {
       "students_screened": 5931,
       "correction_need_rate": 0.8831562974203339,
       "uncorrected_need_rate": 0.9215349369988545,

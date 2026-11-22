@@ -1,0 +1,30 @@
+table 'Lbl Cat Legend'
+	lineageTag: 558296cc-f299-48c3-af8e-13916550a513
+
+	column Domain
+		isHidden
+		lineageTag: 3d87f32b-5dc9-475e-bb99-ed745e136ed1
+		isNameInferred
+		sourceColumn: Lbl Cat[Domain]
+
+	column CatKey
+		isHidden
+		lineageTag: 65fd651d-f5ef-4bd7-a495-4d010d46141a
+		isNameInferred
+		sourceColumn: Lbl Cat[CatKey]
+
+	column LanguageCode
+		isHidden
+		lineageTag: 6a03d8f6-3a40-4b56-8306-d9eae6feee5d
+		isNameInferred
+		sourceColumn: Lbl Cat[LanguageCode]
+
+	column 'Legend Label'
+		lineageTag: 3044c627-d512-4867-868b-8744deb40afd
+		sourceColumn: Lbl Cat[Label]
+		sortByColumn: CatKey
+
+	partition 'Lbl Cat Legend' = calculated
+		mode: import
+		source = FILTER ( 'Lbl Cat', 'Lbl Cat'[Domain] = "DIAG" )
+

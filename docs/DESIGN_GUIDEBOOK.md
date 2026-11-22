@@ -58,7 +58,7 @@ Validated with the dataviz palette checker (colour-vision-deficiency separation 
 | Slot | Use | Light | Dark |
 |---|---|---|---|
 | 1 | Default single series, Astigmatism | `#2A78D6` | `#3987E5` |
-| 2 | Myopia, Previous year | `#EB6834` | `#D95926` |
+| 2 | Myopia, Previous year | `#C2410C` | `#D95926` |
 | 3 | Hyperopia | `#1BAF7A` | `#199E70` |
 | 4 | Emmetropia | `#6250D6` | `#9085E9` |
 

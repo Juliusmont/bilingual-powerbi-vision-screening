@@ -37,6 +37,16 @@ ref table DimSex
 ref table DimSymptom
 ref table DimVACategory
 ref table _Measures
+ref table 'Param Region'
+ref table 'Param Campaign'
+ref table 'Param Prefecture'
+ref table 'Lbl Cat'
+ref table 'Lbl Cat Legend'
+ref table 'DQ Check'
+
+ref role 'Region - Plateaux'
+ref role 'Region - Maritime'
+ref role 'Dynamic by user'
 
 ref cultureInfo en-US
 

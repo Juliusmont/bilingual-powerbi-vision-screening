@@ -1,0 +1,41 @@
+table 'Lbl Cat'
+	lineageTag: 82d1f24e-4899-4fee-be60-0f9c4f188502
+
+	column Domain
+		isHidden
+		lineageTag: 64c563a7-92c3-4c02-b113-04e93f750e4a
+		isNameInferred
+		sourceColumn: [Domain]
+
+	column CatKey
+		isHidden
+		lineageTag: e4818849-2472-47d0-ab7e-d6435ade0a2c
+		isNameInferred
+		sourceColumn: [CatKey]
+
+	column LanguageCode
+		isHidden
+		lineageTag: d1dd6bf3-7b82-4e08-b510-665247909e34
+		isNameInferred
+		sourceColumn: [LanguageCode]
+
+	column Label
+		lineageTag: 155e5f3f-b77f-450f-858a-fd7510e972c2
+		isNameInferred
+		sourceColumn: [Label]
+		sortByColumn: CatKey
+
+	partition 'Lbl Cat' = calculated
+		mode: import
+		source =
+				UNION(
+				    SELECTCOLUMNS ( SUMMARIZE ( DimDiagnosis, DimDiagnosis[GroupSortOrder], DimDiagnosis[DiagnosisGroup_FR] ), "Domain", "DIAG", "CatKey", DimDiagnosis[GroupSortOrder], "LanguageCode", "FR", "Label", DimDiagnosis[DiagnosisGroup_FR] ),
+				    SELECTCOLUMNS ( SUMMARIZE ( DimDiagnosis, DimDiagnosis[GroupSortOrder], DimDiagnosis[DiagnosisGroup_EN] ), "Domain", "DIAG", "CatKey", DimDiagnosis[GroupSortOrder], "LanguageCode", "EN", "Label", DimDiagnosis[DiagnosisGroup_EN] ),
+				    SELECTCOLUMNS ( DimVACategory, "Domain", "VA", "CatKey", DimVACategory[VACategoryKey], "LanguageCode", "FR", "Label", DimVACategory[VACategory_FR] ),
+				    SELECTCOLUMNS ( DimVACategory, "Domain", "VA", "CatKey", DimVACategory[VACategoryKey], "LanguageCode", "EN", "Label", DimVACategory[VACategory_EN] ),
+				    SELECTCOLUMNS ( DimSymptom, "Domain", "SYMPTOM", "CatKey", DimSymptom[SymptomKey], "LanguageCode", "FR", "Label", DimSymptom[Symptom_FR] ),
+				    SELECTCOLUMNS ( DimSymptom, "Domain", "SYMPTOM", "CatKey", DimSymptom[SymptomKey], "LanguageCode", "EN", "Label", DimSymptom[Symptom_EN] ),
+				    SELECTCOLUMNS ( DimScreenTime, "Domain", "SCREEN", "CatKey", DimScreenTime[ScreenTimeKey], "LanguageCode", "FR", "Label", DimScreenTime[ScreenTime_FR] ),
+				    SELECTCOLUMNS ( DimScreenTime, "Domain", "SCREEN", "CatKey", DimScreenTime[ScreenTimeKey], "LanguageCode", "EN", "Label", DimScreenTime[ScreenTime_EN] )
+				)
+

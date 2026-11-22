@@ -1,0 +1,8 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "d27f9b4170c5a7fe8922",
+  "displayName": "3 - Clinical analysis",
+  "displayOption": "FitToPage",
+  "height": 810,
+  "width": 1440
+}

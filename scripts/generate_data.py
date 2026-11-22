@@ -125,16 +125,15 @@ def q(x):  # round to 0.25 D
 # ---------------------------------------------------------------------------
 write("DimLanguage.csv", ["LanguageCode", "LanguageName", "Culture", "SortOrder"],
       [("FR", "Français", "fr-FR", 1), ("EN", "English", "en-US", 2)])
-REGION_FR = {"Savanes": "Région des Savanes", "Kara": "Région de la Kara", "Centrale": "Région Centrale",
-             "Plateaux": "Région des Plateaux", "Maritime": "Région Maritime"}
+# Display names carry no "Région"/"Region" prefix: the visual title already says it (readability)
 write("DimRegion.csv", ["RegionKey", "RegionCode", "RegionName_FR", "RegionName_EN", "RegionSortOrder"],
-      [(i + 1, REGION_CODE[r], REGION_FR[r], r + " Region", i + 1) for i, r in enumerate(REGIONS)])
+      [(i + 1, REGION_CODE[r], r, r, i + 1) for i, r in enumerate(REGIONS)])
 
 pref_rows, commune_rows, school_rows = [], [], []
 pk = ck = sk = 0
 for region, pref, ncom, chef in GEO:
     pk += 1
-    pref_rows.append((pk, REGIONS.index(region) + 1, "Préfecture " + pref, pref + " Prefecture", pref, chef))
+    pref_rows.append((pk, REGIONS.index(region) + 1, pref, pref, pref, chef))
     for n in range(1, ncom + 1):
         ck += 1
         commune_rows.append((ck, pk, f"{pref.upper()} {n}"))
@@ -172,7 +171,7 @@ MONTHS_FR = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "
 MONTHS_EN = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 drows, d = [], date(2024, 1, 1)
 while d <= date(2026, 12, 31):
-    drows.append((int(d.strftime("%Y%m%d")), d.isoformat(), d.year, d.month, MONTHS_FR[d.month - 1], MONTHS_EN[d.month - 1], f"Campagne {d.year}", f"{d.year} campaign"))
+    drows.append((int(d.strftime("%Y%m%d")), d.isoformat(), d.year, d.month, MONTHS_FR[d.month - 1], MONTHS_EN[d.month - 1], str(d.year), str(d.year)))
     d += timedelta(days=1)
 write("DimDate.csv", ["DateKey", "Date", "Year", "MonthNumber", "Month_FR", "Month_EN", "Campaign_FR", "Campaign_EN"], drows)
 
@@ -306,6 +305,7 @@ LABELS = [
     ("chart_rank", "Classement des préfectures", "Prefecture ranking"),
     ("chart_trend", "Évolution par campagne", "Trend by campaign"),
     ("chart_diag", "Répartition des diagnostics", "Diagnosis breakdown"),
+    ("chart_diag_share", "Proportion des diagnostics", "Diagnosis proportion"),
     ("chart_symptom", "Signes fonctionnels déclarés", "Reported symptoms"),
     ("chart_screen", "Diagnostic selon le temps d'écran", "Diagnosis by screen time"),
     ("slicer_language", "Langue", "Language"),
@@ -327,11 +327,48 @@ LABELS = [
     ("kpi_uncorrected", "Besoin non corrigé", "Uncorrected need"),
     ("chart_va", "Acuité visuelle par œil", "Visual acuity per eye"),
     ("chart_dq", "Anomalies détectées", "Issues detected"),
+    ("note_assoc", "Association, pas causalité", "Association, not causation"),
+    ("col_prefecture", "Préfecture", "Prefecture"),
+    ("col_rank", "Rang", "Rank"),
+    ("legend_target", "Objectif", "Target"),
+    ("chart_security", "Sécurité et confidentialité", "Security and privacy"),
+    ("sec_static", "Rôles statiques : « Region - Plateaux » et « Region - Maritime » limitent les données à une seule région.",
+     "Static roles: “Region - Plateaux” and “Region - Maritime” limit the data to a single region."),
+    ("sec_dynamic", "Rôle dynamique : « Dynamic by user » filtre les régions selon l'identité de l'utilisateur (USERPRINCIPALNAME) lue dans la table SecurityUserRegion.",
+     "Dynamic role: “Dynamic by user” filters regions by the identity of the user (USERPRINCIPALNAME) looked up in the SecurityUserRegion table."),
+    ("sec_entra", "En production, les rôles seraient attribués à des groupes de sécurité Microsoft Entra ID plutôt qu'à des utilisateurs.",
+     "In production, roles would be assigned to Microsoft Entra ID security groups rather than to individual users."),
     ("note_population", "Population dépistée : élèves vus lors des campagnes, pas une prévalence nationale",
      "Screened population: students seen during campaigns, not a national prevalence"),
     ("note_small_cells", "Taux masqués sous 10 élèves (protection des mineurs)",
      "Rates hidden below 10 students (protection of minors)"),
     ("footer_built", "Construit avec Power BI · données synthétiques", "Built with Power BI · synthetic data"),
+    # --- Page 1 (About) body text ---
+    ("about_intro",
+     "Combien d'élèves avons-nous dépistés, combien ont besoin de lunettes, où, et sommes-nous dans la cible ? "
+     "Ce rapport aide à décider où envoyer optométristes et lunettes pour la prochaine campagne.",
+     "How many students did we reach, how many need glasses, where, and are we on target? "
+     "This report supports deciding where to send optometrists and glasses for the next campaign."),
+    ("about_def_need",
+     "Besoin de correction : part des élèves pour qui l'examinateur propose une prescription non nulle "
+     "(sphère ou cylindre) sur au moins un œil.",
+     "Need for correction: share of students for whom the examiner proposed a non-zero prescription "
+     "(sphere or cylinder) in at least one eye."),
+    ("about_def_uncorrected",
+     "Besoin non corrigé : part de ces élèves qui ne portaient pas de correction au moment du dépistage.",
+     "Uncorrected need: share of those students who were not wearing a correction at screening."),
+    ("about_def_impairment",
+     "Déficience visuelle : acuité visuelle « légère » ou pire sur au moins un œil.",
+     "Visual impairment: visual acuity of \"mild\" or worse in at least one eye."),
+    ("about_def_target",
+     "Atteinte de l'objectif : élèves dépistés rapportés à la cible de dépistage de la préfecture.",
+     "Target achievement: students screened against the prefecture's screening target."),
+    ("about_howto_lang",
+     "Changez de langue à tout moment avec le sélecteur FR | EN du panneau latéral ; titres, axes et légendes suivent.",
+     "Switch language at any time with the FR | EN selector in the side panel; titles, axes and legends follow."),
+    ("about_author",
+     "Conçu et construit par Julius Akouété M. ATCHOU · github.com/Juliusmont",
+     "Designed and built by Julius Akouété M. ATCHOU · github.com/Juliusmont"),
 ]
 write("Labels.csv", ["LabelKey", "LanguageCode", "Text"],
       [(k, "FR", fr) for k, fr, _ in LABELS] + [(k, "EN", en) for k, _, en in LABELS])

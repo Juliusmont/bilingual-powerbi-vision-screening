@@ -1,6 +1,6 @@
 ﻿RegionKey,RegionCode,RegionName_FR,RegionName_EN,RegionSortOrder
-1,SAV,Région des Savanes,Savanes Region,1
-2,KAR,Région de la Kara,Kara Region,2
-3,CEN,Région Centrale,Centrale Region,3
-4,PLA,Région des Plateaux,Plateaux Region,4
-5,MAR,Région Maritime,Maritime Region,5
+1,SAV,Savanes,Savanes,1
+2,KAR,Kara,Kara,2
+3,CEN,Centrale,Centrale,3
+4,PLA,Plateaux,Plateaux,4
+5,MAR,Maritime,Maritime,5

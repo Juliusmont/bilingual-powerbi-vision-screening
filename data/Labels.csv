@@ -11,6 +11,7 @@ chart_region,FR,Besoin de correction par région
 chart_rank,FR,Classement des préfectures
 chart_trend,FR,Évolution par campagne
 chart_diag,FR,Répartition des diagnostics
+chart_diag_share,FR,Proportion des diagnostics
 chart_symptom,FR,Signes fonctionnels déclarés
 chart_screen,FR,Diagnostic selon le temps d'écran
 slicer_language,FR,Langue
@@ -31,9 +32,24 @@ section_geo,FR,03 Répartition territoriale
 kpi_uncorrected,FR,Besoin non corrigé
 chart_va,FR,Acuité visuelle par œil
 chart_dq,FR,Anomalies détectées
+note_assoc,FR,"Association, pas causalité"
+col_prefecture,FR,Préfecture
+col_rank,FR,Rang
+legend_target,FR,Objectif
+chart_security,FR,Sécurité et confidentialité
+sec_static,FR,Rôles statiques : « Region - Plateaux » et « Region - Maritime » limitent les données à une seule région.
+sec_dynamic,FR,Rôle dynamique : « Dynamic by user » filtre les régions selon l'identité de l'utilisateur (USERPRINCIPALNAME) lue dans la table SecurityUserRegion.
+sec_entra,FR,"En production, les rôles seraient attribués à des groupes de sécurité Microsoft Entra ID plutôt qu'à des utilisateurs."
 note_population,FR,"Population dépistée : élèves vus lors des campagnes, pas une prévalence nationale"
 note_small_cells,FR,Taux masqués sous 10 élèves (protection des mineurs)
 footer_built,FR,Construit avec Power BI · données synthétiques
+about_intro,FR,"Combien d'élèves avons-nous dépistés, combien ont besoin de lunettes, où, et sommes-nous dans la cible ? Ce rapport aide à décider où envoyer optométristes et lunettes pour la prochaine campagne."
+about_def_need,FR,Besoin de correction : part des élèves pour qui l'examinateur propose une prescription non nulle (sphère ou cylindre) sur au moins un œil.
+about_def_uncorrected,FR,Besoin non corrigé : part de ces élèves qui ne portaient pas de correction au moment du dépistage.
+about_def_impairment,FR,Déficience visuelle : acuité visuelle « légère » ou pire sur au moins un œil.
+about_def_target,FR,Atteinte de l'objectif : élèves dépistés rapportés à la cible de dépistage de la préfecture.
+about_howto_lang,FR,"Changez de langue à tout moment avec le sélecteur FR | EN du panneau latéral ; titres, axes et légendes suivent."
+about_author,FR,Conçu et construit par Julius Akouété M. ATCHOU · github.com/Juliusmont
 title_exec,EN,School Vision Screening - Executive View
 title_analysis,EN,Refractive Error Analysis
 kpi_screened,EN,Students screened
@@ -46,6 +62,7 @@ chart_region,EN,Need for correction by region
 chart_rank,EN,Prefecture ranking
 chart_trend,EN,Trend by campaign
 chart_diag,EN,Diagnosis breakdown
+chart_diag_share,EN,Diagnosis proportion
 chart_symptom,EN,Reported symptoms
 chart_screen,EN,Diagnosis by screen time
 slicer_language,EN,Language
@@ -66,6 +83,21 @@ section_geo,EN,03 Territorial breakdown
 kpi_uncorrected,EN,Uncorrected need
 chart_va,EN,Visual acuity per eye
 chart_dq,EN,Issues detected
+note_assoc,EN,"Association, not causation"
+col_prefecture,EN,Prefecture
+col_rank,EN,Rank
+legend_target,EN,Target
+chart_security,EN,Security and privacy
+sec_static,EN,Static roles: “Region - Plateaux” and “Region - Maritime” limit the data to a single region.
+sec_dynamic,EN,Dynamic role: “Dynamic by user” filters regions by the identity of the user (USERPRINCIPALNAME) looked up in the SecurityUserRegion table.
+sec_entra,EN,"In production, roles would be assigned to Microsoft Entra ID security groups rather than to individual users."
 note_population,EN,"Screened population: students seen during campaigns, not a national prevalence"
 note_small_cells,EN,Rates hidden below 10 students (protection of minors)
 footer_built,EN,Built with Power BI · synthetic data
+about_intro,EN,"How many students did we reach, how many need glasses, where, and are we on target? This report supports deciding where to send optometrists and glasses for the next campaign."
+about_def_need,EN,Need for correction: share of students for whom the examiner proposed a non-zero prescription (sphere or cylinder) in at least one eye.
+about_def_uncorrected,EN,Uncorrected need: share of those students who were not wearing a correction at screening.
+about_def_impairment,EN,"Visual impairment: visual acuity of ""mild"" or worse in at least one eye."
+about_def_target,EN,Target achievement: students screened against the prefecture's screening target.
+about_howto_lang,EN,"Switch language at any time with the FR | EN selector in the side panel; titles, axes and legends follow."
+about_author,EN,Designed and built by Julius Akouété M. ATCHOU · github.com/Juliusmont

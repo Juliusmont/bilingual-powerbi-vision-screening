@@ -86,3 +86,27 @@ relationship AutoDetected_b3144c6d-9036-4c6c-b4c5-7ca7baf531db
 	fromColumn: SecurityUserRegion.RegionCode
 	toColumn: DimRegion.RegionCode
 
+relationship 'Param Region_LanguageCode_DimLanguage_LanguageCode'
+	fromColumn: 'Param Region'.LanguageCode
+	toColumn: DimLanguage.LanguageCode
+
+relationship 'Param Campaign_LanguageCode_DimLanguage_LanguageCode'
+	fromColumn: 'Param Campaign'.LanguageCode
+	toColumn: DimLanguage.LanguageCode
+
+relationship 'Param Prefecture_LanguageCode_DimLanguage_LanguageCode'
+	fromColumn: 'Param Prefecture'.LanguageCode
+	toColumn: DimLanguage.LanguageCode
+
+relationship 'Lbl Cat_LanguageCode_DimLanguage'
+	fromColumn: 'Lbl Cat'.LanguageCode
+	toColumn: DimLanguage.LanguageCode
+
+relationship 'Lbl Cat Legend_LanguageCode_DimLanguage'
+	fromColumn: 'Lbl Cat Legend'.LanguageCode
+	toColumn: DimLanguage.LanguageCode
+
+relationship 'DQ Check_LanguageCode_DimLanguage'
+	fromColumn: 'DQ Check'.LanguageCode
+	toColumn: DimLanguage.LanguageCode
+

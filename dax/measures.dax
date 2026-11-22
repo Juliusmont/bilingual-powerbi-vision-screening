@@ -24,9 +24,59 @@ Lbl Chart Region = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_region",
 Lbl Chart Rank = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_rank", Labels[LanguageCode], [Selected Language] )
 Lbl Chart Trend = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_trend", Labels[LanguageCode], [Selected Language] )
 Lbl Chart Diag = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_diag", Labels[LanguageCode], [Selected Language] )
+Lbl Chart Diag Share = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_diag_share", Labels[LanguageCode], [Selected Language] )
 Lbl Chart Symptom = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_symptom", Labels[LanguageCode], [Selected Language] )
 Lbl Chart Screen = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_screen", Labels[LanguageCode], [Selected Language] )
 Lbl Note Synthetic = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "note_synthetic", Labels[LanguageCode], [Selected Language] )
+Lbl KPI YoY = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_yoy", Labels[LanguageCode], [Selected Language] )
+Lbl Slicer Language = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "slicer_language", Labels[LanguageCode], [Selected Language] )
+Lbl Slicer Region = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "slicer_region", Labels[LanguageCode], [Selected Language] )
+Lbl Slicer Campaign = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "slicer_campaign", Labels[LanguageCode], [Selected Language] )
+Lbl Note DQ = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "note_dq", Labels[LanguageCode], [Selected Language] )
+Lbl Nav About = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "nav_about", Labels[LanguageCode], [Selected Language] )
+Lbl Nav Exec = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "nav_exec", Labels[LanguageCode], [Selected Language] )
+Lbl Nav Analysis = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "nav_analysis", Labels[LanguageCode], [Selected Language] )
+Lbl Nav Quality = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "nav_quality", Labels[LanguageCode], [Selected Language] )
+Lbl Title Quality = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "title_quality", Labels[LanguageCode], [Selected Language] )
+Lbl Title About = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "title_about", Labels[LanguageCode], [Selected Language] )
+Lbl Narrative Title = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "narrative_title", Labels[LanguageCode], [Selected Language] )
+Lbl Section Coverage = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "section_coverage", Labels[LanguageCode], [Selected Language] )
+Lbl Section Needs = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "section_needs", Labels[LanguageCode], [Selected Language] )
+Lbl Section Geo = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "section_geo", Labels[LanguageCode], [Selected Language] )
+Lbl KPI Uncorrected = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_uncorrected", Labels[LanguageCode], [Selected Language] )
+Lbl Chart VA = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_va", Labels[LanguageCode], [Selected Language] )
+Lbl Chart DQ = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_dq", Labels[LanguageCode], [Selected Language] )
+Lbl Note Population = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "note_population", Labels[LanguageCode], [Selected Language] )
+Lbl Note Small Cells = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "note_small_cells", Labels[LanguageCode], [Selected Language] )
+Lbl Footer Built = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "footer_built", Labels[LanguageCode], [Selected Language] )
+Lbl About Intro = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_intro", Labels[LanguageCode], [Selected Language] )
+Lbl About Def Need = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_def_need", Labels[LanguageCode], [Selected Language] )
+Lbl About Def Uncorrected = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_def_uncorrected", Labels[LanguageCode], [Selected Language] )
+Lbl About Def Impairment = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_def_impairment", Labels[LanguageCode], [Selected Language] )
+Lbl About Def Target = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_def_target", Labels[LanguageCode], [Selected Language] )
+Lbl About Howto Lang = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_howto_lang", Labels[LanguageCode], [Selected Language] )
+Lbl About Author = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_author", Labels[LanguageCode], [Selected Language] )
+
+// ---------- Folder: 0 Language (bold-keyword split, About page definitions) --------
+Lbl About Def Need Body =
+VAR t = [Lbl About Def Need]
+VAR p = FIND ( ":", t, 1, 0 )
+RETURN IF ( p > 0, TRIM ( MID ( t, p + 1, 9999 ) ), t )
+
+Lbl About Def Uncorrected Body =
+VAR t = [Lbl About Def Uncorrected]
+VAR p = FIND ( ":", t, 1, 0 )
+RETURN IF ( p > 0, TRIM ( MID ( t, p + 1, 9999 ) ), t )
+
+Lbl About Def Impairment Body =
+VAR t = [Lbl About Def Impairment]
+VAR p = FIND ( ":", t, 1, 0 )
+RETURN IF ( p > 0, TRIM ( MID ( t, p + 1, 9999 ) ), t )
+
+Lbl About Def Target Body =
+VAR t = [Lbl About Def Target]
+VAR p = FIND ( ":", t, 1, 0 )
+RETURN IF ( p > 0, TRIM ( MID ( t, p + 1, 9999 ) ), t )
 
 // ---------- Folder: 1 Core KPIs ---------------------------------------
 Students Screened = COUNTROWS ( FactScreening )
@@ -104,6 +154,66 @@ KPI Screened Caption =
 FORMAT ( [Students Screened], "#,0", [Selected Locale] )
     & IF ( [Selected Language] = "FR", " élèves dépistés", " students screened" )
 
+Color YoY =
+VAR d = [Students Screened YoY %]
+RETURN IF ( ISBLANK ( d ), "#4A5873", IF ( d >= 0, "#0CA30C", "#D03B3B" ) )
+
+KPI Screened YoY Caption =
+VAR d = [Students Screened YoY %]
+RETURN
+    IF (
+        ISBLANK ( d ),
+        IF ( [Selected Language] = "FR", "Première campagne", "First campaign" ),
+        ( IF ( d >= 0, "▲ ", "▼ " ) )
+            & FORMAT ( d, "+0.0%;-0.0%;0.0%", [Selected Locale] )
+            & IF ( [Selected Language] = "FR", " vs campagne précédente", " vs previous campaign" )
+    )
+
+Color Target Achievement =
+VAR a = [Target Achievement %]
+RETURN
+    IF (
+        ISBLANK ( a ), "#4A5873",
+        IF ( a >= 0.95, "#0CA30C", IF ( a >= 0.85, "#FAB219", "#D03B3B" ) )
+    )
+
+KPI Target Caption =
+FORMAT ( [Target Students], "#,0", [Selected Locale] )
+    & IF ( [Selected Language] = "FR", " élèves ciblés", " students targeted" )
+
+KPI Uncorrected Caption =
+IF ( [Selected Language] = "FR", "Parmi les besoins de correction", "Of those needing correction" )
+
+KPI Impairment Caption =
+IF ( [Selected Language] = "FR", "Acuité légère ou pire, au moins un œil", "Mild acuity or worse, at least one eye" )
+
+// Fixed accent colour for the region bar chart (single series; see guidebook palette slot 1)
+Color Region Bar = "#2A78D6"
+
+// Selected campaign year (header slicer) or an "all campaigns" fallback.
+// Reads DimDate[Year] directly: a field-parameter column cannot be used in a measure (composite-key error).
+Header Campaign Pill =
+VAR yr = SELECTEDVALUE ( DimDate[Year] )
+RETURN
+    IF (
+        ISBLANK ( yr ),
+        IF ( [Selected Language] = "FR", "Toutes campagnes", "All campaigns" ),
+        IF ( [Selected Language] = "FR", "Campagne " & yr, yr & " campaign" )
+    )
+
+// Overview page narrative banner headline
+Narrative Headline =
+VAR need = [Correction Need Rate]
+VAR screened = [Students Screened]
+RETURN
+    IF (
+        [Selected Language] = "FR",
+        FORMAT ( need, "0.0%", "fr-FR" ) & " des " & FORMAT ( screened, "#,0", "fr-FR" )
+            & " élèves dépistés ont besoin d'une correction visuelle.",
+        FORMAT ( need, "0.0%", "en-US" ) & " of " & FORMAT ( screened, "#,0", "en-US" )
+            & " students screened need a vision correction."
+    )
+
 // Accessibility: dynamic alt text (Format > General > Alt text > fx)
 Alt Text Region Chart =
 IF (
@@ -158,14 +268,31 @@ IF (
 // to add a 4th column = language code, rename it LanguageCode and create a
 // relationship DimLanguage[LanguageCode] (1) -> (*) Param[LanguageCode]
 // =====================================================================
+// IMPLEMENTED (page 2 - Overview): Param Region and Param Campaign, each with
+// the 4th LanguageCode column and the DimLanguage relationship, so an axis or
+// slicer bound to Param Region[Param Region] / Param Campaign[Param Campaign]
+// automatically shows the FR or EN field depending on the language slicer -
+// never a literal _FR/_EN column. Built via the modeling MCP's
+// CreateFieldParameter + table_operations Update (to add LanguageCode) +
+// relationship_operations Create (Param X[LanguageCode] -> DimLanguage[LanguageCode],
+// one-direction); recalculate the model after creating the relationship.
+Param Region = {
+    ("Région", NAMEOF ( 'DimRegion'[RegionName_FR] ), 0, "FR"),
+    ("Region", NAMEOF ( 'DimRegion'[RegionName_EN] ), 1, "EN")
+}
+Param Campaign = {
+    ("Campagne", NAMEOF ( 'DimDate'[Campaign_FR] ), 0, "FR"),
+    ("Campaign", NAMEOF ( 'DimDate'[Campaign_EN] ), 1, "EN")
+}
+Param Prefecture = {
+    ("Préfecture", NAMEOF ( 'DimPrefecture'[PrefectureName_FR] ), 0, "FR"),
+    ("Prefecture", NAMEOF ( 'DimPrefecture'[PrefectureName_EN] ), 1, "EN")
+}
+// Remaining field parameters below are TODO for page 3 (Clinical analysis).
 /*
 Param Diagnosis Group = {
     ("Groupe de diagnostic", NAMEOF ( 'DimDiagnosis'[DiagnosisGroup_FR] ), 0, "FR"),
     ("Diagnosis group",      NAMEOF ( 'DimDiagnosis'[DiagnosisGroup_EN] ), 1, "EN")
-}
-Param Region = {
-    ("Région", NAMEOF ( 'DimRegion'[RegionName_FR] ), 0, "FR"),
-    ("Region", NAMEOF ( 'DimRegion'[RegionName_EN] ), 1, "EN")
 }
 Param Sex = {
     ("Sexe", NAMEOF ( 'DimSex'[Sex_FR] ), 0, "FR"),
@@ -183,10 +310,6 @@ Param Screen Time = {
     ("Temps d'écran", NAMEOF ( 'DimScreenTime'[ScreenTime_FR] ), 0, "FR"),
     ("Screen time",   NAMEOF ( 'DimScreenTime'[ScreenTime_EN] ), 1, "EN")
 }
-Param Campaign = {
-    ("Campagne", NAMEOF ( 'DimDate'[Campaign_FR] ), 0, "FR"),
-    ("Campaign", NAMEOF ( 'DimDate'[Campaign_EN] ), 1, "EN")
-}
 */
 
 // =====================================================================
@@ -202,3 +325,75 @@ Role "Dynamic by user":
             SecurityUserRegion[UserEmail] = USERPRINCIPALNAME ()
         )
 */
+
+// ---------- Folder: 3 Clinical analysis (bilingual axes) --------------
+// Axes come from the calculated tables 'Lbl Cat' / 'Lbl Cat Legend' (one row per category x language,
+// related to DimLanguage). Each measure returns BLANK on rows of the non-selected language, so the axis
+// shows labels in the selected language only. Rates hidden below 10 students (small-cell rule).
+// 'Lbl Cat' = UNION of SELECTCOLUMNS over DimDiagnosis groups / DimVACategory / DimSymptom / DimScreenTime
+//   (Domain, CatKey, LanguageCode, Label); 'Lbl Cat Legend' = FILTER ( 'Lbl Cat', Domain = "DIAG" ).
+Diagnosis Share (Cat) =
+VAR k = SELECTEDVALUE ( 'Lbl Cat'[CatKey] )
+RETURN
+    IF (
+        SELECTEDVALUE ( 'Lbl Cat'[LanguageCode] ) = [Selected Language] && NOT ISBLANK ( k ) && [Students Screened] >= 10,
+        CALCULATE ( [Diagnosis Share], DimDiagnosis[GroupSortOrder] = k )
+    )
+
+VA Share (Cat) =
+VAR k = SELECTEDVALUE ( 'Lbl Cat'[CatKey] )
+RETURN
+    IF (
+        SELECTEDVALUE ( 'Lbl Cat'[LanguageCode] ) = [Selected Language] && NOT ISBLANK ( k ) && [Students Screened] >= 10,
+        DIVIDE ( CALCULATE ( [Eyes Examined], FactEyeExam[VACategoryKey] = k ), [Eyes Examined] )
+    )
+
+Symptom Rate (Cat) =
+VAR k = SELECTEDVALUE ( 'Lbl Cat'[CatKey] )
+RETURN
+    IF (
+        SELECTEDVALUE ( 'Lbl Cat'[LanguageCode] ) = [Selected Language] && NOT ISBLANK ( k ) && [Students Screened] >= 10,
+        CALCULATE ( [Symptom Rate], DimSymptom[SymptomKey] = k )
+    )
+
+Eyes by Screen Time (Cat) =
+VAR ks = SELECTEDVALUE ( 'Lbl Cat'[CatKey] )
+VAR kd = SELECTEDVALUE ( 'Lbl Cat Legend'[CatKey] )
+RETURN
+    IF (
+        SELECTEDVALUE ( 'Lbl Cat'[LanguageCode] ) = [Selected Language]
+            && SELECTEDVALUE ( 'Lbl Cat Legend'[LanguageCode] ) = [Selected Language]
+            && NOT ISBLANK ( ks ) && NOT ISBLANK ( kd ),
+        CALCULATE ( [Eyes Examined], FactScreening[ScreenTimeKey] = ks, DimDiagnosis[GroupSortOrder] = kd )
+    )
+
+Color Diagnosis Group =
+VAR kl = SELECTEDVALUE ( 'Lbl Cat Legend'[CatKey] )
+VAR k = COALESCE ( kl, SELECTEDVALUE ( 'Lbl Cat'[CatKey] ) )
+VAR okAxis = SELECTEDVALUE ( 'Lbl Cat'[LanguageCode] ) = [Selected Language]
+VAR okLegend = ISBLANK ( kl ) || SELECTEDVALUE ( 'Lbl Cat Legend'[LanguageCode] ) = [Selected Language]
+RETURN
+    IF (
+        okAxis && okLegend && NOT ISBLANK ( k ),
+        SWITCH ( k, 1, "#2A78D6", 2, "#C2410C", 3, "#1BAF7A", 4, "#6250D6", "#8A94A6" )
+    )
+
+Color VA Ramp =
+VAR k = SELECTEDVALUE ( 'Lbl Cat'[CatKey] )
+RETURN
+    IF (
+        SELECTEDVALUE ( 'Lbl Cat'[LanguageCode] ) = [Selected Language] && NOT ISBLANK ( k ),
+        SWITCH ( k, 1, "#CDE2FB", 2, "#86B6EF", 3, "#3987E5", 4, "#1C5CAB", 5, "#104281", "#8A94A6" )
+    )
+
+Lbl Note Assoc = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "note_assoc", Labels[LanguageCode], [Selected Language] )
+
+Alt Text Diagnosis Chart = "Bars: share of examined eyes by diagnosis group / Barres : répartition des yeux examinés par groupe de diagnostic"
+Alt Text VA Chart = "Columns: share of examined eyes by visual acuity category / Colonnes : répartition des yeux par catégorie d'acuité visuelle"
+Alt Text Symptom Chart = "Bars: share of students reporting each symptom / Barres : proportion d'élèves par signe fonctionnel"
+Alt Text Screen Chart = "100% stacked columns: diagnosis mix by screen time; association, not causation / Colonnes empilées : diagnostics selon le temps d'écran ; association, pas causalité"
+
+// ---------- Folder: 0 Language (table headers / chart legend labels, page 2) ----------
+Lbl Col Prefecture = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "col_prefecture", Labels[LanguageCode], [Selected Language] )
+Lbl Col Rank = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "col_rank", Labels[LanguageCode], [Selected Language] )
+Lbl Legend Target = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "legend_target", Labels[LanguageCode], [Selected Language] )

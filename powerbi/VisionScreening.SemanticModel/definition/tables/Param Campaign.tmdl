@@ -1,0 +1,48 @@
+table 'Param Campaign'
+	lineageTag: 1410270f-c6c7-4441-a247-967c9f0d822b
+
+	column 'Param Campaign Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 3a6abf9d-f378-4631-9a34-82d9be50a355
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+	column 'Param Campaign Fields'
+		dataType: string
+		isHidden
+		lineageTag: 2e26f6ff-f2ed-4d48-9d6a-fd71f1d00f99
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Param Campaign Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+	column 'Param Campaign'
+		dataType: string
+		lineageTag: cc35b48a-9e91-4a81-82ad-ddef2d6e614d
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Param Campaign Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Param Campaign Fields'
+
+	column LanguageCode
+		isHidden
+		lineageTag: 268b4047-f960-4c82-8900-5e92de033621
+		sourceColumn: [Value4]
+
+	partition 'Param Campaign' = calculated
+		mode: import
+		source =
+				{
+				    ("Campagne", NAMEOF('DimDate'[Campaign_FR]), 0, "FR"),
+				    ("Campaign", NAMEOF('DimDate'[Campaign_EN]), 1, "EN")
+				}
+

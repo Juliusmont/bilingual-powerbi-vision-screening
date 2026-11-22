@@ -23,6 +23,7 @@ table DimRegion
 		lineageTag: e54cac66-1300-4b76-882d-0e502e8ed685
 		summarizeBy: none
 		sourceColumn: RegionName_FR
+		sortByColumn: RegionSortOrder
 
 		annotation SummarizationSetBy = Automatic
 
@@ -31,6 +32,7 @@ table DimRegion
 		lineageTag: 78b92083-cbb8-40f2-a61c-c75475af3495
 		summarizeBy: none
 		sourceColumn: RegionName_EN
+		sortByColumn: RegionSortOrder
 
 		annotation SummarizationSetBy = Automatic
 
