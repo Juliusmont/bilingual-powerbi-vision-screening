@@ -18,6 +18,7 @@
 
 - [Highlights](#highlights)
 - [Screenshots](#screenshots)
+- [Demo](#demo)
 - [How the report was built (Claude Code + Power BI)](#how-the-report-was-built-claude-code--power-bi)
 - [Multilingual design](#multilingual-design)
 - [Data model](#data-model)
@@ -58,9 +59,21 @@
 
 ![Model view](screenshots/model-view.png)
 
-**Demo video** (FR → EN switch, filters, RLS): [`screenshots/demo.mp4`](screenshots/demo.mp4).
-
 Still to capture (optional, see [`docs/CAPTURE_CHECKLIST.md`](docs/CAPTURE_CHECKLIST.md)): KPI definition tooltip, RLS *View as* banner, and a Power BI Service `?language=fr` capture.
+
+## Demo
+
+▶️ [**`screenshots/demo.mp4`**](screenshots/demo.mp4) — GitHub doesn't autoplay an MP4 inline, so click through to watch it.
+
+What it walks through:
+
+| Time | Shot |
+|---|---|
+| 0-10 s | Overview in **French**, hovering the KPI cards |
+| 10-20 s | Switch to **English**: titles, axes, numbers (`87,2 %` → `87.2%`) and narrative all follow |
+| 20-35 s | Select a region: narrative, KPIs and prefecture ranking update together |
+| 35-50 s | Clinical analysis page, screen-time chart |
+| 50-65 s | Quality & security page: DQ status, then RLS *View as Region - Plateaux* |
 
 ## How the report was built (Claude Code + Power BI)
 
