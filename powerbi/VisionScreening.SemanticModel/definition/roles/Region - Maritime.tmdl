@@ -1,0 +1,8 @@
+/// Static role: Maritime region only
+role 'Region - Maritime'
+	modelPermission: read
+
+	tablePermission DimRegion = [RegionCode] = "MAR"
+
+	annotation PBI_Id = 107d22591c404f69976bafe919f5b4c7
+

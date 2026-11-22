@@ -1,0 +1,8 @@
+/// Regions mapped to USERPRINCIPALNAME() in SecurityUserRegion
+role 'Dynamic by user'
+	modelPermission: read
+
+	tablePermission DimRegion = [RegionCode] IN CALCULATETABLE ( VALUES ( SecurityUserRegion[RegionCode] ), SecurityUserRegion[UserEmail] = USERPRINCIPALNAME () )
+
+	annotation PBI_Id = 12225a242aee41e8b07fff010a1624d4
+

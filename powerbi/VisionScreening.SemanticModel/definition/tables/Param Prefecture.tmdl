@@ -1,0 +1,48 @@
+table 'Param Prefecture'
+	lineageTag: 2cca3d4b-7cb9-4776-b0ab-1311621c84a5
+
+	column 'Param Prefecture Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 45caaa1e-4a00-44dc-9248-1cdc2e00be7e
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+	column 'Param Prefecture Fields'
+		dataType: string
+		isHidden
+		lineageTag: d7709443-64e1-43cf-b12f-541850fc3ef9
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Param Prefecture Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+	column 'Param Prefecture'
+		dataType: string
+		lineageTag: 543e8e24-8419-4ffb-ba46-f7e022d5aa09
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Param Prefecture Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Param Prefecture Fields'
+
+	column LanguageCode
+		isHidden
+		lineageTag: 7aaa0873-ca46-4e77-9bc4-11556032a634
+		sourceColumn: [Value4]
+
+	partition 'Param Prefecture' = calculated
+		mode: import
+		source =
+				{
+				    ("Préfecture", NAMEOF('DimPrefecture'[PrefectureName_FR]), 0, "FR"),
+				    ("Prefecture", NAMEOF('DimPrefecture'[PrefectureName_EN]), 1, "EN")
+				}
+

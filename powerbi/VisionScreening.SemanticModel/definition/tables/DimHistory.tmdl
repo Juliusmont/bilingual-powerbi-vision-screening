@@ -1,0 +1,56 @@
+table DimHistory
+	lineageTag: e5db8011-17e3-4282-b3b7-a927aaee04f2
+
+	column HistoryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: afc48e7b-fa4c-42aa-89ce-1416bd378e55
+		summarizeBy: none
+		sourceColumn: HistoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category_FR
+		dataType: string
+		lineageTag: 981d0a06-d85a-42bc-944d-c11b6c6905fa
+		summarizeBy: none
+		sourceColumn: Category_FR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Category_EN
+		dataType: string
+		lineageTag: bd96d063-d4cd-4444-809e-c364490c304d
+		summarizeBy: none
+		sourceColumn: Category_EN
+
+		annotation SummarizationSetBy = Automatic
+
+	column History_FR
+		dataType: string
+		lineageTag: ba6a28aa-5653-470e-9a48-5495aab1e02a
+		summarizeBy: none
+		sourceColumn: History_FR
+
+		annotation SummarizationSetBy = Automatic
+
+	column History_EN
+		dataType: string
+		lineageTag: ba70cec1-6daf-4a2b-8fe8-a661c5454b96
+		summarizeBy: none
+		sourceColumn: History_EN
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimHistory = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "DimHistory.csv"), [Delimiter = ",", Columns = 5, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"HistoryKey", Int64.Type}, {"Category_FR", type text}, {"Category_EN", type text}, {"History_FR", type text}, {"History_EN", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

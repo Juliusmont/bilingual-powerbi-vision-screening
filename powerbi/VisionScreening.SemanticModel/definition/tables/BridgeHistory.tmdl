@@ -1,0 +1,33 @@
+table BridgeHistory
+	lineageTag: 9ec74fca-b2f8-4b82-b0f9-933ff036f71c
+
+	column StudentKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 9288696d-d1e0-4e6c-b04b-ed849af31605
+		summarizeBy: none
+		sourceColumn: StudentKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column HistoryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 1463e92e-9212-45b3-a24a-1c0ed77bee6f
+		summarizeBy: none
+		sourceColumn: HistoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition BridgeHistory = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "BridgeHistory.csv"), [Delimiter = ",", Columns = 2, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"StudentKey", Int64.Type}, {"HistoryKey", Int64.Type}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

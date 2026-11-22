@@ -1,0 +1,40 @@
+table DimAgeBand
+	lineageTag: 0e277b33-e066-4b30-958d-39d969732446
+
+	column AgeBandKey
+		dataType: int64
+		formatString: 0
+		lineageTag: df9a4c79-2fa9-4840-aaae-a8ab0f691b6e
+		summarizeBy: none
+		sourceColumn: AgeBandKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeBand_FR
+		dataType: string
+		lineageTag: 3027673b-aa9c-4a5e-ba84-a7c8969bbff1
+		summarizeBy: none
+		sourceColumn: AgeBand_FR
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeBand_EN
+		dataType: string
+		lineageTag: 2aa1c890-65a5-4769-b539-8af26f4aba34
+		summarizeBy: none
+		sourceColumn: AgeBand_EN
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimAgeBand = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "DimAgeBand.csv"), [Delimiter = ",", Columns = 3, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"AgeBandKey", Int64.Type}, {"AgeBand_FR", type text}, {"AgeBand_EN", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

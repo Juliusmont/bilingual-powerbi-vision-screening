@@ -1,0 +1,123 @@
+table FactScreening
+	lineageTag: 3996340b-75ea-45ef-9458-57f2f67ef1c9
+
+	column StudentKey
+		dataType: int64
+		formatString: 0
+		lineageTag: ac728965-f95e-4b79-87ae-0e8f52df9d45
+		summarizeBy: none
+		sourceColumn: StudentKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: ef141e1d-6a24-4289-ade2-54b36b9c4683
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchoolKey
+		dataType: int64
+		formatString: 0
+		lineageTag: f16cf8e5-49f1-45a5-8075-1b7f5baec94b
+		summarizeBy: none
+		sourceColumn: SchoolKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SexKey
+		dataType: int64
+		formatString: 0
+		lineageTag: f43afe2c-9869-4a95-983f-0f5859b6aa37
+		summarizeBy: none
+		sourceColumn: SexKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column AgeBandKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 25e4d60f-2009-4018-901d-4cc0a9f319f7
+		summarizeBy: none
+		sourceColumn: AgeBandKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Age
+		dataType: int64
+		formatString: 0
+		lineageTag: 0c7d2c74-1c91-4ff6-b7d3-abc2438e3cf1
+		summarizeBy: sum
+		sourceColumn: Age
+
+		annotation SummarizationSetBy = Automatic
+
+	column CycleKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 66f875f1-e6fa-42d7-9814-a6bb86087660
+		summarizeBy: none
+		sourceColumn: CycleKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column ScreenTimeKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 616312b5-4975-4680-85d1-033c83a05b1a
+		summarizeBy: none
+		sourceColumn: ScreenTimeKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column WearsCorrection
+		dataType: int64
+		formatString: 0
+		lineageTag: ff62a19c-6117-4ace-8df6-3758b6fb1384
+		summarizeBy: sum
+		sourceColumn: WearsCorrection
+
+		annotation SummarizationSetBy = Automatic
+
+	column YearsWithCorrection
+		dataType: int64
+		formatString: 0
+		lineageTag: 48881a4d-d965-47c1-a819-f5e1f74f8812
+		summarizeBy: sum
+		sourceColumn: YearsWithCorrection
+
+		annotation SummarizationSetBy = Automatic
+
+	column PerceivedSchoolImpact
+		dataType: int64
+		formatString: 0
+		lineageTag: fbe69e7a-5142-4c89-9f1e-eebbcd71602f
+		summarizeBy: sum
+		sourceColumn: PerceivedSchoolImpact
+
+		annotation SummarizationSetBy = Automatic
+
+	column HasSymptoms
+		dataType: int64
+		formatString: 0
+		lineageTag: 7caf09e1-b0df-482a-83ed-c655f7f55850
+		summarizeBy: sum
+		sourceColumn: HasSymptoms
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactScreening = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "FactScreening.csv"), [Delimiter = ",", Columns = 12, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"StudentKey", Int64.Type}, {"DateKey", Int64.Type}, {"SchoolKey", Int64.Type}, {"SexKey", Int64.Type}, {"AgeBandKey", Int64.Type}, {"Age", Int64.Type}, {"CycleKey", Int64.Type}, {"ScreenTimeKey", Int64.Type}, {"WearsCorrection", Int64.Type}, {"YearsWithCorrection", Int64.Type}, {"PerceivedSchoolImpact", Int64.Type}, {"HasSymptoms", Int64.Type}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

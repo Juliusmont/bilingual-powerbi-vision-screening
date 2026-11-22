@@ -1,0 +1,30 @@
+table SecurityUserRegion
+	lineageTag: 900a5f55-7d3a-49a3-96b9-5959b6649faf
+
+	column UserEmail
+		dataType: string
+		lineageTag: c0610d66-6eec-41c8-932a-4ce4dca49918
+		summarizeBy: none
+		sourceColumn: UserEmail
+
+		annotation SummarizationSetBy = Automatic
+
+	column RegionCode
+		dataType: string
+		lineageTag: ad940d70-6b1b-4734-bb7f-ed1b4c43bc32
+		summarizeBy: none
+		sourceColumn: RegionCode
+
+		annotation SummarizationSetBy = Automatic
+
+	partition SecurityUserRegion = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "SecurityUserRegion.csv"), [Delimiter = ",", Columns = 2, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true])
+				in
+				  #"Promoted headers"
+
+	annotation PBI_ResultType = Table
+

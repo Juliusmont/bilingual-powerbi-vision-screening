@@ -1,0 +1,40 @@
+table DimSymptom
+	lineageTag: 94116e6b-7a36-497b-b54d-4661bdda7b3a
+
+	column SymptomKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a41f1a5-8797-422f-994c-a7c98527d69a
+		summarizeBy: none
+		sourceColumn: SymptomKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Symptom_FR
+		dataType: string
+		lineageTag: 2f7b4910-ae5c-4cb1-ac63-d28be4144422
+		summarizeBy: none
+		sourceColumn: Symptom_FR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Symptom_EN
+		dataType: string
+		lineageTag: 4bf5198d-3ba6-4960-8013-e8d59396e644
+		summarizeBy: none
+		sourceColumn: Symptom_EN
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimSymptom = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "DimSymptom.csv"), [Delimiter = ",", Columns = 3, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"SymptomKey", Int64.Type}, {"Symptom_FR", type text}, {"Symptom_EN", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

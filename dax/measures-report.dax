@@ -1,0 +1,155 @@
+// =====================================================================
+// Report-layer measures (v1.1) - add to _Measures, after dax/measures.dax
+// Used by the pages described in docs/DESIGN_GUIDEBOOK.md
+// =====================================================================
+
+// ---------- Folder: 0 Language > Labels (new keys in Labels.csv) -------
+Lbl Nav About = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "nav_about", Labels[LanguageCode], [Selected Language] )
+Lbl Nav Exec = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "nav_exec", Labels[LanguageCode], [Selected Language] )
+Lbl Nav Analysis = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "nav_analysis", Labels[LanguageCode], [Selected Language] )
+Lbl Nav Quality = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "nav_quality", Labels[LanguageCode], [Selected Language] )
+Lbl Title About = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "title_about", Labels[LanguageCode], [Selected Language] )
+Lbl Title Quality = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "title_quality", Labels[LanguageCode], [Selected Language] )
+Lbl Narrative Title = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "narrative_title", Labels[LanguageCode], [Selected Language] )
+Lbl Section Coverage = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "section_coverage", Labels[LanguageCode], [Selected Language] )
+Lbl Section Needs = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "section_needs", Labels[LanguageCode], [Selected Language] )
+Lbl Section Geo = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "section_geo", Labels[LanguageCode], [Selected Language] )
+Lbl Uncorrected = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_uncorrected", Labels[LanguageCode], [Selected Language] )
+Lbl Screen = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_screen", Labels[LanguageCode], [Selected Language] )
+Lbl Chart VA = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_va", Labels[LanguageCode], [Selected Language] )
+Lbl Chart DQ = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_dq", Labels[LanguageCode], [Selected Language] )
+Lbl Note Population = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "note_population", Labels[LanguageCode], [Selected Language] )
+Lbl Note Small Cells = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "note_small_cells", Labels[LanguageCode], [Selected Language] )
+Lbl Footer = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "footer_built", Labels[LanguageCode], [Selected Language] )
+
+// ---------- Folder: 4 Formatted captions > Header ---------------------
+// Campaign pill next to the page title, e.g. "Campagne 2026" / "2026 campaign" / "3 campagnes"
+Header Campaign Pill =
+VAR nCamp = DISTINCTCOUNT ( DimDate[Year] )
+VAR campFR = SELECTEDVALUE ( DimDate[Campaign_FR] )
+VAR campEN = SELECTEDVALUE ( DimDate[Campaign_EN] )
+RETURN
+    IF (
+        [Selected Language] = "FR",
+        IF ( NOT ISBLANK ( campFR ), campFR, FORMAT ( nCamp, "0" ) & " campagnes" ),
+        IF ( NOT ISBLANK ( campEN ), campEN, FORMAT ( nCamp, "0" ) & " campaigns" )
+    )
+
+// ---------- Folder: 4 Formatted captions > Narrative ------------------
+// "What the numbers say" banner: one sentence, bilingual, locale-aware, filter-aware
+Narrative Headline =
+VAR lang = [Selected Language]
+VAR loc = [Selected Locale]
+VAR n = [Students Screened]
+VAR yoy = [Students Screened YoY %]
+VAR need = [Correction Need Rate]
+VAR unc = [Uncorrected Need Rate]
+VAR regionRates =
+    FILTER (
+        ADDCOLUMNS (
+            VALUES ( DimRegion[RegionKey] ),
+            "@rate", [Correction Need Rate (Safe)]
+        ),
+        NOT ISBLANK ( [@rate] )
+    )
+VAR topKey = MAXX ( TOPN ( 1, regionRates, [@rate], DESC ), DimRegion[RegionKey] )
+VAR topRate = MAXX ( regionRates, [@rate] )
+VAR topName =
+    IF (
+        lang = "FR",
+        LOOKUPVALUE ( DimRegion[RegionName_FR], DimRegion[RegionKey], topKey ),
+        LOOKUPVALUE ( DimRegion[RegionName_EN], DimRegion[RegionKey], topKey )
+    )
+VAR nRegions = COUNTROWS ( regionRates )
+VAR sScreened =
+    FORMAT ( n, "#,0", loc )
+        & IF ( lang = "FR", " élèves dépistés", " students screened" )
+        & IF (
+            ISBLANK ( yoy ),
+            "",
+            " (" & FORMAT ( yoy, "+0.0%;-0.0%", loc )
+                & IF ( lang = "FR", " vs campagne précédente)", " vs previous campaign)" )
+        )
+        & ". "
+VAR sNeed =
+    FORMAT ( need, "0.0%", loc )
+        & IF ( lang = "FR", " ont besoin d'une correction optique, dont ", " need optical correction, of whom " )
+        & FORMAT ( unc, "0.0%", loc )
+        & IF ( lang = "FR", " sans correction actuelle. ", " currently have none. " )
+VAR sTop =
+    IF (
+        nRegions > 1,
+        IF ( lang = "FR", "Taux le plus élevé : ", "Highest rate: " )
+            & topName & " (" & FORMAT ( topRate, "0.0%", loc ) & ").",
+        ""
+    )
+RETURN
+    IF ( n < 10, IF ( lang = "FR", "Effectif insuffisant pour commenter.", "Too few students to comment." ), sScreened & sNeed & sTop )
+
+// ---------- Folder: 4 Formatted captions > KPI cards ------------------
+KPI Screened YoY Caption =
+VAR d = [Students Screened YoY %]
+RETURN
+    IF (
+        ISBLANK ( d ),
+        IF ( [Selected Language] = "FR", "Première campagne", "First campaign" ),
+        IF ( d >= 0, "▲ ", "▼ " ) & FORMAT ( ABS ( d ), "0.0%", [Selected Locale] )
+            & IF ( [Selected Language] = "FR", " vs campagne précédente", " vs previous campaign" )
+    )
+
+KPI Target Caption =
+VAR t = [Target Students]
+RETURN
+    IF (
+        ISBLANK ( t ),
+        IF ( [Selected Language] = "FR", "Pas d'objectif", "No target" ),
+        IF ( [Selected Language] = "FR", "Objectif : ", "Target: " ) & FORMAT ( t, "#,0", [Selected Locale] )
+            & IF ( [Selected Language] = "FR", " élèves", " students" )
+    )
+
+KPI Uncorrected Caption =
+FORMAT ( [Uncorrected Need], "#,0", [Selected Locale] )
+    & IF ( [Selected Language] = "FR", " élèves sans lunettes adaptées", " students without suitable glasses" )
+
+KPI Impairment Caption =
+IF ( [Selected Language] = "FR", "Acuité ≤ 0,5 sur au moins un œil", "Acuity ≤ 0.5 in at least one eye" )
+
+// ---------- Folder: 7 Formatting (field value conditional formatting) --
+// Status colours are reserved: always paired with an icon or a text label.
+Color Target Achievement =
+VAR a = [Target Achievement %]
+RETURN
+    SWITCH ( TRUE (), ISBLANK ( a ), "#8A94A6", a >= 0.95, "#0CA30C", a >= 0.85, "#FAB219", "#D03B3B" )
+
+Color YoY =
+VAR d = [Students Screened YoY %]
+RETURN
+    SWITCH ( TRUE (), ISBLANK ( d ), "#8A94A6", d >= 0, "#0CA30C", "#D03B3B" )
+
+Color DQ Status = IF ( [DQ Issues Total] = 0, "#0CA30C", "#FAB219" )
+
+// Highlight the selected region in the region bar chart, everything else in series 1
+Color Region Bar =
+IF ( ISFILTERED ( DimRegion[RegionKey] ) && HASONEVALUE ( DimRegion[RegionKey] ), "#104281", "#2A78D6" )
+
+// ---------- Folder: 4 Formatted captions > Tooltips (KPI definitions) --
+Def Need Rate =
+IF (
+    [Selected Language] = "FR",
+    "Élèves pour qui l'examinateur a prescrit une correction non nulle sur au moins un œil (myopie ≤ -0,75 D, hypermétropie ≥ +2,00 D sous cycloplégie, astigmatisme ≥ 1,00 D).",
+    "Students for whom the examiner prescribed a non-zero correction in at least one eye (myopia ≤ -0.75 D, hyperopia ≥ +2.00 D under cycloplegia, astigmatism ≥ 1.00 D)."
+)
+
+Def Impairment Rate =
+IF (
+    [Selected Language] = "FR",
+    "Élèves avec une acuité visuelle de loin ≤ 5/10 sur au moins un œil (catégorie OMS légère ou pire).",
+    "Students with distance visual acuity ≤ 0.5 in at least one eye (WHO category mild or worse)."
+)
+
+Def Target Achievement =
+IF (
+    [Selected Language] = "FR",
+    "Élèves dépistés divisés par l'objectif de la préfecture pour la campagne.",
+    "Students screened divided by the prefecture target for the campaign."
+)

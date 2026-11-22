@@ -1,0 +1,48 @@
+table 'Param Region'
+	lineageTag: 7dea0850-fb3f-4148-a357-f57417ee34ef
+
+	column 'Param Region Order'
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 6b63b62a-c256-4476-979e-429e7349e4c4
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+	column 'Param Region Fields'
+		dataType: string
+		isHidden
+		lineageTag: 8f25c6e7-d7fe-48d5-a43d-7264466ecdd1
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Param Region Order'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+	column 'Param Region'
+		dataType: string
+		lineageTag: 000121e5-2fb2-4a2b-a34e-d54836048694
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Param Region Order'
+
+		relatedColumnDetails
+			groupByColumn: 'Param Region Fields'
+
+	column LanguageCode
+		isHidden
+		lineageTag: 91a60c74-a6dc-4f1d-81a9-1e8c16875130
+		sourceColumn: [Value4]
+
+	partition 'Param Region' = calculated
+		mode: import
+		source =
+				{
+				    ("Région", NAMEOF('DimRegion'[RegionName_FR]), 0, "FR"),
+				    ("Region", NAMEOF('DimRegion'[RegionName_EN]), 1, "EN")
+				}
+

@@ -1,0 +1,600 @@
+table _Measures
+	lineageTag: bc1ceb25-bfe0-44d3-8e35-6013389241ce
+
+	measure 'Selected Language' = SELECTEDVALUE ( DimLanguage[LanguageCode], IF ( LEFT ( USERCULTURE (), 2 ) = "fr", "FR", "EN" ) )
+		displayFolder: 0 Language
+		lineageTag: c371bd75-0128-4b88-ae16-d830a6029f78
+
+	measure 'Selected Locale' = IF ( [Selected Language] = "FR", "fr-FR", "en-US" )
+		displayFolder: 0 Language
+		lineageTag: 77607d2b-2bd0-4d14-9f3c-f26bbcf17c7e
+
+	measure 'Lbl Title Exec' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "title_exec", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 94153876-c583-4d01-bb94-b57db5492c6f
+
+	measure 'Lbl Title Analysis' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "title_analysis", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 4d89428d-5e1c-4507-a0a9-01aeca66a69d
+
+	measure 'Lbl Screened' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_screened", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: f2610ae8-4ff8-4385-81ea-ab02b816fe54
+
+	measure 'Lbl Need' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_need", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 3af40441-81dc-471f-88a9-5a5c233db43e
+
+	measure 'Lbl Impairment' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_impairment", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: f6c09af8-edbe-458f-bc93-7fc74d6f7c91
+
+	measure 'Lbl Target' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_target", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: dd62ef02-3a0b-484f-a539-757fcd48df06
+
+	measure 'Lbl Chart Region' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_region", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: e260eb69-5668-45eb-9ced-7078054348e8
+
+	measure 'Lbl Chart Rank' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_rank", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 1176c018-65eb-42f2-840d-03ff252237f6
+
+	measure 'Lbl Chart Trend' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_trend", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: f6c42bb4-184d-4103-87b1-4992ba566417
+
+	measure 'Lbl Chart Diag' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_diag", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: f4ad6fb9-2345-4139-b184-654239ae6f79
+
+	measure 'Lbl Chart Symptom' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_symptom", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 51d3e289-4b63-459a-a2a8-fd0707aa9fca
+
+	measure 'Lbl Chart Screen' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_screen", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: e25744b9-29ab-4635-b6ed-e4e19e3b537c
+
+	measure 'Lbl Note Synthetic' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "note_synthetic", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 1ab7360c-a748-465d-8cba-be3374b50fa7
+
+	measure 'Students Screened' = COUNTROWS ( FactScreening )
+		formatString: #,##0
+		displayFolder: 1 Core KPIs
+		lineageTag: a44f2b12-b497-4001-9125-8bd47ab34086
+
+	measure 'Eyes Examined' = COUNTROWS ( FactEyeExam )
+		formatString: #,##0
+		displayFolder: 1 Core KPIs
+		lineageTag: 04135247-8d7c-41de-9c32-738f6e5e3b4d
+
+	measure 'Students Needing Correction' = CALCULATE ( DISTINCTCOUNT ( FactEyeExam[StudentKey] ), FactEyeExam[SphereRx] <> 0 || FactEyeExam[CylinderRx] <> 0 )
+		formatString: #,##0
+		displayFolder: 1 Core KPIs
+		lineageTag: 04082de7-95a7-4c15-a011-758ac4e9c862
+
+	measure 'Correction Need Rate' = DIVIDE ( [Students Needing Correction], [Students Screened] )
+		formatString: 0.0%
+		displayFolder: 1 Core KPIs
+		lineageTag: 598bc172-ad37-4d24-b4f3-a7a5c08a6ac9
+
+	measure 'Uncorrected Need' = CALCULATE ( [Students Needing Correction], FactScreening[WearsCorrection] = 0 )
+		formatString: #,##0
+		displayFolder: 1 Core KPIs
+		lineageTag: c4e14a16-c8c7-4fd7-b98a-e0d429092e0a
+
+	measure 'Uncorrected Need Rate' = DIVIDE ( [Uncorrected Need], [Students Needing Correction] )
+		formatString: 0.0%
+		displayFolder: 1 Core KPIs
+		lineageTag: bad292e9-b0ef-43c5-9507-7192d3a843d8
+
+	measure 'Students With Impairment' = CALCULATE ( DISTINCTCOUNT ( FactEyeExam[StudentKey] ), FactEyeExam[VACategoryKey] >= 2 )
+		formatString: #,##0
+		displayFolder: 1 Core KPIs
+		lineageTag: 3a9c6afe-7116-4b2b-a74a-f34f42fa8e3e
+
+	measure 'Impairment Rate' = DIVIDE ( [Students With Impairment], [Students Screened] )
+		formatString: 0.0%
+		displayFolder: 1 Core KPIs
+		lineageTag: eaf355d2-edb3-44e3-bf72-58eddb7de4ea
+
+	measure 'Screen Exposure Rate' = DIVIDE ( CALCULATE ( [Students Screened], FactScreening[ScreenTimeKey] > 0 ), [Students Screened] )
+		formatString: 0.0%
+		displayFolder: 1 Core KPIs
+		lineageTag: cf445c74-b3ef-44e0-a490-9491acaa9535
+
+	measure 'Diagnosis Share' = DIVIDE ( [Eyes Examined], CALCULATE ( [Eyes Examined], REMOVEFILTERS ( DimDiagnosis ) ) )
+		formatString: 0.0%
+		displayFolder: 1 Core KPIs
+		lineageTag: 1b91961b-fd8a-4350-9fd5-55d4406353f7
+
+	measure 'Students With Symptom' = DISTINCTCOUNT ( BridgeSymptom[StudentKey] )
+		formatString: #,##0
+		displayFolder: 1 Core KPIs
+		lineageTag: 304a6c2f-f279-49fb-8ca2-72798ed6df9c
+
+	measure 'Symptom Rate' = DIVIDE ( [Students With Symptom], [Students Screened] )
+		formatString: 0.0%
+		displayFolder: 1 Core KPIs
+		lineageTag: d1270334-41cb-4f0e-bfd2-4ef52f6c6c9f
+
+	measure 'Students Screened PY' = CALCULATE ( [Students Screened], SAMEPERIODLASTYEAR ( DimDate[Date] ) )
+		formatString: #,##0
+		displayFolder: 2 Time intelligence & targets
+		lineageTag: d5d882aa-b733-4417-97f9-4027c96b116c
+
+	measure 'Students Screened YoY %' = DIVIDE ( [Students Screened] - [Students Screened PY], [Students Screened PY] )
+		formatString: +0.0%;-0.0%;0.0%
+		displayFolder: 2 Time intelligence & targets
+		lineageTag: 52ff0317-2cd6-4fda-aab3-7e6595265dc2
+
+	measure 'Students Screened YTD' = TOTALYTD ( [Students Screened], DimDate[Date] )
+		formatString: #,##0
+		displayFolder: 2 Time intelligence & targets
+		lineageTag: 11bae57e-13bd-4824-89fc-33f5609783c8
+
+	measure 'Correction Need Rate PY' = CALCULATE ( [Correction Need Rate], SAMEPERIODLASTYEAR ( DimDate[Date] ) )
+		formatString: 0.0%
+		displayFolder: 2 Time intelligence & targets
+		lineageTag: 2b5225b4-5878-4d35-869b-6820383c9bb5
+
+	measure 'Correction Need Rate Change (pts)' = IF ( NOT ISBLANK ( [Correction Need Rate PY] ), ( [Correction Need Rate] - [Correction Need Rate PY] ) * 100 )
+		formatString: +0.0;-0.0;0.0
+		displayFolder: 2 Time intelligence & targets
+		lineageTag: 39d32b55-a788-47ac-bdf3-e995e8f0e479
+
+	measure 'Target Students' = SUM ( FactTarget[TargetStudents] )
+		formatString: #,##0
+		displayFolder: 2 Time intelligence & targets
+		lineageTag: 0cf2bd9d-71e3-41f6-bf1d-1ce1911ca47e
+
+	measure 'Target Achievement %' = DIVIDE ( [Students Screened], [Target Students] )
+		formatString: 0.0%
+		displayFolder: 2 Time intelligence & targets
+		lineageTag: 72598752-8f8d-4712-be6e-96137dff15af
+
+	measure 'Prefecture Rank (Need Rate)' = IF ( ISINSCOPE ( DimPrefecture[Prefecture] ), RANKX ( ALLSELECTED ( DimPrefecture[Prefecture] ), [Correction Need Rate], , DESC, DENSE ) )
+		formatString: 0
+		displayFolder: 3 Ranking
+		lineageTag: 9f909a96-e870-4ab7-a982-ff6fb9be0ada
+
+	measure 'KPI Need Subtitle' =
+			VAR d = [Correction Need Rate Change (pts)]
+			RETURN
+			    IF (
+			        ISBLANK ( d ),
+			        IF ( [Selected Language] = "FR", "Première campagne", "First campaign" ),
+			        FORMAT ( d, "+0.0;-0.0;0.0", [Selected Locale] )
+			            & IF ( [Selected Language] = "FR", " pts vs campagne précédente", " pts vs previous campaign" )
+			    )
+		displayFolder: 4 Formatted captions
+		lineageTag: 9dba321c-71a6-4d15-9ac3-b2320f4d02a3
+
+	measure 'KPI Screened Caption' =
+			FORMAT ( [Students Screened], "#,0", [Selected Locale] )
+			    & IF ( [Selected Language] = "FR", " élèves dépistés", " students screened" )
+		displayFolder: 4 Formatted captions
+		lineageTag: cb44d79c-5ce0-47f5-87b3-e18f8d119d13
+
+	measure 'Alt Text Region Chart' =
+			IF (
+			    [Selected Language] = "FR",
+			    "Graphique à barres du taux de besoin de correction par région. Taux national : "
+			        & FORMAT ( [Correction Need Rate], "0.0 %", "fr-FR" ),
+			    "Bar chart of the need-for-correction rate by region. National rate: "
+			        & FORMAT ( [Correction Need Rate], "0.0%", "en-US" )
+			)
+		displayFolder: 4 Formatted captions
+		lineageTag: 615c355e-1981-4e97-a4a3-ed694cba239d
+
+	measure 'Correction Need Rate (Safe)' = IF ( [Students Screened] < 10, BLANK (), [Correction Need Rate] )
+		formatString: 0.0%
+		displayFolder: 5 Privacy
+		lineageTag: c9ed9a73-5884-4e5d-be29-85c901743c44
+
+	measure 'DQ Implausible Cylinder' = COUNTROWS ( FILTER ( FactEyeExam, ABS ( FactEyeExam[CylinderRx] ) > 6 ) )
+		formatString: #,##0
+		displayFolder: 6 Data integrity checks
+		lineageTag: a06e4b54-2b4b-48e2-a145-20c8915f1d96
+
+	measure 'DQ Plus Cylinder Convention' = COUNTROWS ( FILTER ( FactEyeExam, FactEyeExam[CylinderRx] > 0 && FactEyeExam[CylinderRx] <= 6 ) )
+		formatString: #,##0
+		displayFolder: 6 Data integrity checks
+		lineageTag: b3c250d1-5471-414c-a725-73091790fe24
+
+	measure 'DQ Missing Visual Acuity' = COUNTROWS ( FILTER ( FactEyeExam, ISBLANK ( FactEyeExam[VA_10] ) ) )
+		formatString: #,##0
+		displayFolder: 6 Data integrity checks
+		lineageTag: 4cc67bc5-dc33-4cd7-92ae-4cd13c1b115f
+
+	measure 'DQ Students Without Two Eyes' = COALESCE ( COUNTROWS ( FILTER ( FactScreening, CALCULATE ( COUNTROWS ( FactEyeExam ) ) <> 2 ) ), 0 )
+		formatString: #,##0
+		displayFolder: 6 Data integrity checks
+		lineageTag: 9dc85514-fd51-4874-9f76-2d1cb383304a
+
+	measure 'DQ Symptom Inconsistency' =
+			COALESCE (
+			    COUNTROWS (
+			        FILTER ( FactScreening, FactScreening[HasSymptoms] = 0 && CALCULATE ( COUNTROWS ( BridgeSymptom ) ) > 0 )
+			    ),
+			    0
+			)
+		formatString: #,##0
+		displayFolder: 6 Data integrity checks
+		lineageTag: 947b5449-12e2-4ed6-a269-4790d3c83a3a
+
+	measure 'DQ Issues Total' =
+			[DQ Implausible Cylinder] + [DQ Plus Cylinder Convention] + [DQ Missing Visual Acuity]
+			    + [DQ Students Without Two Eyes] + [DQ Symptom Inconsistency]
+		formatString: #,##0
+		displayFolder: 6 Data integrity checks
+		lineageTag: 8853f348-1b08-4607-8131-353fedc1918b
+
+	measure 'DQ Status' =
+			IF (
+			    [DQ Issues Total] = 0,
+			    IF ( [Selected Language] = "FR", "✓ Aucune anomalie", "✓ No issues" ),
+			    "⚠ " & FORMAT ( [DQ Issues Total], "#,0", [Selected Locale] )
+			        & IF ( [Selected Language] = "FR", " anomalies à vérifier", " issues to review" )
+			)
+		displayFolder: 6 Data integrity checks
+		lineageTag: 70436a49-56c9-49ba-87ce-e204acb9b39e
+
+	measure 'Lbl KPI YoY' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_yoy", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 1b4c5f58-11e1-40e1-8923-4492d35bbc4a
+
+	measure 'Lbl Slicer Language' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "slicer_language", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 40cc0033-bb85-40cc-8ba8-37afe05edde0
+
+	measure 'Lbl Slicer Region' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "slicer_region", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 137830a6-7147-4080-a6c7-1be75b5676a2
+
+	measure 'Lbl Slicer Campaign' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "slicer_campaign", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: e4e5bce4-50db-4ee7-9ad5-b6f60258e521
+
+	measure 'Lbl Note DQ' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "note_dq", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: c02602af-9ca7-41e7-88ba-99e17de2581c
+
+	measure 'Lbl Nav About' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "nav_about", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 795aa00c-a07e-4efb-ae40-ee84fe438948
+
+	measure 'Lbl Nav Exec' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "nav_exec", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 1721292a-c76a-4bc3-b83f-49d8a2839d55
+
+	measure 'Lbl Nav Analysis' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "nav_analysis", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: c4c7ca66-43d6-4ced-97a0-ce31fd686bf5
+
+	measure 'Lbl Nav Quality' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "nav_quality", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 7a1e5c26-bc8d-46c0-99f0-cc1a401416f6
+
+	measure 'Lbl Title Quality' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "title_quality", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: f2204bc0-173d-438b-8201-41b9d4043e29
+
+	measure 'Lbl Title About' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "title_about", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 328dbd7b-c99e-4763-8f03-7fa0374b82b6
+
+	measure 'Lbl Narrative Title' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "narrative_title", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 214d9361-4e06-42ad-bc67-75f55efb500e
+
+	measure 'Lbl Section Coverage' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "section_coverage", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 116df832-b965-449f-8bff-7837764d0ede
+
+	measure 'Lbl Section Needs' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "section_needs", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 54927b59-d07b-4fef-b2c3-23b61b4dbb10
+
+	measure 'Lbl Section Geo' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "section_geo", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 0270741d-c835-4f90-8fc6-a4dbbeda45d8
+
+	measure 'Lbl KPI Uncorrected' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "kpi_uncorrected", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: d7514287-f3f8-4332-aec6-c3abad0ee2a1
+
+	measure 'Lbl Chart VA' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_va", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 881e9b6b-2a5a-4850-9804-8d01218cb0b5
+
+	measure 'Lbl Chart DQ' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_dq", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 7dc50dda-1e8d-4977-b046-0d407efc2fe9
+
+	measure 'Lbl Note Population' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "note_population", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 14e2f680-cf85-422a-96be-919934aa46d2
+
+	measure 'Lbl Note Small Cells' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "note_small_cells", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 038be8f9-2a8d-46a1-82da-598a74d902da
+
+	measure 'Lbl Footer Built' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "footer_built", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: feb31793-297a-4a18-a0bd-bb4766ba6ae5
+
+	measure 'Lbl About Intro' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_intro", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: a27fda60-c3ca-4fe9-b18b-a4e67d557bff
+
+	measure 'Lbl About Def Need' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_def_need", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 73970141-c322-4b58-90c1-0ff66758695c
+
+	measure 'Lbl About Def Uncorrected' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_def_uncorrected", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: b2485fa6-5312-4387-9c8d-68c46d769208
+
+	measure 'Lbl About Def Impairment' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_def_impairment", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 2c731f33-e84f-4497-9bdb-70bdceac24b1
+
+	measure 'Lbl About Def Target' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_def_target", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 5c7d654f-a4c7-4f87-b3cc-db313624af84
+
+	measure 'Lbl About Howto Lang' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_howto_lang", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: b931c79f-ff8c-41ce-8523-d05d1858b54f
+
+	measure 'Lbl About Author' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "about_author", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: c0902d7d-b6c3-4d01-bbf5-04f328328ea8
+
+	measure 'Color YoY' =
+			VAR d = [Students Screened YoY %]
+			RETURN IF ( ISBLANK ( d ), "#4A5873", IF ( d >= 0, "#0CA30C", "#D03B3B" ) )
+		displayFolder: 4 Formatted captions
+		lineageTag: 8438850e-7bcc-41d6-9381-5a449bf8d6cc
+
+	measure 'KPI Screened YoY Caption' =
+			VAR d = [Students Screened YoY %]
+			RETURN
+			    IF (
+			        ISBLANK ( d ),
+			        IF ( [Selected Language] = "FR", "Première campagne", "First campaign" ),
+			        ( IF ( d >= 0, "▲ ", "▼ " ) )
+			            & FORMAT ( d, "+0.0%;-0.0%;0.0%", [Selected Locale] )
+			            & IF ( [Selected Language] = "FR", " vs campagne précédente", " vs previous campaign" )
+			    )
+		displayFolder: 4 Formatted captions
+		lineageTag: b0a21558-b640-4a85-8cae-97995b816687
+
+	measure 'Color Target Achievement' =
+			VAR a = [Target Achievement %]
+			RETURN
+			    IF (
+			        ISBLANK ( a ), "#4A5873",
+			        IF ( a >= 0.95, "#0CA30C", IF ( a >= 0.85, "#FAB219", "#D03B3B" ) )
+			    )
+		displayFolder: 4 Formatted captions
+		lineageTag: b81068ca-e1cc-4001-94d3-5691fdeea275
+
+	measure 'KPI Target Caption' =
+			FORMAT ( [Target Students], "#,0", [Selected Locale] )
+			    & IF ( [Selected Language] = "FR", " élèves ciblés", " students targeted" )
+		displayFolder: 4 Formatted captions
+		lineageTag: 72e74eac-3d76-44ea-9f16-f516dbd43a23
+
+	measure 'KPI Uncorrected Caption' = IF ( [Selected Language] = "FR", "Parmi les besoins de correction", "Of those needing correction" )
+		displayFolder: 4 Formatted captions
+		lineageTag: 918c3050-1829-434d-b54b-a0b4198f1f10
+
+	measure 'KPI Impairment Caption' = IF ( [Selected Language] = "FR", "Acuité légère ou pire, au moins un œil", "Mild acuity or worse, at least one eye" )
+		displayFolder: 4 Formatted captions
+		lineageTag: 249b1351-8316-4078-94fe-c41d9a2f935a
+
+	measure 'Color Region Bar' = "#2A78D6"
+		displayFolder: 4 Formatted captions
+		lineageTag: bb640a6d-47c3-473a-9137-d6ba7cbdd3f1
+
+	measure 'Header Campaign Pill' =
+			VAR yr = SELECTEDVALUE ( DimDate[Year] )
+			RETURN
+			    IF (
+			        ISBLANK ( yr ),
+			        IF ( [Selected Language] = "FR", "Toutes campagnes", "All campaigns" ),
+			        IF ( [Selected Language] = "FR", "Campagne " & yr, yr & " campaign" )
+			    )
+		displayFolder: 4 Formatted captions
+		lineageTag: a7a53904-1afe-4de5-a034-7226173eb987
+
+	measure 'Narrative Headline' =
+			VAR need = [Correction Need Rate]
+			VAR screened = [Students Screened]
+			RETURN
+			    IF (
+			        [Selected Language] = "FR",
+			        FORMAT ( need, "0.0%", "fr-FR" ) & " des " & FORMAT ( screened, "#,0", "fr-FR" )
+			            & " élèves dépistés ont besoin d'une correction visuelle.",
+			        FORMAT ( need, "0.0%", "en-US" ) & " of " & FORMAT ( screened, "#,0", "en-US" )
+			            & " students screened need a vision correction."
+			    )
+		displayFolder: 4 Formatted captions
+		lineageTag: 6039ab76-4b33-4439-bdf2-2d01ad7eeec9
+
+	measure 'Diagnosis Share (Cat)' =
+			VAR k = SELECTEDVALUE ( 'Lbl Cat'[CatKey] )
+			RETURN
+			    IF (
+			        SELECTEDVALUE ( 'Lbl Cat'[LanguageCode] ) = [Selected Language] && NOT ISBLANK ( k ) && [Students Screened] >= 10,
+			        CALCULATE ( [Diagnosis Share], DimDiagnosis[GroupSortOrder] = k )
+			    )
+		formatString: 0.0%
+		displayFolder: 3 Clinical analysis
+		lineageTag: a367987f-4732-4918-8568-2f8a7ed1adbc
+
+	measure 'VA Share (Cat)' =
+			VAR k = SELECTEDVALUE ( 'Lbl Cat'[CatKey] )
+			RETURN
+			    IF (
+			        SELECTEDVALUE ( 'Lbl Cat'[LanguageCode] ) = [Selected Language] && NOT ISBLANK ( k ) && [Students Screened] >= 10,
+			        DIVIDE ( CALCULATE ( [Eyes Examined], FactEyeExam[VACategoryKey] = k ), [Eyes Examined] )
+			    )
+		formatString: 0.0%
+		displayFolder: 3 Clinical analysis
+		lineageTag: affa98d6-852d-4bc3-960f-a6c994ee9339
+
+	measure 'Symptom Rate (Cat)' =
+			VAR k = SELECTEDVALUE ( 'Lbl Cat'[CatKey] )
+			RETURN
+			    IF (
+			        SELECTEDVALUE ( 'Lbl Cat'[LanguageCode] ) = [Selected Language] && NOT ISBLANK ( k ) && [Students Screened] >= 10,
+			        CALCULATE ( [Symptom Rate], DimSymptom[SymptomKey] = k )
+			    )
+		formatString: 0.0%
+		displayFolder: 3 Clinical analysis
+		lineageTag: 736785ee-760e-4487-94fe-62ba04075f3f
+
+	measure 'Eyes by Screen Time (Cat)' =
+			VAR ks = SELECTEDVALUE ( 'Lbl Cat'[CatKey] )
+			VAR kd = SELECTEDVALUE ( 'Lbl Cat Legend'[CatKey] )
+			RETURN
+			    IF (
+			        SELECTEDVALUE ( 'Lbl Cat'[LanguageCode] ) = [Selected Language]
+			            && SELECTEDVALUE ( 'Lbl Cat Legend'[LanguageCode] ) = [Selected Language]
+			            && NOT ISBLANK ( ks ) && NOT ISBLANK ( kd ),
+			        CALCULATE ( [Eyes Examined], FactScreening[ScreenTimeKey] = ks, DimDiagnosis[GroupSortOrder] = kd )
+			    )
+		formatString: #,0
+		displayFolder: 3 Clinical analysis
+		lineageTag: 20e18781-20c4-4124-9b51-00b6eeaca848
+
+	measure 'Color Diagnosis Group' =
+			VAR kl = SELECTEDVALUE ( 'Lbl Cat Legend'[CatKey] )
+			VAR k = COALESCE ( kl, SELECTEDVALUE ( 'Lbl Cat'[CatKey] ) )
+			VAR okAxis = SELECTEDVALUE ( 'Lbl Cat'[LanguageCode] ) = [Selected Language]
+			VAR okLegend = ISBLANK ( kl ) || SELECTEDVALUE ( 'Lbl Cat Legend'[LanguageCode] ) = [Selected Language]
+			RETURN
+			    IF (
+			        okAxis && okLegend && NOT ISBLANK ( k ),
+			        SWITCH ( k, 1, "#2A78D6", 2, "#C2410C", 3, "#1BAF7A", 4, "#6250D6", "#8A94A6" )
+			    )
+		displayFolder: 7 Formatting
+		lineageTag: 49bd2bcd-927c-469a-b983-325310b936b1
+
+	measure 'Color VA Ramp' =
+			VAR k = SELECTEDVALUE ( 'Lbl Cat'[CatKey] )
+			RETURN
+			    IF (
+			        SELECTEDVALUE ( 'Lbl Cat'[LanguageCode] ) = [Selected Language] && NOT ISBLANK ( k ),
+			        SWITCH ( k, 1, "#CDE2FB", 2, "#86B6EF", 3, "#3987E5", 4, "#1C5CAB", 5, "#104281", "#8A94A6" )
+			    )
+		displayFolder: 7 Formatting
+		lineageTag: 67d25563-79d4-457a-944a-cd272d794465
+
+	measure 'Lbl Note Assoc' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "note_assoc", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: ca4376a7-8f03-4762-9a2c-0a2f19ac2a92
+
+	measure 'Alt Text Diagnosis Chart' = IF ( [Selected Language] = "FR", "Barres : répartition des yeux examinés par groupe de diagnostic (astigmatisme, myopie, hypermétropie, emmétropie).", "Bars: share of examined eyes by diagnosis group (astigmatism, myopia, hyperopia, emmetropia)." )
+		displayFolder: 8 Accessibility
+		lineageTag: 2ae8bbdc-9854-4488-9ce3-d9248c8c9db4
+
+	measure 'Alt Text VA Chart' = IF ( [Selected Language] = "FR", "Colonnes : répartition des yeux examinés par catégorie d'acuité visuelle, de l'absence de déficience à la cécité.", "Columns: share of examined eyes by visual acuity category, from no impairment to blindness." )
+		displayFolder: 8 Accessibility
+		lineageTag: 43552b24-06d7-4d1e-955f-b85ca5e40405
+
+	measure 'Alt Text Symptom Chart' = IF ( [Selected Language] = "FR", "Barres : proportion d'élèves déclarant chaque signe fonctionnel, triée par fréquence.", "Bars: share of students reporting each symptom, sorted by frequency." )
+		displayFolder: 8 Accessibility
+		lineageTag: 310f067e-9c3a-4c22-88e6-c20ff51ea8ec
+
+	measure 'Alt Text Screen Chart' = IF ( [Selected Language] = "FR", "Colonnes empilées à 100 % : répartition des groupes de diagnostic selon le temps d'écran quotidien. Association, pas causalité.", "100% stacked columns: diagnosis group mix by daily screen time. Association, not causation." )
+		displayFolder: 8 Accessibility
+		lineageTag: eef1e42b-665e-4467-b942-23b9dc88aaac
+
+	measure 'DQ Issues (Check)' =
+			VAR k = SELECTEDVALUE ( 'DQ Check'[CheckKey] )
+			RETURN
+			    IF (
+			        SELECTEDVALUE ( 'DQ Check'[LanguageCode] ) = [Selected Language] && NOT ISBLANK ( k ),
+			        SWITCH ( k, 1, [DQ Implausible Cylinder], 2, [DQ Plus Cylinder Convention], 3, [DQ Missing Visual Acuity], 4, [DQ Students Without Two Eyes], 5, [DQ Symptom Inconsistency] )
+			    )
+		formatString: #,0
+		displayFolder: 6 Data integrity checks
+		lineageTag: 246cd208-c1a6-4709-9310-c5a61d7ce450
+
+	measure 'Color DQ Status' = IF ( [DQ Issues Total] = 0, "#0CA30C", "#FAB219" )
+		displayFolder: 7 Formatting
+		lineageTag: debf296c-c725-46f0-a5c4-c5762e653648
+
+	measure 'Lbl Chart Security' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_security", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 3e34258e-f6bd-4356-a8ee-1fb1e502dbeb
+
+	measure 'Lbl Sec Static' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "sec_static", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 9bc005e9-fe93-49a8-9412-0e75ffc24efc
+
+	measure 'Lbl Sec Dynamic' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "sec_dynamic", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 74f3d7b2-11bd-41cd-b61b-650ec117e98c
+
+	measure 'Lbl Sec Entra' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "sec_entra", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: d3b6c92f-a067-40cb-bc21-8645295750eb
+
+	measure 'Alt Text DQ Table' = IF ( [Selected Language] = "FR", "Tableau des contrôles de qualité des données : nom du contrôle, nombre d'anomalies et règle utilisée. Total : " & FORMAT ( [DQ Issues Total], "#,0", "fr-FR" ), "Data quality checks table: check name, number of issues and rule used. Total: " & FORMAT ( [DQ Issues Total], "#,0", "en-US" ) )
+		displayFolder: 8 Accessibility
+		lineageTag: eb8930bf-6a14-4711-8058-699550246da5
+
+	measure 'Lbl Col Prefecture' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "col_prefecture", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 6c95e384-9bd7-4599-9e16-4d4dc2e9ccf0
+
+	measure 'Lbl Col Rank' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "col_rank", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 2eaf92cb-b932-4758-a25d-b748a71b12a5
+
+	measure 'Lbl Legend Target' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "legend_target", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 8c7f49a8-1c68-4748-9b5b-ea662450df2a
+
+	measure 'Lbl About Def Need Body' = VAR t = [Lbl About Def Need] VAR p = FIND ( ":", t, 1, 0 ) RETURN IF ( p > 0, TRIM ( MID ( t, p + 1, 9999 ) ), t )
+		isHidden
+		displayFolder: 0 Language
+		lineageTag: c13f8073-f9e3-41cc-abc3-3546749f41ab
+
+	measure 'Lbl About Def Uncorrected Body' = VAR t = [Lbl About Def Uncorrected] VAR p = FIND ( ":", t, 1, 0 ) RETURN IF ( p > 0, TRIM ( MID ( t, p + 1, 9999 ) ), t )
+		isHidden
+		displayFolder: 0 Language
+		lineageTag: 5985dfba-3a4a-4dd7-a5c8-60421b355735
+
+	measure 'Lbl About Def Impairment Body' = VAR t = [Lbl About Def Impairment] VAR p = FIND ( ":", t, 1, 0 ) RETURN IF ( p > 0, TRIM ( MID ( t, p + 1, 9999 ) ), t )
+		isHidden
+		displayFolder: 0 Language
+		lineageTag: 0907451e-a1a5-401f-a5df-2c3d0e809472
+
+	measure 'Lbl About Def Target Body' = VAR t = [Lbl About Def Target] VAR p = FIND ( ":", t, 1, 0 ) RETURN IF ( p > 0, TRIM ( MID ( t, p + 1, 9999 ) ), t )
+		isHidden
+		displayFolder: 0 Language
+		lineageTag: 300ceec6-1622-4348-9ea5-c9322d18f125
+
+	measure 'Lbl Chart Diag Share' = LOOKUPVALUE ( Labels[Text], Labels[LabelKey], "chart_diag_share", Labels[LanguageCode], [Selected Language] )
+		displayFolder: 0 Language
+		lineageTag: 90287340-4099-4598-9f02-d41702a56915
+
+	column Value
+		isHidden
+		lineageTag: d5dc7385-1c46-46db-835a-c8de8b3a8e59
+		isNameInferred
+		sourceColumn: [Value]
+
+	partition _Measures = calculated
+		mode: import
+		source = {BLANK()}
+

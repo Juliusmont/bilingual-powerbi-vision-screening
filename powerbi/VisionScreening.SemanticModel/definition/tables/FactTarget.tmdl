@@ -1,0 +1,42 @@
+table FactTarget
+	lineageTag: 03ce6802-6f6c-4c14-8488-f5fae9954ff5
+
+	column PrefectureKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 902c3fca-c7ea-4a62-b8f1-ad85b494ae1b
+		summarizeBy: none
+		sourceColumn: PrefectureKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: int64
+		formatString: 0
+		lineageTag: a9c91622-34df-4d3d-a5da-758720951e82
+		summarizeBy: none
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column TargetStudents
+		dataType: int64
+		formatString: 0
+		lineageTag: ab20f80f-e644-4540-a08d-afe3c34cf2b4
+		summarizeBy: sum
+		sourceColumn: TargetStudents
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactTarget = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "FactTarget.csv"), [Delimiter = ",", Columns = 3, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"PrefectureKey", Int64.Type}, {"DateKey", Int64.Type}, {"TargetStudents", Int64.Type}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

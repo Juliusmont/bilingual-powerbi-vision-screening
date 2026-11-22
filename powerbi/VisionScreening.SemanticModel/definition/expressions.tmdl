@@ -1,0 +1,10 @@
+/// Chemin local du dossier data\ (avec \ final). À adapter après clonage.
+expression DataFolder =
+		let
+		    Source = "C:\PROJECTS\bilingual-powerbi-vision-screening\data\" meta [IsParameterQuery = true, IsParameterQueryRequired = false, Type = type text]
+		in
+		    Source
+	lineageTag: dc042e28-d955-4def-bfcc-92698933c71c
+
+	annotation PBI_ResultType = Text
+

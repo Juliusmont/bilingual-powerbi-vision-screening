@@ -1,0 +1,52 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-CA
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_QueryOrder = ["FactTarget","FactScreening","FactEyeExam","Labels","SecurityUserRegion","BridgeHistory","BridgeSymptom","DimAgeBand","DimCommune","DimCycle","DimDate","DimDiagnosis","DimEye","DimHistory","DimLanguage","DimPrefecture","DimRegion","DimSchool","DimSchoolType","DimScreenTime","DimSex","DimSymptom","DimVACategory","DataFolder"]
+
+annotation PBI_ProTooling = ["DevMode","TMDLView_Desktop","MCP-PBIModeling"]
+
+ref table FactTarget
+ref table FactScreening
+ref table FactEyeExam
+ref table Labels
+ref table SecurityUserRegion
+ref table BridgeHistory
+ref table BridgeSymptom
+ref table DimAgeBand
+ref table DimCommune
+ref table DimCycle
+ref table DimDate
+ref table DimDiagnosis
+ref table DimEye
+ref table DimHistory
+ref table DimLanguage
+ref table DimPrefecture
+ref table DimRegion
+ref table DimSchool
+ref table DimSchoolType
+ref table DimScreenTime
+ref table DimSex
+ref table DimSymptom
+ref table DimVACategory
+ref table _Measures
+ref table 'Param Region'
+ref table 'Param Campaign'
+ref table 'Param Prefecture'
+ref table 'Lbl Cat'
+ref table 'Lbl Cat Legend'
+ref table 'DQ Check'
+
+ref role 'Region - Plateaux'
+ref role 'Region - Maritime'
+ref role 'Dynamic by user'
+
+ref cultureInfo en-US
+

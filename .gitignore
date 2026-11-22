@@ -10,6 +10,7 @@ __pycache__/
 .venv/
 venv/
 env/
+save/
 .ipynb_checkpoints/
 
 # --- Power BI ---
@@ -32,3 +33,6 @@ env/
 ._*
 Thumbs.db
 desktop.ini
+
+# Binary report: attached to GitHub Releases, not committed
+powerbi/*.pbix

@@ -1,0 +1,104 @@
+{
+  "by_campaign": {
+    "2024": {
+      "students_screened": 8651,
+      "correction_need_rate": 0.8728470697029245,
+      "uncorrected_need_rate": 0.9156403125413852,
+      "impairment_rate": 0.4451508496127615,
+      "screen_exposure_rate": 0.6527569067159866,
+      "symptom_rate": 0.8445266443185759,
+      "target_students": 9440.0,
+      "target_achievement": 0.9164194915254237
+    },
+    "2025": {
+      "students_screened": 11296,
+      "correction_need_rate": 0.8701310198300283,
+      "uncorrected_need_rate": 0.9209482144673924,
+      "impairment_rate": 0.4546742209631728,
+      "screen_exposure_rate": 0.6990084985835694,
+      "symptom_rate": 0.8447237960339944,
+      "target_students": 12480.0,
+      "target_achievement": 0.9051282051282051
+    },
+    "2026": {
+      "students_screened": 15306,
+      "correction_need_rate": 0.8726643146478505,
+      "uncorrected_need_rate": 0.9208654638017519,
+      "impairment_rate": 0.449562263164772,
+      "screen_exposure_rate": 0.7536913628642362,
+      "symptom_rate": 0.8459427675421404,
+      "target_students": 16290.0,
+      "target_achievement": 0.9395948434622468
+    }
+  },
+  "by_region_2026": {
+    "Savanes": {
+      "students_screened": 1724,
+      "correction_need_rate": 0.8544083526682135,
+      "uncorrected_need_rate": 0.9178547182620502,
+      "impairment_rate": 0.43677494199535966,
+      "screen_exposure_rate": 0.5290023201856149,
+      "symptom_rate": 0.8544083526682135,
+      "target_students": 1840.0,
+      "target_achievement": 0.9369565217391305
+    },
+    "Kara": {
+      "students_screened": 2253,
+      "correction_need_rate": 0.8655126498002663,
+      "uncorrected_need_rate": 0.9220512820512821,
+      "impairment_rate": 0.44607190412782954,
+      "screen_exposure_rate": 0.6391478029294274,
+      "symptom_rate": 0.8455392809587217,
+      "target_students": 2360.0,
+      "target_achievement": 0.9546610169491525
+    },
+    "Centrale": {
+      "students_screened": 1416,
+      "correction_need_rate": 0.8637005649717514,
+      "uncorrected_need_rate": 0.9165985282093213,
+      "impairment_rate": 0.4399717514124294,
+      "screen_exposure_rate": 0.6588983050847458,
+      "symptom_rate": 0.8587570621468926,
+      "target_students": 1470.0,
+      "target_achievement": 0.963265306122449
+    },
+    "Plateaux": {
+      "students_screened": 3982,
+      "correction_need_rate": 0.8721747865394274,
+      "uncorrected_need_rate": 0.9219694788367405,
+      "impairment_rate": 0.4402310396785535,
+      "screen_exposure_rate": 0.7330487192365646,
+      "symptom_rate": 0.8410346559517831,
+      "target_students": 4120.0,
+      "target_achievement": 0.9665048543689321
+    },
+    "Maritime": {
+      "students_screened": 5931,
+      "correction_need_rate": 0.8831562974203339,
+      "uncorrected_need_rate": 0.9215349369988545,
+      "impairment_rate": 0.4631596695329624,
+      "screen_exposure_rate": 0.8990052267745743,
+      "symptom_rate": 0.843871185297589,
+      "target_students": 6500.0,
+      "target_achievement": 0.9124615384615384
+    }
+  },
+  "data_quality": {
+    "implausible_cylinder": 177,
+    "plus_cylinder_convention": 178,
+    "missing_visual_acuity": 274,
+    "students_without_two_eyes": 0,
+    "symptom_inconsistency": 0,
+    "total": 629
+  },
+  "all_campaigns": {
+    "students_screened": 35253,
+    "correction_need_rate": 0.871897427169319,
+    "uncorrected_need_rate": 0.9196082896834434,
+    "impairment_rate": 0.45011772047768983,
+    "screen_exposure_rate": 0.7114004481888067,
+    "symptom_rate": 0.8452046634328994,
+    "target_students": 38210.0,
+    "target_achievement": 0.9226118817063595
+  }
+}

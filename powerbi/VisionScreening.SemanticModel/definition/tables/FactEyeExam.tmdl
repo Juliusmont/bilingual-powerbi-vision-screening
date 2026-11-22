@@ -1,0 +1,114 @@
+table FactEyeExam
+	lineageTag: b5d1ac02-a20f-4081-8750-eb61ab1a2087
+
+	column StudentKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 03901c4b-6366-43ac-a16f-7f37ab0fbf3a
+		summarizeBy: none
+		sourceColumn: StudentKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column EyeKey
+		dataType: int64
+		formatString: 0
+		lineageTag: b89f5368-12ad-43ee-8a58-f3dda7286ef7
+		summarizeBy: none
+		sourceColumn: EyeKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column DiagnosisKey
+		dataType: int64
+		formatString: 0
+		lineageTag: e02284b7-c932-45fd-b7b3-45a9210c6225
+		summarizeBy: none
+		sourceColumn: DiagnosisKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column VA_10
+		dataType: int64
+		formatString: 0
+		lineageTag: 54bdf5be-58db-459d-bfcc-afb9236012a2
+		summarizeBy: sum
+		sourceColumn: VA_10
+
+		annotation SummarizationSetBy = Automatic
+
+	column VACategoryKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 32b468cc-647f-430c-889b-006ac3609efe
+		summarizeBy: none
+		sourceColumn: VACategoryKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SphereCyclo
+		dataType: double
+		formatString: 0.00
+		lineageTag: 57373c12-0f89-44ff-bd30-49758c5d3c19
+		summarizeBy: sum
+		sourceColumn: SphereCyclo
+
+		annotation SummarizationSetBy = Automatic
+
+	column CylinderCyclo
+		dataType: double
+		formatString: 0.00
+		lineageTag: 40fd1626-47b7-406e-a24d-7f0a4d79d5cf
+		summarizeBy: sum
+		sourceColumn: CylinderCyclo
+
+		annotation SummarizationSetBy = Automatic
+
+	column AxisCyclo
+		dataType: int64
+		formatString: 0
+		lineageTag: 570decf3-4100-4bae-893d-e26b2fde3068
+		summarizeBy: sum
+		sourceColumn: AxisCyclo
+
+		annotation SummarizationSetBy = Automatic
+
+	column SphereRx
+		dataType: double
+		formatString: 0.00
+		lineageTag: cead9771-220d-4fc0-a532-56a2e3602071
+		summarizeBy: sum
+		sourceColumn: SphereRx
+
+		annotation SummarizationSetBy = Automatic
+
+	column CylinderRx
+		dataType: double
+		formatString: 0.00
+		lineageTag: ebb69c22-bf34-471c-8d82-e68cd80c2dc5
+		summarizeBy: sum
+		sourceColumn: CylinderRx
+
+		annotation SummarizationSetBy = Automatic
+
+	column AxisRx
+		dataType: int64
+		formatString: 0
+		lineageTag: 46d92461-e093-4a10-af1f-94c401cce4d8
+		summarizeBy: sum
+		sourceColumn: AxisRx
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactEyeExam = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "FactEyeExam.csv"), [Delimiter = ",", Columns = 11, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"StudentKey", Int64.Type}, {"EyeKey", Int64.Type}, {"DiagnosisKey", Int64.Type}, {"VA_10", Int64.Type}, {"VACategoryKey", Int64.Type}, {"SphereCyclo", type number}, {"CylinderCyclo", type number}, {"AxisCyclo", Int64.Type}, {"SphereRx", type number}, {"CylinderRx", type number}, {"AxisRx", Int64.Type}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

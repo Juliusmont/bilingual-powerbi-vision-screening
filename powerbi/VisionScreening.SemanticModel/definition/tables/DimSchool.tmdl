@@ -1,0 +1,67 @@
+table DimSchool
+	lineageTag: e9d072e5-3fe1-4d32-a397-f213575e8547
+
+	column SchoolKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 542a6d02-bea9-4b50-9bbf-d8090b28576d
+		summarizeBy: none
+		sourceColumn: SchoolKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CommuneKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 0d1249ce-3843-4fae-b8b3-11099986e245
+		summarizeBy: none
+		sourceColumn: CommuneKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchoolName
+		dataType: string
+		lineageTag: f96047b4-04ca-4706-b4e9-122d08aa37aa
+		summarizeBy: none
+		sourceColumn: SchoolName
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchoolCode
+		dataType: string
+		lineageTag: 053cc6fa-e95d-44bf-8e92-57de232613a0
+		summarizeBy: none
+		sourceColumn: SchoolCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column SchoolTypeKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 96e588c6-0054-4a0c-8792-a7c4766ab81c
+		summarizeBy: none
+		sourceColumn: SchoolTypeKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column HasUpperSecondary
+		dataType: int64
+		formatString: 0
+		lineageTag: 5bb9518a-ce80-4052-9c70-d77c1a671f61
+		summarizeBy: sum
+		sourceColumn: HasUpperSecondary
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimSchool = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "DimSchool.csv"), [Delimiter = ",", Columns = 6, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"SchoolKey", Int64.Type}, {"CommuneKey", Int64.Type}, {"SchoolName", type text}, {"SchoolCode", type text}, {"SchoolTypeKey", Int64.Type}, {"HasUpperSecondary", Int64.Type}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+

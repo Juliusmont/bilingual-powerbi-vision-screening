@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "VisionScreening"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "a74f513e-0483-41f8-9af3-ba4aecd934cf"
+  }
+}

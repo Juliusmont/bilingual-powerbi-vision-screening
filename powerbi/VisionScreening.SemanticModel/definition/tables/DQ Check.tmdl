@@ -1,0 +1,48 @@
+table 'DQ Check'
+	lineageTag: dc11790d-a362-4739-8bd6-fb8d27e76e4e
+
+	column CheckKey
+		isHidden
+		lineageTag: 447bdc7c-087f-482c-9370-c654ecf0fe7e
+		isNameInferred
+		sourceColumn: [CheckKey]
+
+	column LanguageCode
+		isHidden
+		lineageTag: 9ac8ada7-3e7a-4a53-ba0a-9f6c6bac9ed3
+		isNameInferred
+		sourceColumn: [LanguageCode]
+
+	column Check
+		lineageTag: ea7c776f-4f34-4214-b5b6-cf45e3088acd
+		isNameInferred
+		sourceColumn: [Check]
+		sortByColumn: CheckKey
+
+	column Rule
+		lineageTag: 963280dc-debd-4c06-964a-e2d2c706135a
+		isNameInferred
+		sourceColumn: [Rule]
+
+	partition 'DQ Check' = calculated
+		mode: import
+		source =
+				DATATABLE (
+				    "CheckKey", INTEGER,
+				    "LanguageCode", STRING,
+				    "Check", STRING,
+				    "Rule", STRING,
+				    {
+				        { 1, "FR", "Cylindre implausible", "|cylindre| > 6 D" },
+				        { 1, "EN", "Implausible cylinder", "|cylinder| > 6 D" },
+				        { 2, "FR", "Convention du cylindre positif", "0 < cylindre ≤ 6 D (à convertir en cylindre négatif)" },
+				        { 2, "EN", "Plus-cylinder convention", "0 < cylinder ≤ 6 D (to convert to minus-cylinder)" },
+				        { 3, "FR", "Acuité visuelle manquante", "acuité de loin non renseignée" },
+				        { 3, "EN", "Missing visual acuity", "distance acuity not recorded" },
+				        { 4, "FR", "Élèves sans deux yeux examinés", "nombre d'yeux examinés différent de 2" },
+				        { 4, "EN", "Students without two eyes", "number of examined eyes different from 2" },
+				        { 5, "FR", "Incohérence des symptômes", "signes déclarés alors que « sans symptôme »" },
+				        { 5, "EN", "Symptom inconsistency", "symptoms listed while flagged “no symptoms”" }
+				    }
+				)
+

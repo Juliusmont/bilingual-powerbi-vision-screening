@@ -1,0 +1,8 @@
+/// Static role: Plateaux region only
+role 'Region - Plateaux'
+	modelPermission: read
+
+	tablePermission DimRegion = [RegionCode] = "PLA"
+
+	annotation PBI_Id = 5c448be3a40044a1b8893dd0513784f0
+

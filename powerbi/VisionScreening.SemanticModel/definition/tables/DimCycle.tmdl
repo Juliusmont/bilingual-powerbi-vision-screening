@@ -1,0 +1,40 @@
+table DimCycle
+	lineageTag: 55b773a5-622c-45ad-8c56-6772d61c4af4
+
+	column CycleKey
+		dataType: int64
+		formatString: 0
+		lineageTag: 10b5fde1-ea55-4859-9281-457a52b8b536
+		summarizeBy: none
+		sourceColumn: CycleKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cycle_FR
+		dataType: string
+		lineageTag: 3ca739bd-5834-43d5-94b9-497c1726ddba
+		summarizeBy: none
+		sourceColumn: Cycle_FR
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cycle_EN
+		dataType: string
+		lineageTag: c14e02ec-bb34-4894-bda4-41af0b4d78b5
+		summarizeBy: none
+		sourceColumn: Cycle_EN
+
+		annotation SummarizationSetBy = Automatic
+
+	partition DimCycle = m
+		mode: import
+		source =
+				let
+				  Source = Csv.Document(File.Contents(DataFolder & "DimCycle.csv"), [Delimiter = ",", Columns = 3, Encoding = 65001, QuoteStyle = QuoteStyle.None]),
+				  #"Promoted headers" = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				  #"Changed column type" = Table.TransformColumnTypes(#"Promoted headers", {{"CycleKey", Int64.Type}, {"Cycle_FR", type text}, {"Cycle_EN", type text}}, "en-US")
+				in
+				  #"Changed column type"
+
+	annotation PBI_ResultType = Table
+
