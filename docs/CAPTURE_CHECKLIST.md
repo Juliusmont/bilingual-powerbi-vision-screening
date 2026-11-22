@@ -9,18 +9,25 @@
 
 ## Screenshots (PNG, saved in `screenshots/`)
 
+Captured, one file per page per language (page order matches the sidebar nav / section 6 of the guidebook):
+
 | # | File name | Content |
 |---|---|---|
-| 1 | `01-overview-fr.png` | Overview page, French |
-| 2 | `02-overview-en.png` | Overview page, English (same filters) |
-| 3 | `03-clinical-analysis-fr.png` | Clinical analysis, French |
-| 4 | `04-clinical-analysis-en.png` | Clinical analysis, English |
-| 5 | `05-quality-security-en.png` | Quality & security page |
-| 6 | `06-kpi-tooltip-fr.png` | Hover on the Need card, definition tooltip visible |
-| 7 | `07-rls-view-as-plateaux.png` | *Modeling > View as > Region - Plateaux*, banner visible |
-| 8 | `08-model-view.png` | Model view, all tables visible, laid out by star schema |
-| 9 | `09-service-language-fr.png` | (optional) Power BI Service with `?language=fr`, translated field list |
-| 10 | `10-claude-code-session.png` | (optional) Claude Code + Desktop side by side, for the "how it was built" section |
+| 1 | `page1-FR.png` / `page1-EN.png` | About page |
+| 2 | `page2-FR.png` / `page2-EN.png` | Overview page |
+| 3 | `page3-FR.png` / `page3-EN.png` | Clinical analysis page |
+| 4 | `page4-FR.png` / `page4-EN.png` | Quality & security page |
+| 5 | `model-view.png` | Model view, all tables visible, laid out by star schema |
+| 6 | `demo.mp4` | Demo video (FR/EN switch, filters, RLS) |
+
+Still to capture (optional):
+
+| # | File name | Content |
+|---|---|---|
+| 7 | `06-kpi-tooltip-fr.png` | Hover on the Need card, definition tooltip visible |
+| 8 | `07-rls-view-as-plateaux.png` | *Modeling > View as > Region - Plateaux*, banner visible |
+| 9 | `09-service-language-fr.png` | Power BI Service with `?language=fr`, translated field list |
+| 10 | `10-claude-code-session.png` | Claude Code + Desktop side by side, for the "how it was built" section |
 
 Use *Win + Shift + S* (window capture) for the report canvas only, or *File > Export > PDF* for a full-report PDF (`screenshots/report-fr.pdf`).
 
@@ -36,6 +43,8 @@ Use *Win + Shift + S* (window capture) for the report canvas only, or *File > Ex
 | 65-80 s | (optional) Claude Code prompt building a visual, Desktop reloading |
 
 Record with *Win + Alt + R* (Xbox Game Bar) or Clipchamp, 1080p, 30 fps.
+`screenshots/demo.mp4` is recorded (~20 MB, uncommitted) — still above the 10 MB target below;
+compress it with `ffmpeg` (not available in this environment) if a smaller file or an inline GIF preview is wanted.
 Then, for the README (GitHub plays a GIF inline, an MP4 only as a link or uploaded attachment):
 
 ```powershell

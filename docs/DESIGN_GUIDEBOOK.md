@@ -38,6 +38,7 @@ symptomatic students over-represented). Every page that shows a rate carries the
 | Footnote line | 776 | 16 |
 
 - **KPI row**: 5 cards of **220 x 120**, x = 244, 482, 720, 958, 1196 (18 px gap: 5 x 220 + 4 x 18 = 1172).
+- **Narrative banner (Overview page only)**: filled with the sidebar colour (`#0B1F3A` shade, rounded rectangle), full content width. Because the fill is dark, its two text runs (`Lbl Narrative Title`, `Narrative Headline`) are the one deliberate exception to "primary/muted ink on light background": the label uses `#B6C0D2` and the headline uses `#FFFFFF`, not the usual ink colours.
 
 ## 3. Colour
 
@@ -62,7 +63,10 @@ Validated with the dataviz palette checker (colour-vision-deficiency separation 
 | 3 | Hyperopia | `#1BAF7A` | `#199E70` |
 | 4 | Emmetropia | `#6250D6` | `#9085E9` |
 
-Diagnosis groups always keep these colours, on every page and in both languages (colour follows the entity).
+Diagnosis groups always keep these colours, on every page and in both languages (colour follows the entity) —
+**with one deliberate exception**: on the Page 3 "Diagnosis by screen time" stacked column only, Astigmatism is
+overridden to dark maroon `#5C1A1A` (owner's choice, for contrast against that chart's other series); every other
+diagnosis-coloured visual (bar, legend) keeps slot 1 blue.
 Slot 3 is below 3:1 contrast on white: any visual using it **must** show data labels.
 
 **Sequential** (visual acuity categories, heat tables): single blue ramp `#CDE2FB` > `#86B6EF` > `#3987E5` > `#1C5CAB` > `#104281`.
@@ -117,8 +121,8 @@ Use the new card visual (`cardVisual`) or a card + text boxes; never a gauge.
 
 **Sidebar (identical on every page, grouped and copied, not rebuilt):**
 - Top: title "Vision Screening" + "Togo · 2024-2026" (muted), y 24.
-- Navigation: 4 page-navigator buttons, 188 x 36, y 112 / 156 / 200 / 244. Selected state: white background, primary ink text; default: transparent, `#B6C0D2` text. Button text from `Lbl Nav …` (fx).
-- Bottom: **language slicer** (DimLanguage[LanguageCode], tile style, single select, "FR | EN"), y 700, **synced on all pages**. Below it: `Lbl Note Synthetic`, 9 pt muted.
+- Navigation: 4 page-navigator buttons, 188 x 44, y 112 / 176 / 240 / 304 (24 px gap between buttons, widened from the original 188 x 36 / 44 px step for readability). Selected state: white background, primary ink text; default: transparent, `#B6C0D2` text. Button text from `Lbl Nav …` (fx), each prefixed with a locale-neutral Segoe MDL2 Assets icon (info / grid / eye / check-mark) as a literal leading text run — icons are decorative only, never the bilingual binding itself.
+- Bottom: **language slicer** (DimLanguage[LanguageCode], tile style, single select, "FR | EN"), y 684, tightened top/column padding (`layout.topOuterMargin` / `columnPadding`) so the two tiles sit close together, **synced on all pages**. Below it: `Lbl Note Synthetic`, 9 pt muted.
 
 **Header (pages 2-4):** page title (`Lbl Title …`) + campaign pill (`Header Campaign Pill`, rounded, `#2A78D6` fill, white text) on the left;
 Region and Campaign dropdown slicers on the right (labels via field parameters), synced across pages 2-4.
@@ -129,18 +133,19 @@ Region and Campaign dropdown slicers on the right (labels via field parameters),
 |---|---|---|
 | Need by region | 244, 348, 572, 420 | Horizontal bar, `Param Region` on axis, `Correction Need Rate (Safe)`, sorted by `RegionSortOrder`, colour `Color Region Bar`, data labels on, no gridlines. Alt text `Alt Text Region Chart` |
 | Trend by campaign | 832, 348, 584, 196 | Clustered column, `Param Campaign` on axis, `Students Screened`, + `Target Students` as a line (line and clustered column chart, *secondary y-axis turned off* so both share one axis) |
-| Prefecture ranking | 832, 560, 584, 208 | Table: Prefecture, Screened, Need rate (data bar slot 1), Rank, Target achievement (icon + colour). Top 10 by rank, no scrollbar in screenshots |
+| Prefecture ranking | 832, 560, 584, 208 | Table: Prefecture, Screened, Need rate (data bar slot 1, light-blue cell background for readability), Rank, Target achievement (icon + colour, light-grey cell background). **All 39 prefectures** (not capped at 10), native vertical scrollbar — owner's choice, overriding the original "top 10 / no scrollbar" rule below |
 
 ### Page 3 - Clinical analysis
 
 | Visual | Position | Spec |
 |---|---|---|
 | Diagnosis breakdown | 244, 80, 572, 336 | Bar, `Param Diagnosis Group`, `Diagnosis Share`, slots 1-4 per group, labels on |
+| Diagnosis proportion (donut) | 538, 80, 278, 336 | **Owner-added exception to "no donut" (section 8)**: a `donutChart` squeezed between the diagnosis bar and the visual-acuity column, titled `Lbl Chart Diag Share` ("Proportion des diagnostics" / "Diagnosis proportion"). Its `Y` measure (`Diagnosis Share (Cat)`) is not Domain-filtered, so it deliberately shows all ~15 `Lbl Cat` rows across every domain (not just the 4 diagnosis groups) and several wedges share a borrowed value with unpinned, language-unstable colours — a known, owner-accepted quirk, not a bug to fix |
 | Visual acuity per eye | 832, 80, 584, 336 | Column, VA category (ordinal, sequential ramp), `Eyes Examined` share |
 | Reported symptoms | 244, 432, 572, 336 | Bar sorted desc, `Param Symptom`, `Symptom Rate`, single colour slot 1 |
-| Diagnosis by screen time | 832, 432, 584, 336 | 100 % stacked column, `Param Screen Time` axis, diagnosis group legend (slots 1-4). Subtitle: "Association, not causation" / "Association, pas causalité" |
+| Diagnosis by screen time | 832, 432, 584, 336 | 100 % stacked column, `Param Screen Time` axis, diagnosis group legend (slots 1-4, Astigmatism overridden to maroon — see section 3). Subtitle: "Association, not causation" / "Association, pas causalité" |
 
-Page 3 has no narrative banner and no KPI row: the four visuals fill the band from y 80 to y 768 (2 x 2 grid).
+Page 3 has no narrative banner and no KPI row: five visuals fill the band from y 80 to y 768 (the donut shares the top row with the diagnosis bar and the visual-acuity column, exceeding the "4 main visuals" rule in section 8 by owner's choice).
 
 ### Page 4 - Quality & security
 
@@ -160,14 +165,15 @@ Page 3 has no narrative banner and no KPI row: the four visuals fill the band fr
 
 ## 8. What we do NOT want
 
-- No pie, donut, gauge, 3D, treemap or map visual (Togo shape files add noise for 5 regions).
+- No pie, donut, gauge, 3D, treemap or map visual (Togo shape files add noise for 5 regions) — **except** the Page 3 "Diagnosis proportion" donut, added and kept deliberately by the owner (see Page 3 table in section 6).
 - No secondary (dual) y-axis.
 - No default Power BI titles ("Sum of …", "Count of …"), no visual header icons in screenshots.
 - No drop shadows, no gradients, no background images behind data.
 - No rate computed on fewer than 10 students (always use the `(Safe)` measure on detailed visuals).
 - No colour carrying meaning alone; no status colour on a neutral value (the need rate is not "bad", it is a need).
-- No more than 5 KPI cards and 4 main visuals per page.
-- No truncated labels, no scrollbars, no "(Blank)" category visible.
+- No more than 5 KPI cards and 4 main visuals per page — **except** Page 3, which has 5 (see above).
+- No truncated labels, no "(Blank)" category visible. Scrollbars are acceptable where the owner wants the full
+  list rather than a top-N cut (prefecture ranking, section 6) — avoid them elsewhere.
 - No word "prevalence", no claim of causality between screen time and myopia.
 - No real student data, names or schools: the data stays 100 % synthetic.
 

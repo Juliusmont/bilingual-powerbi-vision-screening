@@ -44,18 +44,23 @@
 
 ## Screenshots
 
-<!-- Replace the design target below by screenshots/01-overview-fr.png once captured (see docs/CAPTURE_CHECKLIST.md) -->
-**Design target (Overview page, French).** Built from the real synthetic data; the Power BI report must reproduce it.
-
-![Overview page - design target](docs/design/overview-target-fr.png)
-
-| Overview (FR) | Overview (EN) |
+| About (FR) | About (EN) |
 |---|---|
-| `screenshots/01-overview-fr.png` *(coming)* | `screenshots/02-overview-en.png` *(coming)* |
-| **Clinical analysis** | **Quality & security / RLS** |
-| `screenshots/03-clinical-analysis-fr.png` *(coming)* | `screenshots/07-rls-view-as-plateaux.png` *(coming)* |
+| ![About FR](screenshots/page1-FR.png) | ![About EN](screenshots/page1-EN.png) |
+| **Overview (FR)** | **Overview (EN)** |
+| ![Overview FR](screenshots/page2-FR.png) | ![Overview EN](screenshots/page2-EN.png) |
+| **Clinical analysis (FR)** | **Clinical analysis (EN)** |
+| ![Clinical analysis FR](screenshots/page3-FR.png) | ![Clinical analysis EN](screenshots/page3-EN.png) |
+| **Quality & security (FR)** | **Quality & security (EN)** |
+| ![Quality & security FR](screenshots/page4-FR.png) | ![Quality & security EN](screenshots/page4-EN.png) |
 
-Demo video (FR > EN switch, filters, RLS): `screenshots/demo.mp4` *(coming)*.
+**Semantic model, star schema:**
+
+![Model view](screenshots/model-view.png)
+
+**Demo video** (FR → EN switch, filters, RLS): [`screenshots/demo.mp4`](screenshots/demo.mp4).
+
+Still to capture (optional, see [`docs/CAPTURE_CHECKLIST.md`](docs/CAPTURE_CHECKLIST.md)): KPI definition tooltip, RLS *View as* banner, and a Power BI Service `?language=fr` capture.
 
 ## How the report was built (Claude Code + Power BI)
 
@@ -111,8 +116,11 @@ DimRegion ─< DimPrefecture ─< DimCommune ─< DimSchool ─< FactScreening �
 | `DimDate` | calendar 2024-2026 with bilingual campaign labels | 1,096 |
 | `DimDiagnosis`, `DimVACategory`, `DimEye`, `DimSex`, `DimAgeBand`, `DimCycle`, `DimScreenTime`, `DimSchoolType`, `DimSymptom`, `DimHistory` | bilingual lookup dimensions (`_FR` / `_EN` columns) | |
 | `DimLanguage` | FR / EN, culture codes | 2 |
-| `Labels` | UI text keyed by `LabelKey` + `LanguageCode` | 70 |
+| `Labels` | UI text keyed by `LabelKey` + `LanguageCode` | 70+ |
 | `SecurityUserRegion` | user e-mail → region mapping for dynamic RLS (hidden) | 7 |
+| `Param Region` / `Param Prefecture` / `Param Campaign` | field parameters driving axis/legend/slicer labels for geography and campaign | |
+| `Lbl Cat` / `Lbl Cat Legend` (calculated) | one row per category x language, union of diagnosis / visual-acuity / symptom / screen-time domains, related to `DimLanguage`; feeds every bilingual axis/legend on the Clinical analysis page | |
+| `DQ Check` | one row per data-quality rule shown in the Quality & security page table | 5 |
 
 Three annual campaigns (March 2024, 2025, 2026). Geography follows Togo's administrative division (Law no. 2017-008 on communes).
 
@@ -217,8 +225,8 @@ Publish to the Power BI Service and open the report with `?language=fr` or `?lan
 │   └── design/                            design target (HTML + PNG)
 ├── powerbi/
 │   ├── themes/                            Power BI theme JSON (light, dark)
-│   └── VisionScreening.pbip (+ folders)   PBIP project (coming)
-├── screenshots/                           report screenshots and demo (coming)
+│   └── VisionScreening.pbip (+ folders)   PBIP project (4 pages, PBIR report + TMDL model)
+├── screenshots/                           report screenshots (FR/EN, 4 pages) and model view
 ├── scripts/
 │   ├── generate_data.py                   seeded synthetic data generator
 │   └── expected_kpis.py                   recomputes the expected KPI values (pandas)
@@ -233,9 +241,10 @@ Publish to the Power BI Service and open the report with `?language=fr` or `?lan
 
 - [x] Design guidebook, themes, expected KPI values, agentic build workflow (v1.1)
 - [x] Realistic prescribing rule in the generator (v1.1)
-- [ ] Build the 4 report pages and save as `.pbip`; attach the `.pbix` to release `v1.0`
-- [ ] Add FR / EN screenshots, RLS test, model view and demo video
-- [ ] Publish to the Power BI Service and capture `?language=fr` / `?language=en`
+- [x] Build the 4 report pages and save as `.pbip`
+- [x] Add FR / EN screenshots, model view and demo video
+- [ ] Attach the `.pbix` to release `v1.0`
+- [ ] RLS test screenshot and Power BI Service capture (`?language=fr` / `?language=en`)
 - [ ] Object-level security (OLS) on general medical history for selected roles
 
 ## License
